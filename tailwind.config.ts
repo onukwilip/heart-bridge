@@ -12,10 +12,20 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: "#007AFF",
+        ["primary-grey"]: "rgba(255, 255, 255, 0.3)",
+        ["primary-grey-dark"]: "rgba(255, 255, 255, 0.5)",
         ["weak-white"]: "#FFFFFF66",
       },
       fontFamily: {
         poppins: ["Poppins"],
+      },
+      borderColor: {
+        ["primary-grey"]: "rgba(255, 255, 255, 0.3)",
+        ["primary-grey-dark"]: "rgba(255, 255, 255, 0.5)",
+      },
+      outlineColor: {
+        ["primary-grey"]: "rgba(255, 255, 255, 0.3)",
+        ["primary-grey-dark"]: "rgba(255, 255, 255, 0.5)",
       },
     },
   },
