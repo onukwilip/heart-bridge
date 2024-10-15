@@ -68,3 +68,16 @@ export const sign_in = async (
     return new_current_user;
   }
 };
+
+/**
+ * * Function responsible for logging a user out
+ */
+export const logout = async () => {
+  try {
+    // * Automatically sign the current user out
+    await account.deleteSession("current");
+    console.log("SIGNED OUT CURRENT USER");
+  } catch (error) {
+    console.log("NO USER LOGGED IN PREVIOUSLY");
+  }
+};
