@@ -36,3 +36,16 @@ export interface Summary {
   icon: StaticImageData | string;
   color: string;
 }
+
+export interface Donation {
+  donor: string;
+  amount: number;
+  project: string;
+  date: string;
+}
+
+export interface Visitation {
+  visitor: string;
+  date: string;
+  time: string;
+}

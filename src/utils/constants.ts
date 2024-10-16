@@ -1,4 +1,4 @@
-import { Summary } from "./types";
+import { Donation, Summary, Visitation } from "./types";
 import project from "@/images/projects.png";
 import call from "@/images/calls.png";
 import visitation from "@/images/visitations.png";
@@ -28,5 +28,22 @@ export const summaries: Summary[] = [
     value: "15",
     icon: call,
     color: "border-hot-red",
+  },
+];
+
+export const fakeDonations: Donation[] = [
+  {
+    donor: "John Doe",
+    amount: 200000,
+    project: "Project 1",
+    date: "2021-10-01",
+  },
+];
+
+export const fakeVisitation: Visitation[] = [
+  {
+    visitor: "Jane Doe",
+    date: "2021-10-01",
+    time: "10:00 AM",
   },
 ];
