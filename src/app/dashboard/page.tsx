@@ -1,9 +1,17 @@
-import React from 'react'
+import React from "react";
+import WelcomeCard from "./_components/WelcomeCard";
+import SummaryRow from "./_components/SummaryRow";
 
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <div className="flex flex-col space-y-10 w-full">
+      {/* Welcome card */}
+      <WelcomeCard />
 
-export default Dashboard
+      {/* Summary Row */}
+      <SummaryRow />
+    </div>
+  );
+};
+
+export default Dashboard;
