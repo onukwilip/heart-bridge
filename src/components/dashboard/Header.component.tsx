@@ -86,7 +86,7 @@ const Header = () => {
             className={`fas fa-magnifying-glass inline-block md:hidden text-primary-grey hover:text-primary-grey-dark`}
           ></i>
 
-          {/* Notification */}
+          {/* Notification  */}
           <div>
             <i className="fa-regular fa-bell transition duration-200 hover:text-primary-grey-dark cursor-pointer"></i>
           </div>
