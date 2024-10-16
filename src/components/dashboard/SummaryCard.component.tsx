@@ -9,10 +9,9 @@ interface SummaryCardProps {
 const SummaryCard: React.FC<SummaryCardProps> = ({ summary }) => {
   return (
     <div
-      className={
-        `flex min-w-[270px] gap-y-2  bg-white/20 rounded-xl p-4 flex-col justify-between items-start  border-b-2  ` +
+      className={`flex min-w-[270px] w-full gap-y-2 bg-white/20 rounded-xl p-4 flex-col justify-between items-start border-b-2 ${
         borderColorClasses[summary.color]
-      }
+      }`}
     >
       <Image src={summary.icon} alt={summary.title} />
       <div className="flex text-white  flex-col gap-y-2 items-start">

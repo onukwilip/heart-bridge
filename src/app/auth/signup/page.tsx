@@ -1,7 +1,7 @@
-import LogoText from "@/components/logo.component";
+import LogoText from "@/components/Logo.component";
 import React from "react";
 import bg_img from "@/images/pawan-sharma-lBQuPKiX2e0-unsplash.jpg";
-import SignUpForm from "@/components/signup/form.component";
+import SignUpForm from "@/components/signup/Form.component";
 
 const SignUp = () => {
   return (

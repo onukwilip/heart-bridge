@@ -15,6 +15,7 @@
     "@types/js-cookie": "^3.0.6",
     "@types/react-icons": "^3.0.0",
     "appwrite": "^16.0.2",
+    "framer": "^2.4.1",
     "js-cookie": "^3.0.5",
     "next": "14.2.15",
     "nextjs-toploader": "^3.7.15",
