@@ -1,6 +1,6 @@
 import { summaries } from "@/utils/constants";
 import React from "react";
-import SummaryCard from "./SummaryCard";
+import SummaryCard from "./SummaryCard.component";
 
 const SummaryRow: React.FC = () => {
   return (

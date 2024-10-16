@@ -3,7 +3,7 @@ import { formatAmount } from "@/utils/helpers/formatAmount";
 import Link from "next/link";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
-import SeeAll from "./SeeAll";
+import SeeAll from "./SeeAll.component";
 
 const RecentDonations = () => {
   const moreFakeDonations = Array.from({ length: 5 }, (_, i) => ({

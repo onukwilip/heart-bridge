@@ -1,6 +1,6 @@
 import React from "react";
-import RecentDonations from "./RecentDonations";
-import UpcomingVisitations from "./UpcomingVisitations";
+import RecentDonations from "./RecentDonations.component";
+import UpcomingVisitations from "./UpcomingVisitations.component";
 
 const Highlights = () => {
   return (

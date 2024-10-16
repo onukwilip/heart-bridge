@@ -1,5 +1,5 @@
 import React from "react";
-import OutlinedButton from "./OutlinedButton";
+import OutlinedButton from "./OutlinedButton.component";
 import welcomImg from "@/images/dashboard_welcom.png";
 import Image from "next/image";
 
