@@ -10,14 +10,14 @@ const SummaryCard: React.FC<SummaryCardProps> = ({ summary }) => {
   return (
     <div
       className={
-        `flex min-w-[270px] gap-y-2  bg-white/20 rounded-xl p-4 flex-col justify-between items-start  border-b-2  ` +
+        `flex flex-shrink basis-[200px] lg:basis-[220px] gap-y-2  bg-white/20 rounded-xl p-4 flex-col justify-between items-start  border-b-2 duration-300 hover:-translate-y-2 ` +
         borderColorClasses[summary.color]
       }
     >
       <Image src={summary.icon} alt={summary.title} />
       <div className="flex text-white  flex-col gap-y-2 items-start">
-        <p className=" text-sm">{summary.title} </p>
-        <p className="text-xl font-bold">
+        <p className="text-xs lg:text-sm">{summary.title} </p>
+        <p className="lg:text-xl font-bold">
           {summary.value}{" "}
           {summary.title.includes("Dona")
             ? ""

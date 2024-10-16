@@ -5,7 +5,7 @@ import Highlights from "./_components/Highlights";
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="flex flex-col space-y-14 w-full">
+    <div className="flex flex-col space-y-14 w-full ">
       {/* Welcome card */}
       <WelcomeCard />
 
