@@ -15,7 +15,7 @@ const MobileSideBar: FC<HTMLMotionProps<"div">> = (props) => {
   return (
     <motion.div
       variants={variants}
-      className="fixed top-0 z-50 bg-black h-full lg:hidden"
+      className="fixed top-0 left-0 z-50 bg-black h-full lg:hidden"
       {...props}
     >
       <Sidebar />
