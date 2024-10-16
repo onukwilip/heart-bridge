@@ -1,6 +1,7 @@
-import { ID } from "appwrite";
+import { ID, Models } from "appwrite";
 import account from "./appwrite_account.utils";
-import { SIGNUP_FORMSTATE, TUser } from "../types";
+import { SIGNUP_FORMSTATE, TUser, USER_COOKIE_NAME } from "../types";
+import cookies from "js-cookie";
 
 /**
  * * Function responsible for creating a new user
@@ -33,6 +34,9 @@ export const create_account = async (data: TUser) => {
       [SIGNUP_FORMSTATE.FIRSTNAME]: data.firstname,
       [SIGNUP_FORMSTATE.LASTNAME]: data.lastname,
       [SIGNUP_FORMSTATE.ACCOUNT_TYPE]: data.account_type,
+      ...(data.orphanage_name
+        ? { [SIGNUP_FORMSTATE.ORPHANAGE_NAME]: data.orphanage_name }
+        : {}),
     });
     console.log("UPDATED USER", updated_user);
 
@@ -64,6 +68,8 @@ export const sign_in = async (
     // * Get the signed in user details
     const new_current_user = await account.get<TUser>();
 
+    cookies.set(USER_COOKIE_NAME, JSON.stringify(new_current_user));
+
     // * Return the details of the signed in user
     return new_current_user;
   }
@@ -79,5 +85,24 @@ export const logout = async () => {
     console.log("SIGNED OUT CURRENT USER");
   } catch (error) {
     console.log("NO USER LOGGED IN PREVIOUSLY");
+  }
+};
+
+/**
+ * * Get's the user details of the signed in user
+ */
+export const get_current_user = async () => {
+  try {
+    // * Retrieves the signed in user from the cookies
+    const existing_user = cookies.get(USER_COOKIE_NAME);
+    if (existing_user) return JSON.parse(existing_user) as Models.User<TUser>;
+
+    // * Returns the details of the signed in user from appwrite if the user doesn't exist in the cookies and adds the user to the cookies
+    const user = await account.get<TUser>();
+    cookies.set(USER_COOKIE_NAME, JSON.stringify(user));
+
+    return user;
+  } catch (error) {
+    return undefined;
   }
 };

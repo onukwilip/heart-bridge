@@ -32,6 +32,7 @@ const SignUpForm: FC<{ className?: string }> = ({ className }) => {
     firstname: "",
     lastname: "",
     password: "",
+    orphanage_name: "",
   });
   const fetch_state = useFetch();
 
@@ -113,6 +114,21 @@ const SignUpForm: FC<{ className?: string }> = ({ className }) => {
             <MenuItem value={"donor"}>Donor</MenuItem>
           </Select>
         </FormControl>
+        {/* Orphanage name field */}
+        {form_state.account_type === "orphanage" && (
+          <TextField
+            name={SIGNUP_FORMSTATE.ORPHANAGE_NAME}
+            label="Orphanage name"
+            placeholder="Enter the orphanage name"
+            onChange={(e) =>
+              handle_input_change(e.target.name, e.target.value, setFormState)
+            }
+            value={form_state.orphanage_name}
+            variant="outlined"
+            className="w-full"
+            required
+          />
+        )}
         {/* Email field */}
         <TextField
           name={SIGNUP_FORMSTATE.EMAIL}
