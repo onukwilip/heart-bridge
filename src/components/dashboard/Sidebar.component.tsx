@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import LogoText from "../logo.component";
+import LogoText from "../Logo.component";
 import { MenuClass } from "@/utils/dashboard/classes";
 import Menu from "./Menu.component";
 import { logout } from "@/utils/appwrite/auth.utils";
 import { TAB_PAGE_NAMES } from "@/utils/types";
+import { useSideBarContext } from "@/contexts/SideBar.context";
 
 const menus: MenuClass[] = [
   new MenuClass(TAB_PAGE_NAMES.DASHBOARD, "/dashboard", "fas fa-house"),
@@ -28,7 +29,7 @@ const menus: MenuClass[] = [
 ];
 
 const Sidebar = () => {
-  const [expand, setExpand] = useState(false);
+  const { expand, setExpand } = useSideBarContext();
 
   return (
     <div

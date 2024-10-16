@@ -14,7 +14,7 @@ const RecentDonations = () => {
   }));
 
   return (
-    <div className="flex flex-col gap-y-5 w-1/2">
+    <div className="flex flex-col gap-y-5 w-full">
       <div className="flex justify-between items-center">
         <h3 className="font-bold text-xl text-white">Recent Donations</h3>
         <SeeAll link="/dashboard/donations" />

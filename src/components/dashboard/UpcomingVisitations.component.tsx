@@ -12,7 +12,7 @@ const more_fake_upcoming_visitations = Array.from({ length: 5 }, (_, i) => ({
 
 const UpcomingVisitations = () => {
   return (
-    <div className="flex flex-col gap-y-5 w-1/2">
+    <div className="flex flex-col gap-y-5 w-full">
       <div className="flex justify-between items-center">
         <h3 className="font-bold text-xl text-white">Recent Visitations</h3>
         <SeeAll link="/dashboard/visitations" />

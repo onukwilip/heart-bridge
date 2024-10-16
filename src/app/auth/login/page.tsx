@@ -1,7 +1,7 @@
 import React from "react";
 import bg_img from "@/images/annie-spratt-QdK6aujOLYs-unsplash.jpg";
-import LogoText from "@/components/logo.component";
-import LoginForm from "@/components/login/form.component";
+import LogoText from "@/components/Logo.component";
+import LoginForm from "@/components/login/Form.component";
 
 const Login = () => {
   return (
