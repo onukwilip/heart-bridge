@@ -1,6 +1,7 @@
 import Header from "@/components/dashboard/Header.component";
 import Sidebar from "@/components/dashboard/Sidebar.component";
 import { Metadata } from "next";
+import NextTopLoader from "nextjs-toploader";
 import React, { FC, ReactNode } from "react";
 
 export const metadata: Metadata = {
@@ -15,14 +16,15 @@ const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
         <Sidebar />
       </div>
       {/* Header + tab */}
-      <div className="flex-1 h-full">
+      <div className="flex-1 flex flex-col h-screen">
         {/* Header */}
-        <div className="">
+        <div className="flex-shrink-0">
           <Header />
         </div>
         {/* Tab */}
-        <div>{children}</div>
+        <div className="flex-grow overflow-y-auto p-6">{children}</div>
       </div>
+      <NextTopLoader color="#007AFF" />
     </main>
   );
 };

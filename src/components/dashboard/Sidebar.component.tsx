@@ -4,18 +4,27 @@ import LogoText from "../logo.component";
 import { MenuClass } from "@/utils/dashboard/classes";
 import Menu from "./Menu.component";
 import { logout } from "@/utils/appwrite/auth.utils";
+import { TAB_PAGE_NAMES } from "@/utils/types";
 
 const menus: MenuClass[] = [
-  new MenuClass("dashboard", "/dashboard", "fas fa-house"),
-  new MenuClass("projects", "/dashboard/projects", "fas fa-folder"),
+  new MenuClass(TAB_PAGE_NAMES.DASHBOARD, "/dashboard", "fas fa-house"),
   new MenuClass(
-    "donations",
+    TAB_PAGE_NAMES.PROJECTS,
+    "/dashboard/projects",
+    "fas fa-folder"
+  ),
+  new MenuClass(
+    TAB_PAGE_NAMES.DONATIONS,
     "/dashboard/donations",
     "fas fa-hand-holding-dollar"
   ),
-  new MenuClass("visitations", "/dashboard/visitations", "fas fa-location-dot"),
-  new MenuClass("calls", "/dashboard/calls", "fas fa-mobile"),
-  new MenuClass("account", "/dashboard/account", "fas fa-user"),
+  new MenuClass(
+    TAB_PAGE_NAMES.VISITATIONS,
+    "/dashboard/visitations",
+    "fas fa-location-dot"
+  ),
+  new MenuClass(TAB_PAGE_NAMES.CALLS, "/dashboard/calls", "fas fa-mobile"),
+  new MenuClass(TAB_PAGE_NAMES.ACCOUNT, "/dashboard/account", "fas fa-user"),
 ];
 
 const Sidebar = () => {
