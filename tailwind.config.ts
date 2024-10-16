@@ -16,6 +16,10 @@ const config: Config = {
         ["primary-grey-dark"]: "rgba(255, 255, 255, 0.5)",
         ["weak-white"]: "#FFFFFF66",
         ["weak-red"]: "rgba(180,55,68, 0.2)",
+        golden: "#F8BD00",
+        "hot-red": "#E33629",
+        // #07C589
+        secondary: "#07C589",
       },
       fontFamily: {
         poppins: ["Poppins"],

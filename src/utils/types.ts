@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export type TUser = {
   email: string;
   password: string;
@@ -27,3 +29,23 @@ export enum TAB_PAGE_NAMES {
 }
 
 export const USER_COOKIE_NAME = "user";
+
+export interface Summary {
+  title: string;
+  value: string;
+  icon: StaticImageData | string;
+  color: string;
+}
+
+export interface Donation {
+  donor: string;
+  amount: number;
+  project: string;
+  date: string;
+}
+
+export interface Visitation {
+  visitor: string;
+  date: string;
+  time: string;
+}
