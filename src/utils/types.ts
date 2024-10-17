@@ -49,3 +49,19 @@ export interface Visitation {
   date: string;
   time: string;
 }
+
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  image: string | StaticImageData;
+  // location: string;
+  // date: string;
+  // time: string;
+  donations: number;
+  visitations: number;
+  calls: number;
+  targetAmount: number;
+  currentAmount: number;
+  status: "active" | "completed" | "draft";
+}
