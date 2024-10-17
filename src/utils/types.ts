@@ -28,6 +28,12 @@ export enum TAB_PAGE_NAMES {
   ACCOUNT = "account",
 }
 
+export enum ORPHANAGE_USER_TAB_SLUGS {
+  PROFILE = "profile",
+  BANK_ACCOUNT = "bank_account",
+  CONTACT = "contact",
+}
+
 export const USER_COOKIE_NAME = "user";
 
 export interface Summary {

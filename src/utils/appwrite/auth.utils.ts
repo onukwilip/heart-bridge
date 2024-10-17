@@ -43,6 +43,9 @@ export const create_account = async (data: TUser) => {
     // * Get the signed in user details (the user who was just created)
     const current_user = await account.get<TUser>();
 
+    // * Set the signed in user details in the cookies
+    cookies.set(USER_COOKIE_NAME, JSON.stringify(current_user));
+
     // * Return the details of the signed in user
     return current_user;
   }
@@ -68,6 +71,7 @@ export const sign_in = async (
     // * Get the signed in user details
     const new_current_user = await account.get<TUser>();
 
+    // * Set the signed in user details in the cookies
     cookies.set(USER_COOKIE_NAME, JSON.stringify(new_current_user));
 
     // * Return the details of the signed in user
@@ -82,6 +86,9 @@ export const logout = async () => {
   try {
     // * Automatically sign the current user out
     await account.deleteSession("current");
+    // * Remove the signed in user details from the cookies
+    cookies.remove(USER_COOKIE_NAME);
+
     console.log("SIGNED OUT CURRENT USER");
   } catch (error) {
     console.log("NO USER LOGGED IN PREVIOUSLY");
