@@ -37,7 +37,7 @@ const Tab: FC<{
     >
       {/* Menus */}
       <div
-        className={`flex py-2 gap-3 w-full ${
+        className={`flex py-2 gap-1 md:gap-3 w-full ${
           type === "vertical"
             ? "flex-row flex-0 px-4 border-b border-b-weak-grey md:flex-col md:px-1 lg:px-6 md:border-r md:border-r-weak-grey md:border-b-0 md:h-full md:flex-1"
             : "flex-row px-4 border-b border-b-weak-grey flex-0"
@@ -51,9 +51,9 @@ const Tab: FC<{
                   `/dashboard/${TAB_PAGE_NAMES.ACCOUNT}?user_tab=${menu.slug}`
                 )
               }
-              className={`py-2 px-6 rounded-full flex items-center text-sm hover:bg-primary cursor-pointer capitalize transition w-fit text-nowrap ${
+              className={`py-2 px-2 md:px-6 text-sm rounded-full flex items-center hover:text-primary md:hover:bg-primary md:hover:text-white cursor-pointer capitalize transition w-fit text-nowrap ${
                 current_tab === menu.slug || (!current_tab && i == 0)
-                  ? "bg-primary"
+                  ? "md:bg-primary md:text-white text-primary"
                   : ""
               }`}
             >
@@ -64,7 +64,7 @@ const Tab: FC<{
       </div>
       {/* Tab */}
       <div className="flex-0 w-full py-3 md:px-4 lg:px-8 flex flex-col gap-4">
-        <div className="text-xl capitalize">
+        <div className="text-lg md:text-xl capitalize">
           {menus.find((menu) => menu.slug === current_tab_details.slug)?.name}
         </div>
         <>{current_tab_details.content}</>

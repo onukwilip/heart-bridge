@@ -1,5 +1,4 @@
 import React from "react";
-import TabSection from "@/components/molecules/TabSection.component";
 import UserProfileSection from "@/components/account/UserProfileSection.component";
 import PersonalInformationSection from "./PersonalInformationSection.component";
 import SecuritySection from "./SecuritySection.component";

@@ -5,6 +5,7 @@ import EditButton from "../atoms/EditButton.component";
 import PersonalInformationDetail from "./PersonalInformationDetail.component";
 import { useUserContext } from "@/contexts/User.context";
 import { SIGNUP_FORMSTATE } from "@/utils/types";
+import SectionHeader from "./SectionHeader.component";
 
 const PersonalInformationSection = () => {
   const { user } = useUserContext();
@@ -12,10 +13,9 @@ const PersonalInformationSection = () => {
   return (
     <TabSection className="flex flex-col w-full gap-4">
       {/* Heading + Edit btn */}
-      <div className="w-full flex flex-wrap items-center gap-6 justify-between">
+      <SectionHeader onEditClick={() => {}}>
         <span>Personal information</span>
-        <EditButton />
-      </div>
+      </SectionHeader>
       {/* Details */}
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-2">
         {Object.entries(user?.prefs || {}).map(([key, value]) => (

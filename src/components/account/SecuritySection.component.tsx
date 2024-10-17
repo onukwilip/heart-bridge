@@ -5,6 +5,7 @@ import EditButton from "../atoms/EditButton.component";
 import PersonalInformationDetail from "./PersonalInformationDetail.component";
 import { useUserContext } from "@/contexts/User.context";
 import { SIGNUP_FORMSTATE } from "@/utils/types";
+import SectionHeader from "./SectionHeader.component";
 
 const SecuritySection = () => {
   const { user } = useUserContext();
@@ -12,10 +13,9 @@ const SecuritySection = () => {
   return (
     <TabSection className="flex flex-col w-full gap-4">
       {/* Heading + Edit btn */}
-      <div className="w-full flex flex-wrap items-center gap-6 justify-between">
+      <SectionHeader onEditClick={() => {}}>
         <span>Security</span>
-        <EditButton />
-      </div>
+      </SectionHeader>
       {/* Password */}
       <div className="w-full">
         <PersonalInformationDetail

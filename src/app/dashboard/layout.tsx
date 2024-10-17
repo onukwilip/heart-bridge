@@ -27,7 +27,7 @@ const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
               <Header />
             </div>
             {/* Tab */}
-            <div className="relative flex-grow overflow-y-auto p-6 box-border">
+            <div className="relative flex-grow overflow-y-auto p-2 md:p-6 box-border">
               <PagesWrapper>{children}</PagesWrapper>{" "}
             </div>
           </div>

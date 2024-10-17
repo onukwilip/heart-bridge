@@ -3,6 +3,8 @@ import UserProfle from "@/components/account/UserProfle.component";
 import { TabContentClass, TabMenuClass } from "@/utils/account/classes";
 import { ORPHANAGE_USER_TAB_SLUGS } from "@/utils/types";
 import React from "react";
+import BankAccount from "@/components/account/BankAccount.component";
+import Contact from "@/components/account/Contact.component";
 
 const tab_menus: TabMenuClass[] = [
   { slug: ORPHANAGE_USER_TAB_SLUGS.PROFILE, name: "my profile" },
@@ -12,8 +14,8 @@ const tab_menus: TabMenuClass[] = [
 
 const tab_content: TabContentClass[] = [
   { slug: ORPHANAGE_USER_TAB_SLUGS.PROFILE, content: <UserProfle /> },
-  { slug: ORPHANAGE_USER_TAB_SLUGS.BANK_ACCOUNT, content: <>Bank account</> },
-  { slug: ORPHANAGE_USER_TAB_SLUGS.CONTACT, content: <>Contact</> },
+  { slug: ORPHANAGE_USER_TAB_SLUGS.BANK_ACCOUNT, content: <BankAccount /> },
+  { slug: ORPHANAGE_USER_TAB_SLUGS.CONTACT, content: <Contact /> },
 ];
 
 const Account = () => {

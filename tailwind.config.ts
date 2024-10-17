@@ -33,6 +33,11 @@ const config: Config = {
         ["primary-grey"]: "rgba(255, 255, 255, 0.3)",
         ["primary-grey-dark"]: "rgba(255, 255, 255, 0.5)",
       },
+      screens: {
+        xs: "480px",
+        "2xl": "1440px",
+        "3xl": "1600px",
+      },
     },
   },
   plugins: [],
