@@ -15,10 +15,11 @@ const config: Config = {
         ["primary-grey"]: "rgba(255, 255, 255, 0.3)",
         ["primary-grey-dark"]: "rgba(255, 255, 255, 0.5)",
         ["weak-white"]: "#FFFFFF66",
+        ["weak-grey"]: "#FFFFFF1A",
         ["weak-red"]: "rgba(180,55,68, 0.2)",
         golden: "#F8BD00",
-        "hot-red": "#E33629",
-        // #07C589
+        ["hot-red"]: "#E33629",
+        ["light-gray"]: "#FFFFFF08",
         secondary: "#07C589",
       },
       fontFamily: {

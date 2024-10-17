@@ -33,7 +33,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`flex flex-col justify-between gap-6 py-8 border-r border-[#FFFFFF1A] h-full transition ${
+      className={`flex flex-col justify-between gap-6 py-8 border-r border-weak-grey h-full transition ${
         expand ? "w-[300px]" : "w-fit"
       }`}
     >

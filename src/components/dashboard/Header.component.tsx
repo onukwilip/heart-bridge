@@ -1,38 +1,22 @@
 "use client";
 import usePageName from "@/hooks/usePageName.hook";
-import { TAB_PAGE_NAMES, TUser } from "@/utils/types";
-import React, { use, useEffect, useState } from "react";
+import { TAB_PAGE_NAMES } from "@/utils/types";
+import React from "react";
 import { InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
 import { RoundedFormControl } from "../atoms/RoundedFormControl.component";
 import Image from "next/image";
-import { Models } from "appwrite";
-import { get_current_user } from "@/utils/appwrite/auth.utils";
 import dummy_image from "@/images/dummy-profile-pic.png";
 import { useSideBarContext } from "@/contexts/SideBar.context";
-import { AnimatePresence } from "framer";
-import MobileSideBar from "./MobileSideBar.component";
+import { useUserContext } from "@/contexts/User.context";
 
 const Header = () => {
   const current_page_name = usePageName();
-  const [user, setuser] = useState<Models.User<TUser>>();
+  const { user } = useUserContext();
   const { expand, setExpand } = useSideBarContext();
-
-  /**
-   * * Get's the details of the signed in user
-   */
-  const get_user = async () => {
-    const returned_user = await get_current_user();
-
-    setuser(returned_user);
-  };
-
-  useEffect(() => {
-    get_user();
-  }, []);
 
   return (
     <>
-      <div className="w-full py-4 px-6 box-border sm:px-10 flex gap-4 items-center justify-between border-b border-[#FFFFFF1A]">
+      <div className="w-full py-4 px-6 box-border sm:px-10 flex gap-4 items-center justify-between border-b border-weak-grey">
         {/* Page name + description + menu icon */}
         <div className="flex gap-4 items-center">
           {/* Menu icon */}
