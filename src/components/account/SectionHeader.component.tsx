@@ -1,3 +1,4 @@
+"use client";
 import React, { FC, ReactNode } from "react";
 import EditButton from "../atoms/EditButton.component";
 

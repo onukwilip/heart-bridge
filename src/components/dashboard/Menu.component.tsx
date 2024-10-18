@@ -1,6 +1,6 @@
 "use client";
 import usePageName from "@/hooks/usePageName.hook";
-import { MenuClass } from "@/utils/dashboard/classes";
+import { MenuClass } from "@/utils/dashboard/classes.utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { FC, MouseEventHandler, useEffect } from "react";

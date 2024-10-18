@@ -6,6 +6,8 @@ import donation from "@/images/donations.png";
 
 import projectImg1 from "@/images/360_F_632735725_T74nETWjo5dcdQDlQLEIFjJuAR1VkDFH.png";
 
+export const USER_COOKIE_NAME = "user";
+
 export const summaries: Summary[] = [
   {
     title: "Total Donations Received",

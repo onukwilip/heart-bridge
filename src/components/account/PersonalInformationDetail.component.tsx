@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 
 const PersonalInformationDetail: FC<{
   title: string;
-  value: string;
+  value: ReactNode;
   no_capitalize?: boolean;
 }> = ({ title, value, no_capitalize }) => {
   return (

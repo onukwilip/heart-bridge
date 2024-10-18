@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import TabSection from "../molecules/TabSection.component";
 import SectionHeader from "./SectionHeader.component";

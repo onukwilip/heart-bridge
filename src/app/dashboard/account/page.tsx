@@ -1,6 +1,6 @@
 import Tab from "@/components/molecules/Tab.component";
 import UserProfle from "@/components/account/UserProfle.component";
-import { TabContentClass, TabMenuClass } from "@/utils/account/classes";
+import { TabContentClass, TabMenuClass } from "@/utils/account/classes.utils";
 import { ORPHANAGE_USER_TAB_SLUGS } from "@/utils/types";
 import React from "react";
 import BankAccount from "@/components/account/BankAccount.component";
