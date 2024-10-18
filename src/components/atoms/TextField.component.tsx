@@ -2,8 +2,6 @@
 import styled from "@emotion/styled";
 import MUITextField from "@mui/material/TextField";
 
-
-
 export const TextField = styled(MUITextField)({
   "& label": {
     color: "rgba(255, 255, 255, 0.3)",
@@ -36,8 +34,12 @@ export const TextField = styled(MUITextField)({
     "&.Mui-focused": {
       color: "rgba(255, 255, 255, 0.5)",
     },
+
+    "&:disabled": {
+      borderColor: "white",
+      color: "red",
+    },
   },
 });
-
 
 export default TextField;

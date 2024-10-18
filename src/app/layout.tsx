@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
+import ModalContextProvider from "@/contexts/Modal.context";
+import Modal from "@/components/molecules/Modal.component";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -48,7 +50,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} !font-poppins antialiased w-screen h-screen overflow-x-hidden overflow-y-auto text-primary-grey`}
       >
-        {children}
+        <ModalContextProvider>
+          {children}
+          <Modal />
+        </ModalContextProvider>
         <NextTopLoader color="#007AFF" />
       </body>
     </html>

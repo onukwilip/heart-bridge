@@ -1,7 +1,8 @@
 import { ID, Models } from "appwrite";
 import account from "./appwrite_account.utils";
-import { SIGNUP_FORMSTATE, TUser, USER_COOKIE_NAME } from "../types";
+import { SIGNUP_FORMSTATE, TUser } from "../types";
 import cookies from "js-cookie";
+import { USER_COOKIE_NAME } from "../constants";
 
 /**
  * * Function responsible for creating a new user

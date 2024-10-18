@@ -1,5 +1,5 @@
 "use client";
-import { TabContentClass, TabMenuClass } from "@/utils/account/classes";
+import { TabContentClass, TabMenuClass } from "@/utils/account/classes.utils";
 import { TAB_PAGE_NAMES } from "@/utils/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { FC, ReactNode, useEffect, useState } from "react";

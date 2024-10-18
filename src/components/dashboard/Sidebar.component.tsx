@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import LogoText from "../Logo.component";
-import { MenuClass } from "@/utils/dashboard/classes";
+import { MenuClass } from "@/utils/dashboard/classes.utils";
 import Menu from "./Menu.component";
 import { logout } from "@/utils/appwrite/auth.utils";
 import { TAB_PAGE_NAMES } from "@/utils/types";

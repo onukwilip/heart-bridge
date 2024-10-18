@@ -15,7 +15,7 @@ import TextField from "../atoms/TextField.component";
 import { FormControl } from "../atoms/FormControl.component";
 import Link from "next/link";
 import GoogleButton from "../atoms/GoogleSSO.component";
-import { handle_input_change } from "@/utils/auth.utils";
+import { handle_input_change } from "@/utils/input.utils";
 import { SIGNUP_FORMSTATE, TUser } from "@/utils/types";
 import { useRouter } from "next/navigation";
 import { create_account } from "@/utils/appwrite/auth.utils";
