@@ -1,4 +1,5 @@
 "use server";
+import { PaystackAccountDetailsClass } from "@/utils/account/classes.utils";
 import account from "@/utils/appwrite/appwrite_account.utils";
 import database from "@/utils/appwrite/appwrite_database.utils";
 import { paystack_interceptor } from "@/utils/interceptors/interceptors.utils";
@@ -42,6 +43,7 @@ export const get_bank_details = async (
       account_number: bank_details.account_number,
       bank_name: bank_details.bank_name,
       bank_code: bank_details.bank_code,
+      paystack_details: bank_details.paystack_details,
     };
   } catch (error) {
     console.log(error);
@@ -97,7 +99,20 @@ const add_bank_details = async (config: TBankDetailsParams) => {
         APPWRITE_DATABASE.DB_ID,
         APPWRITE_DATABASE.PAYSTACK_DETAILS_COLLECTION_ID,
         paystack_details_id,
-        { ...paystack_subaccount_res.data, user_id: config.user_id }
+        {
+          ...new PaystackAccountDetailsClass(
+            paystack_subaccount_res.data.business_name,
+            paystack_subaccount_res.data.account_number,
+            paystack_subaccount_res.data.percentage_charge,
+            paystack_subaccount_res.data.settlement_bank,
+            paystack_subaccount_res.data.currency,
+            paystack_subaccount_res.data.bank,
+            paystack_subaccount_res.data.account_name,
+            paystack_subaccount_res.data.subaccount_code,
+            paystack_subaccount_res.data.id
+          ),
+          user_id: config.user_id,
+        }
       )
       .catch((e) =>
         console.error("Error adding the paystack details to the collection", e)
@@ -194,7 +209,20 @@ const update_bank_details = async (config: TBankDetailsParams) => {
             APPWRITE_DATABASE.DB_ID,
             APPWRITE_DATABASE.PAYSTACK_DETAILS_COLLECTION_ID,
             config.paystack_details_id,
-            { ...paystack_subaccount_res.data, user_id: config.user_id }
+            {
+              ...new PaystackAccountDetailsClass(
+                paystack_subaccount_res.data.business_name,
+                paystack_subaccount_res.data.account_number,
+                paystack_subaccount_res.data.percentage_charge,
+                paystack_subaccount_res.data.settlement_bank,
+                paystack_subaccount_res.data.currency,
+                paystack_subaccount_res.data.bank,
+                paystack_subaccount_res.data.account_name,
+                paystack_subaccount_res.data.subaccount_code,
+                paystack_subaccount_res.data.id
+              ),
+              user_id: config.user_id,
+            }
           )
           .catch((e) =>
             console.error(
@@ -228,6 +256,7 @@ export const modify_bank_details = async (config: TBankDetailsParams) => {
     // * If it does, update the existing bank information instead of creating a new one
     if (existing_account_details) {
       await update_bank_details(config);
+      return;
     }
 
     // * if it doesn't exist, upload a new bank info. for the user

@@ -151,13 +151,6 @@ const EditBankAccount: FC<{
           existing_information?.paystack_details?.subaccount_code,
       });
 
-      //   const existing_account_details = await database.listDocuments(
-      //     APPWRITE_DATABASE.DB_ID,
-      //     APPWRITE_DATABASE.PAYSTACK_DETAILS_COLLECTION_ID,
-      //     [Query.equal("user_id", user_id)]
-      //   );
-      //   console.log("DETAILS", existing_account_details);
-
       // * Display the success state for the form submission
       validate_form_state.display_success("Success");
 
@@ -221,6 +214,7 @@ const EditBankAccount: FC<{
             label="Account number"
             className="w-full"
             name={BANK_INFORMATION_FORM.ACCOUNT_NUMBER}
+            value={form_state.account_number}
             onChange={async (e) => {
               await bank_information_change_handler(
                 e.target.name,
