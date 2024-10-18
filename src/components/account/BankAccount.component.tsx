@@ -16,7 +16,7 @@ const BankAccount = () => {
     useState<TBankAccount>();
   const { user } = useUserContext();
   const fetch_state = useFetch();
-  const { open_modal } = useModalContext();
+  const { open_modal, modal } = useModalContext();
 
   /**
    * * Function responsible for retieving the user bank information
@@ -29,6 +29,7 @@ const BankAccount = () => {
 
       if (bank_details) {
         setBankAccountDetails(bank_details);
+        console.log("BANK", bank_details);
       }
       fetch_state.display_success("Success");
     } catch (error) {
@@ -53,8 +54,8 @@ const BankAccount = () => {
   };
 
   useEffect(() => {
-    get_user_bank_details();
-  }, []);
+    if (!modal.open) get_user_bank_details();
+  }, [modal.open]);
 
   return (
     <>
