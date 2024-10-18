@@ -205,7 +205,7 @@ const EditBankAccount: FC<{
 
   return (
     <>
-      <div className="w-[300px] xs:w-[400px] sm:w-[600px] min-h-[300px] flex flex-col gap-5">
+      <div className="w-full flex flex-col gap-5">
         {/* Title + cancel btn */}
         <div className="w-full flex gap-4 justify-between items-center text-white text-lg">
           <span>Edit Bank Information</span>
