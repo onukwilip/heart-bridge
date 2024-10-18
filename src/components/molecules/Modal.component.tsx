@@ -4,19 +4,6 @@ import MUIModal from "@mui/material/Modal";
 import { Box, Drawer } from "@mui/material";
 import { useModalContext } from "@/contexts/Modal.context";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "100%",
-  bgcolor: "#121212",
-  border: "2px solid #000",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 2,
-};
-
 /**
  * * Modal component to display content in a modal or drawer
  * @returns - React component
