@@ -263,12 +263,12 @@ const EditBankAccount: FC<{
             </Select>
           </FormControl>
           {/* Account name */}
-          <div className="w-full text-lg">
+          <div className="w-full text-lg !text-white">
             {fetch_account_name_state.loading && (
               <Skeleton
                 animation="pulse"
                 width={"80%"}
-                className="bg-weak-grey/10"
+                className="!bg-weak-grey/10"
               />
             )}
             {form_state.account_name}

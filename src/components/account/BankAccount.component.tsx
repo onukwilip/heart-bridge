@@ -73,7 +73,7 @@ const BankAccount = () => {
                 <Skeleton
                   animation="pulse"
                   width={"150%"}
-                  className="bg-weak-grey/10"
+                  className="!bg-weak-grey/10"
                 />
               ) : (
                 bank_account_details?.account_number || "-"
@@ -88,7 +88,7 @@ const BankAccount = () => {
                 <Skeleton
                   animation="pulse"
                   width={"150%"}
-                  className="bg-weak-grey/10"
+                  className="!bg-weak-grey/10"
                 />
               ) : (
                 bank_account_details?.account_name || "-"
@@ -103,7 +103,7 @@ const BankAccount = () => {
                   <Skeleton
                     animation="pulse"
                     width={"150%"}
-                    className="bg-weak-grey/10"
+                    className="!bg-weak-grey/10"
                   />
                 </div>
               ) : (
