@@ -1,31 +1,55 @@
 "use client";
-import React, { FC, ReactNode } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import MUIModal from "@mui/material/Modal";
-import { Box } from "@mui/material";
+import { Box, Drawer } from "@mui/material";
 import { useModalContext } from "@/contexts/Modal.context";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "100%",
-  bgcolor: "#121212",
-  border: "2px solid #000",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 2,
-};
-
+/**
+ * * Modal component to display content in a modal or drawer
+ * @returns - React component
+ */
 const Modal: FC = () => {
   const { modal, close_modal } = useModalContext();
+  const [screen_size, setScreenSize] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  /**
+   * * Updates the current window/screen size
+   */
+  const update_screen_size = () => {
+    setScreenSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  };
+
+  useEffect(() => {
+    // * Update screen size on initial load
+    update_screen_size();
+    // * Add event listener to handle window resize
+    window.addEventListener("resize", update_screen_size);
+    // * Clean up event listener on component unmount
+    return () => window.removeEventListener("resize", update_screen_size);
+  }, []);
+
   return (
-    <MUIModal open={modal.open} onClose={close_modal}>
-      {/* <Box sx={style}>{modal.children}</Box> */}
-      <div className="w-fit absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-xl shadow-lg p-4">
-        {modal.children}
-      </div>
-    </MUIModal>
+    <>
+      {screen_size.width >= 480 ? (
+        <MUIModal open={modal.open} onClose={close_modal}>
+          <div className="w-[95%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-xl shadow-lg p-4 xs:w-[400px] sm:w-[600px] min-h-[300px]">
+            {modal.children}
+          </div>
+        </MUIModal>
+      ) : (
+        <Drawer anchor={"bottom"} open={modal.open} onClose={close_modal}>
+          <div className="w-full bg-[#121212] p-4 min-h-[300px]">
+            {modal.children}
+          </div>
+        </Drawer>
+      )}
+    </>
   );
 };
 
