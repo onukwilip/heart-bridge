@@ -5,9 +5,9 @@ import React from "react";
  * @param name The nme of the input field. It should correspond with the name of the state object to be updated
  * @param value The value entered in the input/select field
  */
-export const handle_input_change: (
+export const handle_input_change: <T = string>(
   name: string,
-  value: string,
+  value: T,
   setFormState: React.Dispatch<React.SetStateAction<any>>
 ) => void = (name, value, setFormState) => {
   setFormState((prev: any) => ({
