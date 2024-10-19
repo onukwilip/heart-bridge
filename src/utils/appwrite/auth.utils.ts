@@ -114,3 +114,22 @@ export const get_current_user = async () => {
     return undefined;
   }
 };
+
+/**
+ * * Refreshes the user details of the signed in user, e.g. when the user edits it's details
+ */
+export const refresh_current_user = async () => {
+  try {
+    // * Deletes the signed in user from the cookies
+    cookies.remove(USER_COOKIE_NAME);
+
+    // * Returns the details of the signed in user from appwrite if the user doesn't exist in the cookies and adds the user to the cookies
+    const user = await account.get<TUser>();
+
+    cookies.set(USER_COOKIE_NAME, JSON.stringify(user));
+
+    return user;
+  } catch (error) {
+    return undefined;
+  }
+};

@@ -1,18 +1,41 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useUserContext } from "@/contexts/User.context";
 import Image from "next/image";
 import dummy_image from "@/images/dummy-profile-pic.png";
 import TabSection from "@/components/molecules/TabSection.component";
-import EditButton from "../atoms/EditButton.component";
 import SectionHeader from "./SectionHeader.component";
+import { useModalContext } from "@/contexts/Modal.context";
+import EditUserProfile from "./EditUserProfile.component";
+import { TUser } from "@/utils/types";
+import { refresh_current_user } from "@/utils/appwrite/auth.utils";
+import { refresh_user_details } from "@/utils/account/account";
 
 const UserProfileSection: FC = () => {
-  const { user } = useUserContext();
+  const { user, populate_user } = useUserContext();
+  const { open_modal, modal } = useModalContext();
+
+  /**
+   * * Function responsible for displaying the modal to edit user bank information
+   */
+  const handle_edit_click = () => {
+    open_modal({
+      children: (
+        <EditUserProfile
+          existing_information={{ ...user?.prefs, email: user?.email } as TUser}
+          user_id={user?.$id || ""}
+        />
+      ),
+    });
+  };
+
+  useEffect(() => {
+    if (!modal.open) refresh_user_details(populate_user);
+  }, [modal.open]);
 
   return (
     <TabSection>
-      <SectionHeader onEditClick={() => {}}>
+      <SectionHeader onEditClick={handle_edit_click}>
         {/* Image + name */}
         <div className="flex gap-4 items-center">
           {/* Image container */}

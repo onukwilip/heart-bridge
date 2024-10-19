@@ -8,12 +8,17 @@ export type TUser = {
   account_type: "orphanage" | "donor";
   orphanage_name?: string;
   image?: string;
+  bio?: string;
 };
 
 export enum APPWRITE_DATABASE {
   DB_ID = "heart_bridge",
   BANK_ACCOUNTS_COLLECTION_ID = "bank_accounts",
   PAYSTACK_DETAILS_COLLECTION_ID = "paystack_details",
+}
+
+export enum APPWRITE_BUCKET {
+  PROFILE_IMAGES = "profile-images",
 }
 
 export enum BANK_INFORMATION_FORM {
@@ -30,6 +35,7 @@ export enum SIGNUP_FORMSTATE {
   ACCOUNT_TYPE = "account_type",
   PASSWORD = "password",
   ORPHANAGE_NAME = "orphanage_name",
+  BIO = "bio",
 }
 
 export enum TAB_PAGE_NAMES {

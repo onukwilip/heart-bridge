@@ -16,10 +16,10 @@ import {
 // * The sidebar context
 const UserContext = createContext<{
   user: Models.User<TUser> | undefined;
-  populate_user: () => void;
+  populate_user: () => Promise<void>;
 }>({
   user: undefined,
-  populate_user: () => {},
+  populate_user: async () => {},
 });
 
 /**
