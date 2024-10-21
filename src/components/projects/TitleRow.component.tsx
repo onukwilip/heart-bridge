@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { FaPlus } from "react-icons/fa";
 import Button from "../atoms/Button.component";

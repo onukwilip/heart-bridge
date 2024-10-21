@@ -15,7 +15,7 @@ import CreateOrEditProject from "@/components/projects/CreateOrEditProject.compo
 import { useUserContext } from "@/contexts/User.context";
 
 const ProjectDetail = () => {
-  const { project_id } = useParams();
+  const { projectID: project_id } = useParams();
   const router = useRouter();
   const [project, setProject] = useState<TProject>();
   const { open_modal, modal } = useModalContext();
