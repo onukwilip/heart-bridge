@@ -1,3 +1,4 @@
+"use client";
 import { useModalContext } from "@/contexts/Modal.context";
 import React, { FC, FormEvent, useEffect, useState } from "react";
 import TextField from "../atoms/TextField.component";
@@ -7,9 +8,7 @@ import {
   APPWRITE_BUCKET,
   APPWRITE_DATABASE,
   PROJECT_FORM,
-  SIGNUP_FORMSTATE,
   TProject,
-  TUser,
 } from "@/utils/types";
 import { handle_input_change } from "@/utils/input.utils";
 import Button from "../atoms/Button.component";

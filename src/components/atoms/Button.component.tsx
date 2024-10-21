@@ -1,3 +1,4 @@
+"use client";
 import styled from "@emotion/styled";
 import React, { FC } from "react";
 import MUIButton, { ButtonProps } from "@mui/material/Button";

@@ -1,6 +1,13 @@
-import AllProjects from "@/components/projects/AllProjects.component";
-import TitleRow from "@/components/projects/TitleRow.component";
 import React from "react";
+import dynamic from "next/dynamic";
+import AllProjects from "@/components/projects/AllProjects.component";
+
+const TitleRow = dynamic(
+  () => import("@/components/projects/TitleRow.component"),
+  {
+    ssr: false,
+  }
+);
 
 const Projects = () => {
   return (
