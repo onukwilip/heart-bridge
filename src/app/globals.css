@@ -29,6 +29,16 @@ td {
   padding: 0.5rem;
 }
 
+.list ul,
+ul.list {
+  padding-left: 1rem !important;
+}
+
+.list ul li,
+ul.list li {
+  list-style-type: disc !important;
+}
+
 /*  */
 
 @layer utilities {

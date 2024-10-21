@@ -45,6 +45,7 @@ const BioSection = () => {
           value={
             <span
               dangerouslySetInnerHTML={{ __html: user?.prefs?.bio || "-" }}
+              className="list"
             ></span>
           }
           no_capitalize
