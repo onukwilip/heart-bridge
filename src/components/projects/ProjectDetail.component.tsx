@@ -248,7 +248,7 @@ const ProjectDetail = () => {
         </>
       ) : (
         <div
-          className="w-full"
+          className="w-full list"
           dangerouslySetInnerHTML={{ __html: project?.description || "" }}
         ></div>
       )}
