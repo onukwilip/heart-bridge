@@ -11,7 +11,7 @@ import Error404 from "../atoms/Error404.component";
 import { useModalContext } from "@/contexts/Modal.context";
 
 const AllProjects = () => {
-  const { user } = useUserContext();
+  const { user, fetch_user_state } = useUserContext();
   const { modal } = useModalContext();
   const [projects, setProjects] = useState<TProject[]>([]);
   const fetch_projects_state = useFetch({ loading: true });
@@ -56,12 +56,15 @@ const AllProjects = () => {
   };
 
   useEffect(() => {
+    // * If the user object hasn't been populated, return
+    if (!user) return;
+
     if (!modal.open) get_projects();
-  }, [modal.open]);
+  }, [modal.open, user]);
 
   return (
     <>
-      {fetch_projects_state.loading ? (
+      {fetch_projects_state.loading || fetch_user_state.loading ? (
         <div className="grid md:grid-cols-3 lg:grid-cols-4 w-full gap-10 place-items-center ">
           {Array.from(
             [1, 2, 3, 4, 5, 6, 7, 8].map(() => (
