@@ -1,5 +1,4 @@
 "use client";
-
 import Error404 from "@/components/atoms/Error404.component";
 import useFetch from "@/hooks/useFetch.hook";
 import database from "@/utils/appwrite/appwrite_database.utils";
