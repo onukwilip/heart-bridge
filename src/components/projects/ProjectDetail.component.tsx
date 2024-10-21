@@ -191,7 +191,8 @@ const ProjectDetail = () => {
           <Skeleton
             variant="rectangular"
             animation="pulse"
-            className="!bg-primary-grey rounded-lg w-full h-[200px] sm:[600px] md:w-[700px] lg:w-[1000px] md:h-[400px]"
+            className="!bg-primary-grey rounded-lg w-full !h-[200px] sm:[600px] md:w-[700px] lg:w-[1000px] md:!h-[400px]"
+            height={200}
           />
         ) : (
           <>
