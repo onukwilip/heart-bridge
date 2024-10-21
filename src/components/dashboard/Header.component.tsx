@@ -10,9 +10,19 @@ import { useSideBarContext } from "@/contexts/SideBar.context";
 import { useUserContext } from "@/contexts/User.context";
 
 const Header = () => {
-  const current_page_name = usePageName();
+  const { current_page_name, segments } = usePageName();
   const { user } = useUserContext();
   const { expand, setExpand } = useSideBarContext();
+  const current_page_exists = [
+    TAB_PAGE_NAMES.DASHBOARD,
+    TAB_PAGE_NAMES.PROJECTS,
+    TAB_PAGE_NAMES.VISITATIONS,
+    TAB_PAGE_NAMES.CALLS,
+    TAB_PAGE_NAMES.DONATIONS,
+    TAB_PAGE_NAMES.ACCOUNT,
+  ].includes(current_page_name as TAB_PAGE_NAMES)
+    ? current_page_name
+    : false;
 
   return (
     <>
@@ -29,19 +39,29 @@ const Header = () => {
           <div className="flex flex-col">
             {/* Page name */}
             <span className="capitalize text-primary font-bold text-md">
-              {current_page_name}
+              {current_page_exists
+                ? current_page_name
+                : segments[segments.length - 2]}
             </span>
             {/* Description */}
             <span className="text-xs">
-              {current_page_name === TAB_PAGE_NAMES.DASHBOARD
+              {(current_page_exists || segments[segments.length - 2]) ===
+              TAB_PAGE_NAMES.DASHBOARD
                 ? "Overview of Orphanage stats"
-                : current_page_name === TAB_PAGE_NAMES.PROJECTS
+                : (current_page_exists || segments[segments.length - 2]) ===
+                  TAB_PAGE_NAMES.PROJECTS
                 ? "Keep track of all active and past projects here."
-                : TAB_PAGE_NAMES.VISITATIONS
+                : (current_page_exists || segments[segments.length - 2]) ===
+                  TAB_PAGE_NAMES.VISITATIONS
                 ? "Manage visitations"
-                : TAB_PAGE_NAMES.DONATIONS
+                : (current_page_exists || segments[segments.length - 2]) ===
+                  TAB_PAGE_NAMES.CALLS
+                ? "Manage calls"
+                : (current_page_exists || segments[segments.length - 2]) ===
+                  TAB_PAGE_NAMES.DONATIONS
                 ? "Here are your most recent donations across all projects."
-                : TAB_PAGE_NAMES.ACCOUNT
+                : (current_page_exists || segments[segments.length - 2]) ===
+                  TAB_PAGE_NAMES.ACCOUNT
                 ? "Manage your account information here."
                 : "Overview of Orphanage stats"}
             </span>

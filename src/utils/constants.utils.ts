@@ -1,4 +1,4 @@
-import { Donation, Project, Summary, Visitation } from "./types";
+import { Donation, TProject, Summary, Visitation } from "./types";
 import project from "@/images/projects.png";
 import call from "@/images/calls.png";
 import visitation from "@/images/visitations.png";
@@ -52,18 +52,18 @@ export const fakeVisitation: Visitation[] = [
   },
 ];
 
-export const fakeProjects: Project[] = [
+export const fakeProjects: TProject[] = [
   {
-    id: "1",
+    $id: "1",
+    $createdAt: new Date("11/10/2024"),
     title: "Back to school",
-    calls: 10,
-    targetAmount: 10000000,
-    currentAmount: 250000,
+    goal: 10000000,
+    current_amount: 250000,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tellus lacus, dignissim commodo dictum aliquam, maximus nec mauris. Phasellus sed nisl dignissim erat eleifend congue. Nullam ultricies est a tempus varius. Phasellus vitae massa rutrum, elementum urna sed, volutpat urna. Nam at nulla dui. Suspendisse aliquet metus purus, eget ultrices tellus pharetra eget. Proin dictum urna non aliquet pellentesque. Nunc dapibus gravida justo eu finibus.",
-    image: projectImg1,
-    visitations: 10,
     donations: 5,
     status: "active",
+    images: [],
+    user_id: "",
   },
 ];

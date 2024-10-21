@@ -15,10 +15,12 @@ export enum APPWRITE_DATABASE {
   DB_ID = "heart_bridge",
   BANK_ACCOUNTS_COLLECTION_ID = "bank_accounts",
   PAYSTACK_DETAILS_COLLECTION_ID = "paystack_details",
+  PROJECTS_COLLECTION_ID = "projects",
 }
 
 export enum APPWRITE_BUCKET {
   PROFILE_IMAGES = "profile-images",
+  PROJECT_IMAGES = "project-images",
 }
 
 export enum BANK_INFORMATION_FORM {
@@ -26,6 +28,14 @@ export enum BANK_INFORMATION_FORM {
   BANK_NAME = "bank_name",
   ACCOUNT_NAME = "account_name",
   BANK_CODE = "bank_code",
+}
+
+export enum PROJECT_FORM {
+  TITLE = "title",
+  DESCRIPTION = "description",
+  GOAL = "goal",
+  IMAGES = "images",
+  USER_ID = "user_id",
 }
 
 export enum SIGNUP_FORMSTATE {
@@ -73,21 +83,18 @@ export interface Visitation {
   time: string;
 }
 
-export interface Project {
-  id: string;
+export type TProject = {
+  $id: string;
+  $createdAt: string | Date;
   title: string;
   description: string;
-  image: string | StaticImageData;
-  // location: string;
-  // date: string;
-  // time: string;
+  images: (string | File)[];
   donations: number;
-  visitations: number;
-  calls: number;
-  targetAmount: number;
-  currentAmount: number;
+  goal: number;
+  current_amount: number;
   status: "active" | "completed" | "draft";
-}
+  user_id: string;
+};
 
 export type TBankAccount = {
   $id: string;
