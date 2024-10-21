@@ -1,4 +1,4 @@
-import { summaries } from "@/utils/constants";
+import { summaries } from "@/utils/constants.utils";
 import React from "react";
 import SummaryCard from "./SummaryCard.component";
 

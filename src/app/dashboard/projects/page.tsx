@@ -1,14 +1,20 @@
-import AllProjects from "@/components/projects/AllProjects.component";
-import TitleRow from "@/components/projects/TitleRow.component";
 import React from "react";
+import dynamic from "next/dynamic";
+import AllProjects from "@/components/projects/AllProjects.component";
+
+const TitleRow = dynamic(
+  () => import("@/components/projects/TitleRow.component"),
+  {
+    ssr: false,
+  }
+);
 
 const Projects = () => {
   return (
-    <div className="flex flex-col space-y-14 w-full">
+    <div className="flex flex-col gap-8 w-full">
       {/* Title + New project */}
       <TitleRow />
-
-      {/* PRojects Grid */}
+      {/* Projects Grid */}
       <AllProjects />
     </div>
   );

@@ -1,11 +1,8 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import React from "react";
+import ProjectDetail from "@/components/projects/ProjectDetail.component";
 
-const ProjectDetail = () => {
-  const { projectID } = useParams();
-  return <div>ProjectDetail</div>;
+const ProjectDetailPage = () => {
+  return <ProjectDetail />;
 };
 
-export default ProjectDetail;
+export default ProjectDetailPage;

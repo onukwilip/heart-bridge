@@ -1,4 +1,4 @@
-import { fakeDonations } from "@/utils/constants";
+import { fakeDonations } from "@/utils/constants.utils";
 import { formatAmount } from "@/utils/helpers/formatAmount";
 import Link from "next/link";
 import React from "react";

@@ -16,7 +16,7 @@ const usePageName = () => {
       ? segments[segments.length - 2]
       : segments[segments.length - 1];
 
-  return current_page_name;
+  return { current_page_name, segments };
 };
 
 export default usePageName;

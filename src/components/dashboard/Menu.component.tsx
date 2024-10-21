@@ -12,7 +12,7 @@ const Menu: FC<{
   linkClassName?: string;
   onClick?: Function;
 }> = ({ menu, expand, linkClassName, iconClassName, onClick }) => {
-  const current_page_name = usePageName();
+  const { current_page_name } = usePageName();
   const active = current_page_name === menu.name;
   const router = useRouter();
 

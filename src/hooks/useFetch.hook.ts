@@ -6,14 +6,16 @@ import { useState } from "react";
  * @returns the error, loading, and success states, alongside functions to display them
  */
 const useFetch = <T>(config?: {
-  data: T;
-  loading: boolean;
-  error: boolean;
+  data?: T;
+  loading?: boolean;
+  error?: string;
 }) => {
   const [data, setData] = useState<T>();
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<string | undefined>(
+    config?.error || undefined
+  );
   const [success, setSuccess] = useState<string>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(config?.loading || false);
 
   /**
    * * Function to display the loading state, e.g. during the commencement of the fetch
