@@ -10,11 +10,12 @@ import useFetch from "@/hooks/useFetch.hook";
 import { Alert, Skeleton, Snackbar } from "@mui/material";
 import { useModalContext } from "@/contexts/Modal.context";
 import EditBankAccount from "./EditBankAccount.component";
+import RouteProtector from "../RouteProtector.component";
 
 const BankAccount = () => {
   const [bank_account_details, setBankAccountDetails] =
     useState<TBankAccount>();
-  const { user } = useUserContext();
+  const { user, fetch_user_state } = useUserContext();
   const fetch_state = useFetch();
   const { open_modal, modal } = useModalContext();
 
@@ -54,11 +55,14 @@ const BankAccount = () => {
   };
 
   useEffect(() => {
+    // * If the user object hasn't been populated, return
+    if (!user) return;
+
     if (!modal.open) get_user_bank_details();
-  }, [modal.open]);
+  }, [modal.open, user]);
 
   return (
-    <>
+    <RouteProtector role="orphanage">
       <TabSection className="flex flex-col w-full gap-4">
         {/* Heading + Edit btn */}
         <SectionHeader onEditClick={handle_edit_click}>
@@ -69,7 +73,7 @@ const BankAccount = () => {
           <PersonalInformationDetail
             title={"Account number"}
             value={
-              fetch_state.loading ? (
+              fetch_state.loading || fetch_user_state.loading ? (
                 <Skeleton
                   animation="pulse"
                   width={"150%"}
@@ -84,7 +88,7 @@ const BankAccount = () => {
           <PersonalInformationDetail
             title={"Account name"}
             value={
-              fetch_state.loading ? (
+              fetch_state.loading || fetch_user_state.loading ? (
                 <Skeleton
                   animation="pulse"
                   width={"150%"}
@@ -98,7 +102,7 @@ const BankAccount = () => {
           <PersonalInformationDetail
             title={"Bank name"}
             value={
-              fetch_state.loading ? (
+              fetch_state.loading || fetch_user_state.loading ? (
                 <div>
                   <Skeleton
                     animation="pulse"
@@ -124,7 +128,7 @@ const BankAccount = () => {
           </Alert>
         </Snackbar>
       )}
-    </>
+    </RouteProtector>
   );
 };
 

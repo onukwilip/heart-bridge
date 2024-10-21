@@ -24,6 +24,7 @@ export const update_user_profile = async (
       lastname: user.lastname,
       orphanage_name: user.orphanage_name,
       account_type: current_user.prefs.account_type,
+      bio: user.bio || current_user.prefs.bio,
       image: user.image || current_user.prefs.image,
     });
   } catch (error) {

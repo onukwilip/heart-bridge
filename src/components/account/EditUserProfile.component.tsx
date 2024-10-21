@@ -27,8 +27,10 @@ const EditUserProfile: FC<{ existing_information: TUser; user_id: string }> = ({
     firstname: "",
     lastname: "",
     password: "",
-    orphanage_name: "",
     image: undefined,
+    ...(existing_information.account_type === "orphanage"
+      ? { orphanage_name: "" }
+      : {}),
   });
 
   /**
@@ -67,6 +69,7 @@ const EditUserProfile: FC<{ existing_information: TUser; user_id: string }> = ({
       // * Update the user details
       await update_user_profile({
         $id: user_id,
+        bio: existing_information.bio,
         ...form_state,
         image: uploaded_image_url || existing_information.image,
       });
@@ -226,18 +229,20 @@ const EditUserProfile: FC<{ existing_information: TUser; user_id: string }> = ({
             />
           </div>
           {/* Orphanage name field */}
-          <TextField
-            name={SIGNUP_FORMSTATE.ORPHANAGE_NAME}
-            label="Orphanage name"
-            placeholder="Enter the orphanage name"
-            onChange={(e) =>
-              handle_input_change(e.target.name, e.target.value, setFormState)
-            }
-            value={form_state.orphanage_name}
-            variant="outlined"
-            className="w-full"
-            required
-          />
+          {existing_information.account_type === "orphanage" && (
+            <TextField
+              name={SIGNUP_FORMSTATE.ORPHANAGE_NAME}
+              label="Orphanage name"
+              placeholder="Enter the orphanage name"
+              onChange={(e) =>
+                handle_input_change(e.target.name, e.target.value, setFormState)
+              }
+              value={form_state.orphanage_name}
+              variant="outlined"
+              className="w-full"
+              required
+            />
+          )}
 
           {/* Email field */}
           <TextField

@@ -1,11 +1,13 @@
 import { StaticImageData } from "next/image";
 
+export type TUserRoles = "orphanage" | "donor";
+
 export type TUser = {
   email: string;
   password: string;
   firstname: string;
   lastname: string;
-  account_type: "orphanage" | "donor";
+  account_type: TUserRoles;
   orphanage_name?: string;
   image?: string;
   bio?: string;
