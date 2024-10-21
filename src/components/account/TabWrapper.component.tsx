@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, ReactNode } from "react";
+import React, { FC } from "react";
 import Tab from "../molecules/Tab.component";
 import { ORPHANAGE_USER_TAB_SLUGS, TUser } from "@/utils/types";
 import { TabContentClass, TabMenuClass } from "@/utils/account/classes.utils";

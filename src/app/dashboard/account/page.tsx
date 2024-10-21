@@ -1,5 +1,12 @@
 import React from "react";
-import TabWrapper from "@/components/account/TabWrapper.component";
+import dynamic from "next/dynamic";
+
+const TabWrapper = dynamic(
+  () => import("@/components/account/TabWrapper.component"),
+  {
+    ssr: false,
+  }
+);
 
 const Account = () => {
   return (
