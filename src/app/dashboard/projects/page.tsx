@@ -1,4 +1,3 @@
-"use client";
 import AllProjects from "@/components/projects/AllProjects.component";
 import TitleRow from "@/components/projects/TitleRow.component";
 import React from "react";
