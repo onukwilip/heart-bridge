@@ -11,10 +11,11 @@ import { useUserContext } from "@/contexts/User.context";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const EditBio: FC<{ existing_bio: string; existing_details: TUser }> = ({
-  existing_bio,
-  existing_details,
-}) => {
+const EditBio: FC<{
+  existing_bio: string;
+  existing_details: TUser;
+  post_submit_function?: Function;
+}> = ({ existing_bio, existing_details, post_submit_function }) => {
   const { close_modal } = useModalContext();
   const form_submit_state = useFetch();
 
@@ -38,6 +39,7 @@ const EditBio: FC<{ existing_bio: string; existing_details: TUser }> = ({
         bio: form_state.bio,
       });
 
+      post_submit_function && (await post_submit_function());
       // * Display success message
       form_submit_state.display_success("Successfully updated the user bio");
       // * Close the modal/drawer

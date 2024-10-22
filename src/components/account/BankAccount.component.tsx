@@ -55,11 +55,8 @@ const BankAccount = () => {
   };
 
   useEffect(() => {
-    // * If the user object hasn't been populated, return
-    if (!user) return;
-
-    if (!modal.open) get_user_bank_details();
-  }, [modal.open, user]);
+    get_user_bank_details();
+  }, []);
 
   return (
     <RouteProtector role="orphanage">

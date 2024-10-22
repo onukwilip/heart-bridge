@@ -12,8 +12,8 @@ import { refresh_current_user } from "@/utils/appwrite/auth.utils";
 import { refresh_user_details } from "@/utils/account/account";
 
 const UserProfileSection: FC = () => {
-  const { user, populate_user } = useUserContext();
-  const { open_modal, modal } = useModalContext();
+  const { user, refresh_user } = useUserContext();
+  const { open_modal } = useModalContext();
 
   /**
    * * Function responsible for displaying the modal to edit user bank information
@@ -24,14 +24,11 @@ const UserProfileSection: FC = () => {
         <EditUserProfile
           existing_information={{ ...user?.prefs, email: user?.email } as TUser}
           user_id={user?.$id || ""}
+          post_submit_function={refresh_user}
         />
       ),
     });
   };
-
-  useEffect(() => {
-    if (!modal.open) refresh_user_details(populate_user);
-  }, [modal.open]);
 
   return (
     <TabSection>

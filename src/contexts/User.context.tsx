@@ -1,6 +1,9 @@
 "use client";
 import useFetch from "@/hooks/useFetch.hook";
-import { get_current_user } from "@/utils/appwrite/auth.utils";
+import {
+  get_current_user,
+  refresh_current_user,
+} from "@/utils/appwrite/auth.utils";
 import { TUser } from "@/utils/types";
 import { Models } from "appwrite";
 import {
@@ -17,6 +20,7 @@ import { useRouter } from "next/navigation";
 const UserContext = createContext<{
   user: Models.User<TUser> | undefined;
   populate_user: () => Promise<void>;
+  refresh_user: () => Promise<void>;
   fetch_user_state: {
     error: string | undefined;
     loading: boolean;
@@ -25,6 +29,7 @@ const UserContext = createContext<{
 }>({
   user: undefined,
   populate_user: async () => {},
+  refresh_user: async () => {},
   fetch_user_state: {
     error: undefined,
     loading: false,
@@ -62,12 +67,23 @@ const UserContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     fetch_user_state.display_success("Success");
   };
 
+  /**
+   * * Retrieves the user details from the Appwrite API and updates the user state with it
+   */
+  const refresh_user = async () => {
+    const new_user_details = await refresh_current_user();
+    if (!new_user_details) return;
+    setUser(new_user_details);
+  };
+
   useEffect(() => {
     populate_user();
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, populate_user, fetch_user_state }}>
+    <UserContext.Provider
+      value={{ user, populate_user, fetch_user_state, refresh_user }}
+    >
       {children}
     </UserContext.Provider>
   );
