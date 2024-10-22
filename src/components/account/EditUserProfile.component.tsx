@@ -13,10 +13,11 @@ import storage from "@/utils/appwrite/appwrite_storage.utils";
 import { ID } from "appwrite";
 import { update_user_profile } from "@/actions/user_profile.actions";
 
-const EditUserProfile: FC<{ existing_information: TUser; user_id: string }> = ({
-  existing_information,
-  user_id,
-}) => {
+const EditUserProfile: FC<{
+  existing_information: TUser;
+  user_id: string;
+  post_submit_function?: Function;
+}> = ({ existing_information, user_id, post_submit_function }) => {
   const { close_modal } = useModalContext();
   const form_submit_state = useFetch();
 
@@ -78,6 +79,7 @@ const EditUserProfile: FC<{ existing_information: TUser; user_id: string }> = ({
       form_submit_state.display_success(
         "Successfully updated the user details"
       );
+      post_submit_function && (await post_submit_function());
       // * Close the modal/drawer
       close_modal();
     } catch (error) {

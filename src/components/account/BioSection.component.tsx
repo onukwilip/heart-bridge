@@ -28,10 +28,6 @@ const BioSection = () => {
     });
   };
 
-  useEffect(() => {
-    if (!modal.open) refresh_user_details(populate_user);
-  }, [modal.open]);
-
   return (
     <TabSection className="flex flex-col w-full gap-4">
       {/* Heading + Edit btn */}

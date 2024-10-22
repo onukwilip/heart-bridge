@@ -12,7 +12,7 @@ import EditUserProfile from "./EditUserProfile.component";
 import { refresh_user_details } from "@/utils/account/account";
 
 const PersonalInformationSection = () => {
-  const { user, populate_user } = useUserContext();
+  const { user, refresh_user } = useUserContext();
   const { open_modal, modal } = useModalContext();
 
   /**
@@ -24,14 +24,11 @@ const PersonalInformationSection = () => {
         <EditUserProfile
           existing_information={{ ...user?.prefs, email: user?.email } as TUser}
           user_id={user?.$id || ""}
+          post_submit_function={refresh_user}
         />
       ),
     });
   };
-
-  useEffect(() => {
-    if (!modal.open) refresh_user_details(populate_user);
-  }, [modal.open]);
 
   return (
     <TabSection className="flex flex-col w-full gap-4">
