@@ -49,12 +49,12 @@ const Notifications: FC<{ expand?: boolean }> = ({ expand }) => {
         {fetch_notifications_state.loading ? (
           <>
             {[1, 2, 3, 4, 5].map((_) => (
-              <div className="w-full flex gap-6 items-center" key={_}>
+              <div className="w-full flex gap-2 items-center" key={_}>
                 <Skeleton
                   variant="rounded"
                   animation="pulse"
-                  width={70}
-                  height={70}
+                  width={40}
+                  height={40}
                   className="!bg-primary-grey"
                 />
                 <div className="flex flex-col gap-0 flex-1">
