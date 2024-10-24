@@ -11,7 +11,7 @@ const dummy_notification: TNotification = {
   $id: "1",
   content: "Alex Emeto donated #150,000 to the Back to School project.",
   initiator_id: "kkmnn",
-  orphanage_id: "knnjm",
+  user_id: "knnjm",
   read: false,
   ref_ids: ["ldsd", "kkks"],
   type: "donation",

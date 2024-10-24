@@ -1,10 +1,6 @@
 "use client";
 import useFetch from "@/hooks/useFetch.hook";
 import {
-  get_current_user,
-  refresh_current_user,
-} from "@/utils/appwrite/auth.utils";
-import {
   APPWRITE_DATABASE,
   TNotification,
   TNotificationDoc,
@@ -18,7 +14,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useRouter } from "next/navigation";
 import database from "@/utils/appwrite/appwrite_database.utils";
 import { useUserContext } from "./User.context";
 import client from "@/utils/appwrite/appwrite_client.utils";
@@ -157,14 +152,7 @@ const NotificationsContextProvider: FC<{ children: ReactNode }> = ({
       .listDocuments<Models.Document & TNotification>(
         APPWRITE_DATABASE.DB_ID,
         APPWRITE_DATABASE.NOTIFICATIONS_COLLECTION_ID,
-        [
-          Query.equal(
-            user?.prefs?.account_type === "orphanage"
-              ? "orphanage_id"
-              : "initiator_id",
-            user?.$id || ""
-          ),
-        ]
+        [Query.equal("user_id", user?.$id || "")]
       )
       .catch((e) => fetch_notifications_state.display_error(e.message));
 
@@ -208,7 +196,7 @@ const NotificationsContextProvider: FC<{ children: ReactNode }> = ({
         try {
           const is_create = events[0].includes("create");
 
-          if (is_create && payload.orphanage_id === user?.$id) {
+          if (is_create && payload.user_id === user?.$id) {
             add_new_notification(payload);
           }
         } catch (error) {
