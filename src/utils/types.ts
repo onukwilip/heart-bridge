@@ -169,7 +169,7 @@ export type TNotification = {
   content: string;
   ref_ids: string[];
   type: "visitation" | "call" | "donation";
-  orphanage_id: string;
+  user_id: string;
   read: boolean;
 };
 
