@@ -1,13 +1,14 @@
 "use client";
 import usePageName from "@/hooks/usePageName.hook";
 import { TAB_PAGE_NAMES } from "@/utils/types";
-import React from "react";
+import React, { useState } from "react";
 import { InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
 import { RoundedFormControl } from "../atoms/RoundedFormControl.component";
 import Image from "next/image";
 import dummy_image from "@/images/dummy-profile-pic.png";
 import { useSideBarContext } from "@/contexts/SideBar.context";
 import { useUserContext } from "@/contexts/User.context";
+import HeaderNotification from "../notifications/HeaderNotification.component";
 
 const Header = () => {
   const { current_page_name, segments } = usePageName();
@@ -26,7 +27,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="w-full py-4 px-6 box-border sm:px-10 flex gap-4 items-center justify-between border-b border-weak-grey">
+      <div className="w-full py-4 px-6 box-border sm:px-10 flex gap-4 items-center justify-between border-b border-weak-grey relative">
         {/* Page name + description + menu icon */}
         <div className="flex gap-4 items-center">
           {/* Menu icon */}
@@ -91,9 +92,7 @@ const Header = () => {
           ></i>
 
           {/* Notification */}
-          <div>
-            <i className="fa-regular fa-bell transition duration-200 hover:text-primary-grey-dark cursor-pointer"></i>
-          </div>
+          <HeaderNotification />
           {/* Profile */}
           <div className="flex gap-3 items-center">
             {/* Image container */}

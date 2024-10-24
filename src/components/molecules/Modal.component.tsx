@@ -38,13 +38,13 @@ const Modal: FC = () => {
     <>
       {screen_size.width >= 480 ? (
         <MUIModal open={modal.open} onClose={close_modal}>
-          <div className="w-[95%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#121212] rounded-xl shadow-lg p-4 xs:w-[400px] sm:w-[600px] min-h-[300px] max-h-[80vh] overflow-y-auto">
+          <div className="w-[95%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary-dark rounded-xl shadow-lg p-4 xs:w-[400px] sm:w-[600px] min-h-[300px] max-h-[80vh] overflow-y-auto">
             {modal.children}
           </div>
         </MUIModal>
       ) : (
         <Drawer anchor={"bottom"} open={modal.open} onClose={close_modal}>
-          <div className="w-full bg-[#121212] p-4 min-h-[300px] max-h-[80vh] overflow-y-auto">
+          <div className="w-full bg-primary-dark p-4 min-h-[300px] max-h-[80vh] overflow-y-auto">
             {modal.children}
           </div>
         </Drawer>

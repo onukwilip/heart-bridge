@@ -1,3 +1,4 @@
+import { Models } from "appwrite";
 import { StaticImageData } from "next/image";
 
 export type TUserRoles = "orphanage" | "donor";
@@ -18,6 +19,7 @@ export enum APPWRITE_DATABASE {
   BANK_ACCOUNTS_COLLECTION_ID = "bank_accounts",
   PAYSTACK_DETAILS_COLLECTION_ID = "paystack_details",
   PROJECTS_COLLECTION_ID = "projects",
+  NOTIFICATIONS_COLLECTION_ID = "notfications",
 }
 
 export enum APPWRITE_BUCKET {
@@ -160,3 +162,15 @@ export type TPayStackBankAccountDetails = {
   account_number: string;
   account_name: string;
 };
+
+export type TNotification = {
+  $id: string;
+  initiator_id: string;
+  content: string;
+  ref_ids: string[];
+  type: "visitation" | "call" | "donation";
+  orphanage_id: string;
+  read: boolean;
+};
+
+export type TNotificationDoc = Models.Document & TNotification;
