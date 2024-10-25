@@ -40,3 +40,16 @@ export const get_timelapse = (creation_date: Date | number | string) => {
     return `${diff_days}d`; // More than 1 day
   }
 };
+
+/**
+ * * Function responsible for converting a string to JSON
+ * @param string The string value to be parsed to JSON format
+ * @returns The JSON representation of the string passed
+ */
+export const parse_json = <T>(string: string) => {
+  try {
+    return JSON.parse(string) as T;
+  } catch (error) {
+    return string;
+  }
+};

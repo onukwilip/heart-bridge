@@ -3,13 +3,28 @@ import { StaticImageData } from "next/image";
 
 export type TUserRoles = "orphanage" | "donor";
 
+export type TUserLocation = {
+  lat: number;
+  lng: number;
+  address: {
+    street: string;
+    city?: string;
+    state?: string;
+    country: string;
+    formatted_address: string;
+  };
+};
+
 export type TUser = {
+  $id?: string;
   email: string;
   password: string;
   firstname: string;
   lastname: string;
   account_type: TUserRoles;
   orphanage_name?: string;
+  location?: TUserLocation;
+  phone_number?: string;
   image?: string;
   bio?: string;
 };
