@@ -13,6 +13,7 @@ const config: Config = {
         foreground: "var(--foreground)",
         primary: "#007AFF",
         ["primary-dark"]: "#121212",
+        ["page-dark"]: "#0a0a0a",
         ["primary-grey"]: "rgba(255, 255, 255, 0.3)",
         ["primary-grey-dark"]: "rgba(255, 255, 255, 0.5)",
         ["weak-white"]: "#FFFFFF66",
