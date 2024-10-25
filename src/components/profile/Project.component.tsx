@@ -80,6 +80,7 @@ const Project: FC<{ project: TProject }> = ({ project }) => {
           anchor="right"
           open={show_sidedrawer}
           onClose={() => setShowSidedrawer(false)}
+          className="z-[35]"
         >
           <section className="p-2 bg-primary-dark max-w-[1000px] text-primary-grey">
             <ProjectDetail
