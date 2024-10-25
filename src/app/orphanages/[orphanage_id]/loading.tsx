@@ -15,8 +15,8 @@ const Loading = () => {
           <Skeleton
             animation="pulse"
             variant="rectangular"
-            className="rounded-md !bg-primary-grey"
-            height={250}
+            className="rounded-md !bg-primary-grey !h-[150px] sm:!h-[250px]"
+            height={150}
           />
           <Skeleton
             animation="pulse"
