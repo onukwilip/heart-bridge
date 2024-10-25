@@ -89,16 +89,7 @@ const ProjectDetail: FC<{
   /**
    * * Function responsible for displaying the modal to donate to project
    */
-  const handle_donate_click = () => {
-    open_modal({
-      children: (
-        <CreateOrEditProject
-          user_id={user?.$id || ""}
-          existing_details={project}
-        />
-      ),
-    });
-  };
+  const handle_donate_click = () => {};
 
   useEffect(() => {
     if (!modal.open && !project_from_parent) get_project_details();
