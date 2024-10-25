@@ -89,7 +89,11 @@ const ProjectDetail: FC<{
   /**
    * * Function responsible for displaying the modal to donate to project
    */
-  const handle_donate_click = () => {};
+  const handle_donate_click = () => {
+    router.push(
+      `/donate?orphanage=${project?.user_id}&project=${project?.$id}`
+    );
+  };
 
   useEffect(() => {
     if (!modal.open && !project_from_parent) get_project_details();

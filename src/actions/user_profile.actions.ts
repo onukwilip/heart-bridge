@@ -39,7 +39,7 @@ export const update_user_profile = async (
  * * Function responsible for retrieving the details, and projects of a user
  * @param orphanage_id The ID of the orphanage to return
  */
-export const get_user = async (
+export const get_user_profile = async (
   orphanage_id: string
 ): Promise<Models.User<TUser> & { projects: TProject[] }> => {
   try {

@@ -1,4 +1,4 @@
-import { get_user } from "@/actions/user_profile.actions";
+import { get_user_profile } from "@/actions/user_profile.actions";
 import Error403 from "@/components/atoms/Error403.component";
 import Error404 from "@/components/atoms/Error404.component";
 import Header from "@/components/profile/Header.component";
@@ -20,10 +20,13 @@ export const generateMetadata = async ({
   params: { orphanage_id },
 }: Props): Promise<Metadata> => {
   try {
-    const user = await get_user(orphanage_id);
+    const user = await get_user_profile(orphanage_id);
 
     return {
-      title: `${user.prefs.firstname} ${user.prefs.lastname} | Heart Bridge`,
+      title: `${
+        user.prefs.orphanage_name ||
+        `${user.prefs.firstname} ${user.prefs.lastname}`
+      } | Heart Bridge`,
       description: `${user.prefs.bio?.slice(0, 200)}...` || "Orphanage profile",
     };
   } catch (error) {
@@ -47,7 +50,7 @@ const OrphanageProfilePage: FC<Props> = async ({
   params: { orphanage_id },
 }) => {
   try {
-    const user = await get_user(orphanage_id);
+    const user = await get_user_profile(orphanage_id);
 
     return (
       <div>

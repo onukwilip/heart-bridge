@@ -13,6 +13,11 @@ const Button: FC<
     "&:hover": {
       backgroundColor: props.hoverBgColor || "rgba(0, 122, 255, 0.7)",
     },
+    "&:disabled": {
+      backgroundColor: props.bgColor || "rgba(0, 122, 255, 0.3)",
+      color: "rgba(255, 255, 255, 0.5)",
+      cursor: "no-drop",
+    },
   }));
 
   const OutlinedButton = styled(MUIButton)<ButtonProps>(() => ({
@@ -21,6 +26,11 @@ const Button: FC<
     height: "50px",
     "&:hover": {
       borderColor: props.hoverBgColor || "rgba(0, 122, 255, 0.7)",
+    },
+    "&:disabled": {
+      borderColor: props.bgColor || "rgba(0, 122, 255, 0.3)",
+      color: "rgba(255, 255, 255, 0.5)",
+      cursor: "no-drop",
     },
   }));
 
