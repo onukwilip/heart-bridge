@@ -21,7 +21,7 @@ const ProfileHeader: FC<{ user?: TUser; loading?: boolean }> = ({
               animation="pulse"
               className="!bg-primary-grey"
               width={"100%"}
-              height={150}
+              height={"100%"}
             />
           </>
         ) : (
