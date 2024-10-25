@@ -39,6 +39,9 @@ const config: Config = {
         "2xl": "1440px",
         "3xl": "1600px",
       },
+      fontSize: {
+        "2xs": "0.6rem",
+      },
     },
   },
   plugins: [],

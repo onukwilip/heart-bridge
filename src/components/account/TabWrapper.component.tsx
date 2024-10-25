@@ -1,7 +1,7 @@
 "use client";
 import React, { FC } from "react";
 import Tab from "../molecules/Tab.component";
-import { ORPHANAGE_USER_TAB_SLUGS, TUser } from "@/utils/types";
+import { ORPHANAGE_USER_TAB_SLUGS, TAB_PAGE_NAMES, TUser } from "@/utils/types";
 import { TabContentClass, TabMenuClass } from "@/utils/account/classes.utils";
 import UserProfle from "./UserProfle.component";
 import BankAccount from "./BankAccount.component";
@@ -103,7 +103,14 @@ const TabWrapper: FC = () => {
 
   return (
     <>
-      <Tab menus={tab_menus} type="vertical" tabs={tab_content} />
+      <Tab
+        menus={tab_menus}
+        type="vertical"
+        base_route={`/dashboard/${TAB_PAGE_NAMES.ACCOUNT}`}
+        tab_param="user_tab"
+        tabs={tab_content}
+        display_tab_name
+      />
     </>
   );
 };

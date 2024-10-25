@@ -7,26 +7,32 @@ import { format_currency } from "@/utils/utils";
 import { Skeleton } from "@mui/material";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import dummy_image from "@/images/dummy-image.jpg";
 import Button from "@/components/atoms/Button.component";
 import { useModalContext } from "@/contexts/Modal.context";
 import CreateOrEditProject from "@/components/projects/CreateOrEditProject.component";
 import { useUserContext } from "@/contexts/User.context";
+import FundingProgress from "./FundingProgress.component";
 
-const ProjectDetail = () => {
+const ProjectDetail: FC<{
+  mode: "public" | "private";
+  project?: TProject;
+  onClose?: Function;
+}> = ({ mode, project: project_from_parent, onClose }) => {
   const { projectID: project_id } = useParams();
   const router = useRouter();
-  const [project, setProject] = useState<TProject>();
+  const [project, setProject] = useState<TProject | undefined>(
+    project_from_parent
+  );
   const { open_modal, modal } = useModalContext();
   const { user } = useUserContext();
   const [selected_image, setSelectedImage] = useState(
     (project?.images?.[0] as string) || dummy_image.src
   );
-  const fetch_project_state = useFetch({ loading: true });
-  const progress_percentage =
-    ((Number(project?.current_amount) || 0) / (Number(project?.goal) || 0)) *
-    100;
+  const fetch_project_state = useFetch({
+    loading: project_from_parent ? false : true,
+  });
 
   /**
    * * Function responsible for retrieving project details
@@ -80,8 +86,22 @@ const ProjectDetail = () => {
     });
   };
 
+  /**
+   * * Function responsible for displaying the modal to donate to project
+   */
+  const handle_donate_click = () => {
+    open_modal({
+      children: (
+        <CreateOrEditProject
+          user_id={user?.$id || ""}
+          existing_details={project}
+        />
+      ),
+    });
+  };
+
   useEffect(() => {
-    if (!modal.open) get_project_details();
+    if (!modal.open && !project_from_parent) get_project_details();
   }, [modal.open]);
 
   if (!fetch_project_state.loading && !project)
@@ -98,7 +118,12 @@ const ProjectDetail = () => {
         {/* Breadcrumb */}
         <div className="flex gap-2 !text-primary-grey capitalize">
           {/* Previous */}
-          <span onClick={() => router.back()} className="cursor-pointer">
+          <span
+            onClick={() =>
+              mode === "public" && onClose ? onClose() : router.back()
+            }
+            className="cursor-pointer"
+          >
             <i className="fa-solid fa-arrow-left-long transition hover:!text-white"></i>
           </span>{" "}
           {/* Projects */}
@@ -117,10 +142,24 @@ const ProjectDetail = () => {
           </span>
         </div>
         {/* Edit button */}
-        <Button className="!text-white flex gap-2" onClick={handle_edit_click}>
-          <i className="fa-regular fa-pen-to-square"></i>
-          <span>Edit project</span>
-        </Button>
+        {mode === "private" ? (
+          <Button
+            className="!text-white flex gap-2"
+            onClick={handle_edit_click}
+          >
+            <i className="fa-regular fa-pen-to-square"></i>
+            <span>Edit project</span>
+          </Button>
+        ) : (
+          <Button
+            outlined
+            className="flex gap-2 w-[150px] h-[40px] text-xs"
+            onClick={handle_donate_click}
+          >
+            <i className="fas fa-dollar-sign"></i>
+            <span>Donate</span>
+          </Button>
+        )}
       </div>
       {/* Title + funding */}
       <div className="flex justify-between gap-4 w-full flex-wrap text-white items-center">
@@ -144,33 +183,7 @@ const ProjectDetail = () => {
             className="!bg-primary-grey w-[300px]"
           />
         ) : (
-          <div className="flex gap-4 items-center text-sm">
-            <span>Funding progress:</span>
-            {/* Progress bar container */}
-            <div
-              className={`w-[200px] h-[30px] bg-weak-grey rounded-md overflow-hidden flex justify-center items-center relative pointer-events-none`}
-            >
-              {/* Progress bar */}
-              <div
-                style={{ width: `${progress_percentage}%` }}
-                className={`h-full absolute top-0 left-0 z-10 ${
-                  progress_percentage <= 50
-                    ? "!bg-primary-grey"
-                    : progress_percentage <= 75
-                    ? "!bg-yellow-300/30"
-                    : progress_percentage <= 100
-                    ? "!bg-green-400/30"
-                    : "!bg-primary-grey"
-                }`}
-              ></div>
-              {/* Fraction */}
-              <div className="">
-                {format_currency(project?.current_amount || 0)}{" "}
-                <span className="text-lg">/</span>
-                {format_currency(project?.goal || 0)}
-              </div>
-            </div>
-          </div>
+          <FundingProgress project={project as TProject} />
         )}
       </div>
       {/* Date created */}

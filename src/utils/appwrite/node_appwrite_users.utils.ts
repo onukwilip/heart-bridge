@@ -1,5 +1,5 @@
 import { Users } from "node-appwrite";
-import server_client from "./appwrite-server_client.utils";
+import server_client from "./node_appwrite_client.utils";
 
 const users = new Users(server_client);
 

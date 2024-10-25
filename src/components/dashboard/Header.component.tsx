@@ -1,14 +1,12 @@
 "use client";
 import usePageName from "@/hooks/usePageName.hook";
-import { TAB_PAGE_NAMES } from "@/utils/types";
-import React, { useState } from "react";
-import { InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
-import { RoundedFormControl } from "../atoms/RoundedFormControl.component";
-import Image from "next/image";
-import dummy_image from "@/images/dummy-profile-pic.png";
+import { TAB_PAGE_NAMES, TUser } from "@/utils/types";
+import React from "react";
 import { useSideBarContext } from "@/contexts/SideBar.context";
 import { useUserContext } from "@/contexts/User.context";
 import HeaderNotification from "../notifications/HeaderNotification.component";
+import SearchBar from "../search/SearchBar.component";
+import ProfileCard from "../atoms/ProfileCard.component";
 
 const Header = () => {
   const { current_page_name, segments } = usePageName();
@@ -71,49 +69,11 @@ const Header = () => {
         {/* Right side */}
         <div className="flex gap-6 items-center">
           {/* Search */}
-          <RoundedFormControl
-            variant="outlined"
-            className="w-[300px] !hidden md:!flex rounded-xl"
-          >
-            <InputLabel htmlFor="password">Search</InputLabel>
-            <OutlinedInput
-              endAdornment={
-                <InputAdornment position="end">
-                  <i
-                    className={`fas fa-magnifying-glass text-2xl text-primary-grey`}
-                  ></i>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-          </RoundedFormControl>
-          <i
-            className={`fas fa-magnifying-glass inline-block md:hidden text-primary-grey hover:text-primary-grey-dark`}
-          ></i>
-
+          <SearchBar />
           {/* Notification */}
           <HeaderNotification />
           {/* Profile */}
-          <div className="flex gap-3 items-center">
-            {/* Image container */}
-            <div className="rounded-full overflow-x-hidden overflow-y-hidden w-[40px] h-[40px] md:w-[60px]">
-              <Image
-                width={40}
-                height={40}
-                src={user?.prefs?.image || dummy_image.src}
-                alt={user?.prefs?.firstname || ""}
-                className=" object-cover max-w-[60px] w-full h-full"
-              />
-            </div>
-            <div className="hidden md:flex flex-col capitalize text-sm w-full">
-              <span className="font-bold text-white w-full">
-                {user?.prefs?.account_type === "donor"
-                  ? user?.prefs?.firstname
-                  : user?.prefs?.orphanage_name}
-              </span>
-              <span>{user?.prefs?.account_type}</span>
-            </div>
-          </div>
+          <ProfileCard user={user?.prefs as TUser} />
         </div>
       </div>
     </>

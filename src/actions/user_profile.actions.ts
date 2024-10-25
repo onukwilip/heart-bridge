@@ -1,6 +1,8 @@
 "use server";
-import users from "@/utils/appwrite/appwrite_users.utils";
-import { TUser } from "@/utils/types";
+import database from "@/utils/appwrite/node_appwrite_database.utils";
+import users from "@/utils/appwrite/node_appwrite_users.utils";
+import { APPWRITE_DATABASE, TProject, TUser } from "@/utils/types";
+import { Models, Query } from "node-appwrite";
 
 /**
  * * Function responsible for updating the user profile information
@@ -27,6 +29,35 @@ export const update_user_profile = async (
       bio: user.bio || current_user.prefs.bio,
       image: user.image || current_user.prefs.image,
     });
+  } catch (error) {
+    console.error(error);
+    throw new Error((error as any)?.message || error);
+  }
+};
+
+/**
+ * * Function responsible for retrieving the details, and projects of a user
+ * @param orphanage_id The ID of the orphanage to return
+ */
+export const get_user = async (
+  orphanage_id: string
+): Promise<Models.User<TUser> & { projects: TProject[] }> => {
+  try {
+    // * Retrieves the details of the user
+    const user = await users.get<TUser>(orphanage_id);
+
+    // * If the user is not an orphanage, but a donor, throw error
+    if (user.prefs.account_type === "donor")
+      throw new Error(JSON.stringify({ code: 403 }));
+
+    // * Retrieve list of project created by this orphanage account
+    const user_projects = await database.listDocuments<
+      Models.Document & TProject
+    >(APPWRITE_DATABASE.DB_ID, APPWRITE_DATABASE.PROJECTS_COLLECTION_ID, [
+      Query.equal("user_id", orphanage_id),
+    ]);
+
+    return { ...user, projects: user_projects.documents };
   } catch (error) {
     console.error(error);
     throw new Error((error as any)?.message || error);
