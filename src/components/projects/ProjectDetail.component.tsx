@@ -144,7 +144,7 @@ const ProjectDetail: FC<{
         ) : (
           <Button
             outlined
-            className="flex gap-2 w-[150px] h-[40px] text-xs"
+            className="flex gap-2 w-[150px] !h-[40px] text-xs"
             onClick={handle_donate_click}
           >
             <i className="fas fa-dollar-sign"></i>

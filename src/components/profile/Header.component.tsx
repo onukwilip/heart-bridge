@@ -41,7 +41,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="w-full py-4 px-6 box-border sm:px-10 flex gap-4 items-center justify-between border-b border-weak-grey sticky top-0 left-0 bg-[#0a0a0a] z-10">
+    <div className="w-full py-4 px-6 box-border sm:px-10 flex gap-4 items-center justify-between border-b border-weak-grey sticky top-0 left-0 bg-[#0a0a0a] z-30">
       {/* Logo section */}
       <div className="flex gap-4 items-center">
         <LogoText reduceOnSmallScreen />

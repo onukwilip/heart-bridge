@@ -56,7 +56,7 @@ const Project: FC<{ project: TProject }> = ({ project }) => {
           <span className="text-white text-xl">{project.title}</span>
           <Button
             variant="outlined"
-            className="h-[30px]"
+            className="!h-[30px]"
             outlined
             onClick={() => setShowSidedrawer(true)}
           >
@@ -80,6 +80,7 @@ const Project: FC<{ project: TProject }> = ({ project }) => {
           anchor="right"
           open={show_sidedrawer}
           onClose={() => setShowSidedrawer(false)}
+          className="z-[35]"
         >
           <section className="p-2 bg-primary-dark max-w-[1000px] text-primary-grey">
             <ProjectDetail

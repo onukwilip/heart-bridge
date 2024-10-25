@@ -21,7 +21,7 @@ const ProfileHeader: FC<{ user?: TUser; loading?: boolean }> = ({
               animation="pulse"
               className="!bg-primary-grey"
               width={"100%"}
-              height={"100%"}
+              height={150}
             />
           </>
         ) : (
@@ -81,10 +81,10 @@ const ProfileHeader: FC<{ user?: TUser; loading?: boolean }> = ({
         {/* Actions */}
         {!loading && (
           <div className="flex gap-2">
-            <Button className="h-[30px] w-[100px]">
+            <Button className="!h-[30px] w-[100px]">
               <span className="!text-2xs">Book a visit</span>{" "}
             </Button>
-            <Button className="h-[30px] w-fit" outlined size="small">
+            <Button className="!h-[30px] w-fit" outlined size="small">
               <i className="fas fa-phone !text-xs"></i>
             </Button>
           </div>

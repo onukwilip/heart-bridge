@@ -75,13 +75,15 @@ const Header = () => {
           {/* Notification */}
           <HeaderNotification />
           {/* View public profile */}
-          <Link
-            href={`/orphanages/${user?.$id}`}
-            title="View public profile"
-            target="_blank"
-          >
-            <i className="fa-regular fa-eye transition duration-200 hover:text-primary-grey-dark cursor-pointer"></i>
-          </Link>
+          {user?.prefs.account_type === "orphanage" && (
+            <Link
+              href={`/orphanages/${user?.$id}`}
+              title="View public profile"
+              target="_blank"
+            >
+              <i className="fa-regular fa-eye transition duration-200 hover:text-primary-grey-dark cursor-pointer"></i>
+            </Link>
+          )}
           {/* Profile */}
           {user ? (
             <ProfileCard user={user?.prefs as TUser} />
