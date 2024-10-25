@@ -7,6 +7,8 @@ import { useUserContext } from "@/contexts/User.context";
 import HeaderNotification from "../notifications/HeaderNotification.component";
 import SearchBar from "../search/SearchBar.component";
 import ProfileCard from "../atoms/ProfileCard.component";
+import Link from "next/link";
+import { Skeleton } from "@mui/material";
 
 const Header = () => {
   const { current_page_name, segments } = usePageName();
@@ -43,7 +45,7 @@ const Header = () => {
                 : segments[segments.length - 2]}
             </span>
             {/* Description */}
-            <span className="text-xs">
+            <span className="hidden xs:inline text-xs">
               {(current_page_exists || segments[segments.length - 2]) ===
               TAB_PAGE_NAMES.DASHBOARD
                 ? "Overview of Orphanage stats"
@@ -72,8 +74,44 @@ const Header = () => {
           <SearchBar />
           {/* Notification */}
           <HeaderNotification />
+          {/* View public profile */}
+          <Link
+            href={`/orphanages/${user?.$id}`}
+            title="View public profile"
+            target="_blank"
+          >
+            <i className="fa-regular fa-eye transition duration-200 hover:text-primary-grey-dark cursor-pointer"></i>
+          </Link>
           {/* Profile */}
-          <ProfileCard user={user?.prefs as TUser} />
+          {user ? (
+            <ProfileCard user={user?.prefs as TUser} />
+          ) : (
+            <div className="flex items-center gap-2">
+              <Skeleton
+                variant="circular"
+                className="!bg-primary-grey"
+                animation="pulse"
+                width={40}
+                height={40}
+              />
+              <div className="flex flex-col">
+                <Skeleton
+                  variant="text"
+                  className="!bg-primary-grey"
+                  animation="pulse"
+                  width={70}
+                  sx={{ fontSize: "11px" }}
+                />
+                <Skeleton
+                  variant="text"
+                  className="!bg-primary-grey"
+                  animation="pulse"
+                  width={40}
+                  sx={{ fontSize: "11px" }}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
