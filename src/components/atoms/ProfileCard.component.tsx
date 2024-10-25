@@ -3,12 +3,16 @@ import { Models } from "appwrite";
 import Image from "next/image";
 import React, { FC } from "react";
 import dummy_image from "@/images/dummy-profile-pic.png";
+import Link from "next/link";
 
 const ProfileCard: FC<{ user: TUser }> = ({ user }) => {
   return (
     <div className="flex gap-3 items-center">
       {/* Image container */}
-      <div className="rounded-full overflow-x-hidden overflow-y-hidden w-[40px] h-[40px] md:w-[60px]">
+      <Link
+        href={"/dashboard"}
+        className="rounded-full block overflow-x-hidden overflow-y-hidden w-[40px] h-[40px] md:w-[60px]"
+      >
         <Image
           width={40}
           height={40}
@@ -16,7 +20,7 @@ const ProfileCard: FC<{ user: TUser }> = ({ user }) => {
           alt={user?.firstname || ""}
           className=" object-cover max-w-[60px] w-full h-full"
         />
-      </div>
+      </Link>
       <div className="hidden md:flex flex-col capitalize text-sm w-full">
         <span className="font-bold text-white w-full">
           {user?.account_type === "donor"
