@@ -56,7 +56,7 @@ const Project: FC<{ project: TProject }> = ({ project }) => {
           <span className="text-white text-xl">{project.title}</span>
           <Button
             variant="outlined"
-            className="h-[30px]"
+            className="!h-[30px]"
             outlined
             onClick={() => setShowSidedrawer(true)}
           >
