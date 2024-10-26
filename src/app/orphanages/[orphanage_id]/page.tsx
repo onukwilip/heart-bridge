@@ -1,4 +1,4 @@
-import { get_user_profile } from "@/actions/user_profile.actions";
+import { get_user_profile } from "@/actions/user_profile.action";
 import Error403 from "@/components/atoms/Error403.component";
 import Error404 from "@/components/atoms/Error404.component";
 import Header from "@/components/profile/Header.component";
