@@ -10,8 +10,8 @@
 /coverage
 
 # next.js
-.next/  // properly ignore the .next directory because it appeared after i pulled
-out/
+/.next/
+/out/
 
 # production
 /build
