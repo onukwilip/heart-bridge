@@ -1,11 +1,17 @@
 import React from "react";
+import { BarLoader } from "react-spinners";
 
-const loading = () => {
+const Loading = () => {
   return (
     <div className="w-screen h-screen flex items-center justify-center">
-      <span>Loading...</span>
+      <BarLoader
+        color={"#007AFF"}
+        loading={true}
+        aria-label="Loading"
+        speedMultiplier={1}
+      />
     </div>
   );
 };
 
-export default loading;
+export default Loading;
