@@ -6,6 +6,7 @@ import {
   TDonation,
   TNotificationDonationMetadata,
   TNotificationScheduleMetadata,
+  TProject,
   TUser,
   TUserRoles,
 } from "@/utils/types";
@@ -41,6 +42,25 @@ export const add_donation = async ({
       { orphanage_id, project: project_id, comment, donor: donor_id, amount }
     );
 
+    // * Get the details of the project
+    const project_details = await database.getDocument<
+      Models.Document & TProject
+    >(
+      APPWRITE_DATABASE.DB_ID,
+      APPWRITE_DATABASE.PROJECTS_COLLECTION_ID,
+      project_id
+    );
+
+    // * Update the projects' current amount
+    await database.updateDocument(
+      APPWRITE_DATABASE.DB_ID,
+      APPWRITE_DATABASE.PROJECTS_COLLECTION_ID,
+      project_id,
+      {
+        current_amount: Number(project_details.current_amount) + Number(amount),
+      }
+    );
+
     // * Notify the orphanage of this donation
     await add_notification({
       user_id: orphanage_id,
@@ -62,6 +82,7 @@ export const add_donation = async ({
           ...notification_metadata,
           donor_name: "You",
           donation_id: donation_id,
+          orphanage_id,
         },
       });
   } catch (error) {

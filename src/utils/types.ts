@@ -205,6 +205,7 @@ export type TNotification = {
 export type TNotificationDonationMetadata = {
   donation_id?: string;
   donor_name?: string;
+  orphanage_id?: string;
   amount?: string;
   project_title?: string;
 };

@@ -1,4 +1,5 @@
 import { useNotificationsContext } from "@/contexts/Notifications.context";
+import { useUserContext } from "@/contexts/User.context";
 import { TNotificationDoc } from "@/utils/types";
 import { get_timelapse } from "@/utils/utils";
 import Link from "next/link";
@@ -9,18 +10,23 @@ const Notification: FC<{ notification: TNotificationDoc; expand: boolean }> = ({
   expand,
 }) => {
   const { read_notification } = useNotificationsContext();
+  const { user } = useUserContext();
 
-  const link = `/dashboard/${
+  const link = `${
     notification.type === "donation"
-      ? "projects"
+      ? user?.prefs.account_type === "orphanage"
+        ? "/dashboard/projects"
+        : `/orphanages/${notification.ref_ids[2]}`
       : notification.type === "visitation"
-      ? "visitations"
+      ? "/dashboard/visitations"
       : notification.type === "call"
-      ? "calls"
+      ? "/dashboard/calls"
       : ""
   }/${
     notification.type === "donation"
-      ? `${notification.ref_ids[0]}/#${notification.ref_ids[1]}`
+      ? user?.prefs.account_type === "orphanage"
+        ? `/${notification.ref_ids[0]}/#${notification.ref_ids[1]}`
+        : `?project=${notification.ref_ids[0]}`
       : notification.type === "visitation"
       ? `#${notification.ref_ids[0]}`
       : notification.type === "call"
