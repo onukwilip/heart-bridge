@@ -8,12 +8,15 @@ const Tab: FC<{
   type?: "vertical" | "horizontal";
   menus: TabMenuClass[];
   tabs: TabContentClass[];
-}> = ({ type, menus, tabs }) => {
+  tab_param: string;
+  base_route: string;
+  display_tab_name?: boolean;
+}> = ({ type, menus, tabs, tab_param, base_route, display_tab_name }) => {
   const pathname = usePathname();
   const router = useRouter();
   const search_params = useSearchParams();
   const [current_tab, setCurrentTab] = useState<string | undefined>(
-    search_params.get("user_tab") || undefined
+    search_params.get(tab_param) || undefined
   );
   const current_tab_details =
     tabs.find((tab) => tab.slug === current_tab) || tabs[0];
@@ -22,7 +25,7 @@ const Tab: FC<{
    * * Updates the current tab when the route changes
    */
   const handle_route_change = () => {
-    setCurrentTab(search_params.get("user_tab") || undefined);
+    setCurrentTab(search_params.get(tab_param) || undefined);
   };
 
   useEffect(() => {
@@ -47,9 +50,7 @@ const Tab: FC<{
           <>
             <div
               onClick={() =>
-                router.push(
-                  `/dashboard/${TAB_PAGE_NAMES.ACCOUNT}?user_tab=${menu.slug}`
-                )
+                router.push(`${base_route}?${tab_param}=${menu.slug}`)
               }
               className={`py-2 px-2 md:px-6 text-sm rounded-full flex items-center hover:text-primary md:hover:bg-primary md:hover:text-white cursor-pointer capitalize transition w-fit text-nowrap ${
                 current_tab === menu.slug || (!current_tab && i == 0)
@@ -57,16 +58,18 @@ const Tab: FC<{
                   : ""
               }`}
             >
-              {menu.name}
+              {menu.content || menu.name}
             </div>
           </>
         ))}
       </div>
       {/* Tab */}
       <div className="flex-0 w-full py-3 md:px-4 lg:px-8 flex flex-col gap-4">
-        <div className="text-lg md:text-xl capitalize">
-          {menus.find((menu) => menu.slug === current_tab_details.slug)?.name}
-        </div>
+        {display_tab_name && (
+          <div className="text-lg md:text-xl capitalize">
+            {menus.find((menu) => menu.slug === current_tab_details.slug)?.name}
+          </div>
+        )}
         <>{current_tab_details.content}</>
       </div>
     </div>

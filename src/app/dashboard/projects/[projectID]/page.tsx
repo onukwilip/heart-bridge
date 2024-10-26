@@ -5,7 +5,7 @@ import RouteProtector from "@/components/RouteProtector.component";
 const ProjectDetailPage = () => {
   return (
     <RouteProtector role="orphanage">
-      <ProjectDetail />
+      <ProjectDetail mode="private" />
     </RouteProtector>
   );
 };

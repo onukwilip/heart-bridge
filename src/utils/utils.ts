@@ -14,3 +14,42 @@ export const format_currency = (
     value
   );
 };
+
+/**
+ * * Compares the provided date with the current date, and returns the timelapse
+ * @param creation_date The date to compare against
+ * @returns The timelapse of the comparison
+ */
+export const get_timelapse = (creation_date: Date | number | string) => {
+  const now = new Date();
+  const created = new Date(creation_date);
+  const diff_ms = now.getTime() - created.getTime(); // Difference in milliseconds
+
+  const diff_seconds = Math.floor(diff_ms / 1000);
+  const diff_minutes = Math.floor(diff_seconds / 60);
+  const diff_hours = Math.floor(diff_minutes / 60);
+  const diff_days = Math.floor(diff_hours / 24);
+
+  if (diff_seconds < 60) {
+    return `${diff_seconds < 0 ? 1 : diff_seconds}s`; // Less than 1 minute
+  } else if (diff_minutes < 60) {
+    return `${diff_minutes}m`; // Less than 1 hour
+  } else if (diff_hours < 24) {
+    return `${diff_hours}h`; // Less than 1 day
+  } else {
+    return `${diff_days}d`; // More than 1 day
+  }
+};
+
+/**
+ * * Function responsible for converting a string to JSON
+ * @param string The string value to be parsed to JSON format
+ * @returns The JSON representation of the string passed
+ */
+export const parse_json = <T>(string: string) => {
+  try {
+    return JSON.parse(string) as T;
+  } catch (error) {
+    return string;
+  }
+};

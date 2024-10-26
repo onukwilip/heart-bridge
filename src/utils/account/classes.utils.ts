@@ -2,7 +2,11 @@ import { ReactNode } from "react";
 import { TPayStackBankAccountDetails } from "../types";
 
 export class TabMenuClass {
-  constructor(public slug: string, public name: string) {}
+  constructor(
+    public slug: string,
+    public name: string,
+    public content?: ReactNode
+  ) {}
 }
 
 export class TabContentClass {

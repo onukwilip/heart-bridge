@@ -1,13 +1,14 @@
 "use client";
 import usePageName from "@/hooks/usePageName.hook";
-import { TAB_PAGE_NAMES } from "@/utils/types";
+import { TAB_PAGE_NAMES, TUser } from "@/utils/types";
 import React from "react";
-import { InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
-import { RoundedFormControl } from "../atoms/RoundedFormControl.component";
-import Image from "next/image";
-import dummy_image from "@/images/dummy-profile-pic.png";
 import { useSideBarContext } from "@/contexts/SideBar.context";
 import { useUserContext } from "@/contexts/User.context";
+import HeaderNotification from "../notifications/HeaderNotification.component";
+import SearchBar from "../search/SearchBar.component";
+import ProfileCard from "../atoms/ProfileCard.component";
+import Link from "next/link";
+import { Skeleton } from "@mui/material";
 
 const Header = () => {
   const { current_page_name, segments } = usePageName();
@@ -26,7 +27,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="w-full py-4 px-6 box-border sm:px-10 flex gap-4 items-center justify-between border-b border-weak-grey">
+      <div className="w-full py-4 px-6 box-border sm:px-10 flex gap-4 items-center justify-between border-b border-weak-grey relative">
         {/* Page name + description + menu icon */}
         <div className="flex gap-4 items-center">
           {/* Menu icon */}
@@ -44,7 +45,7 @@ const Header = () => {
                 : segments[segments.length - 2]}
             </span>
             {/* Description */}
-            <span className="text-xs">
+            <span className="hidden xs:inline text-xs">
               {(current_page_exists || segments[segments.length - 2]) ===
               TAB_PAGE_NAMES.DASHBOARD
                 ? "Overview of Orphanage stats"
@@ -70,51 +71,49 @@ const Header = () => {
         {/* Right side */}
         <div className="flex gap-6 items-center">
           {/* Search */}
-          <RoundedFormControl
-            variant="outlined"
-            className="w-[300px] !hidden md:!flex rounded-xl"
-          >
-            <InputLabel htmlFor="password">Search</InputLabel>
-            <OutlinedInput
-              endAdornment={
-                <InputAdornment position="end">
-                  <i
-                    className={`fas fa-magnifying-glass text-2xl text-primary-grey`}
-                  ></i>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-          </RoundedFormControl>
-          <i
-            className={`fas fa-magnifying-glass inline-block md:hidden text-primary-grey hover:text-primary-grey-dark`}
-          ></i>
-
+          <SearchBar />
           {/* Notification */}
-          <div>
-            <i className="fa-regular fa-bell transition duration-200 hover:text-primary-grey-dark cursor-pointer"></i>
-          </div>
+          <HeaderNotification />
+          {/* View public profile */}
+          {user?.prefs.account_type === "orphanage" && (
+            <Link
+              href={`/orphanages/${user?.$id}`}
+              title="View public profile"
+              target="_blank"
+            >
+              <i className="fa-regular fa-eye transition duration-200 hover:text-primary-grey-dark cursor-pointer"></i>
+            </Link>
+          )}
           {/* Profile */}
-          <div className="flex gap-3 items-center">
-            {/* Image container */}
-            <div className="rounded-full overflow-x-hidden overflow-y-hidden w-[40px] h-[40px] md:w-[60px]">
-              <Image
+          {user ? (
+            <ProfileCard user={user?.prefs as TUser} />
+          ) : (
+            <div className="flex items-center gap-2">
+              <Skeleton
+                variant="circular"
+                className="!bg-primary-grey"
+                animation="pulse"
                 width={40}
                 height={40}
-                src={user?.prefs?.image || dummy_image.src}
-                alt={user?.prefs?.firstname || ""}
-                className=" object-cover max-w-[60px] w-full h-full"
               />
+              <div className="flex flex-col">
+                <Skeleton
+                  variant="text"
+                  className="!bg-primary-grey"
+                  animation="pulse"
+                  width={70}
+                  sx={{ fontSize: "11px" }}
+                />
+                <Skeleton
+                  variant="text"
+                  className="!bg-primary-grey"
+                  animation="pulse"
+                  width={40}
+                  sx={{ fontSize: "11px" }}
+                />
+              </div>
             </div>
-            <div className="hidden md:flex flex-col capitalize text-sm w-full">
-              <span className="font-bold text-white w-full">
-                {user?.prefs?.account_type === "donor"
-                  ? user?.prefs?.firstname
-                  : user?.prefs?.orphanage_name}
-              </span>
-              <span>{user?.prefs?.account_type}</span>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </>

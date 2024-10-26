@@ -1,15 +1,20 @@
 import React, { FC } from "react";
 
-const LogoText: FC<{ enableExpand?: boolean; expand?: boolean }> = ({
-  enableExpand,
-  expand,
-}) => {
+const LogoText: FC<{
+  enableExpand?: boolean;
+  expand?: boolean;
+  reduceOnSmallScreen?: boolean;
+}> = ({ enableExpand, expand, reduceOnSmallScreen }) => {
   return (
-    <span className="text-white font-bold text-xl">
+    <span
+      className={`text-white font-bold ${
+        reduceOnSmallScreen ? "text-sm md:text-xl" : "text-xl"
+      }`}
+    >
       {enableExpand ? (
         expand ? (
           <>
-            Heart<span className="text-primary">Bridge</span>
+            Heart<span className={`text-primary`}>Bridge</span>
           </>
         ) : (
           <>
