@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { FC, useState } from "react";
 import dummy_image from "@/images/dummy-image.jpg";
 import Button from "../atoms/Button.component";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import TabSection from "../molecules/TabSection.component";
 import FundingProgress from "../projects/FundingProgress.component";
 import ProjectDetail from "../projects/ProjectDetail.component";
@@ -12,14 +12,17 @@ import { Drawer } from "@mui/material";
 
 const Project: FC<{ project: TProject }> = ({ project }) => {
   const router = useRouter();
-  const [show_sidedrawer, setShowSidedrawer] = useState(false);
+  const searchParams = useSearchParams();
+  const [show_sidedrawer, setShowSidedrawer] = useState(
+    searchParams.get("project") === project.$id
+  );
   const [selected_image, setSelectedImage] = useState(
     (project?.images?.[0] as string) || dummy_image.src
   );
 
   return (
     <>
-      <TabSection className="w-full flex flex-col gap-2">
+      <TabSection className="w-full flex flex-col gap-2" id={project.$id}>
         {/* Images */}
         <div className="w-full h-full flex flex-col gap-4">
           {/* Big image */}

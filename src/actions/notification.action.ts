@@ -17,7 +17,7 @@ import { ID, Models } from "node-appwrite";
 export const add_notification = async ({
   user_id,
   ref_id,
-  initiator_id: donor_id,
+  initiator_id,
   type,
   metadata,
 }: {
@@ -35,7 +35,7 @@ export const add_notification = async ({
       APPWRITE_DATABASE.NOTIFICATIONS_COLLECTION_ID,
       id,
       {
-        initiator_id: donor_id,
+        initiator_id,
         type: type,
         user_id,
         content:
@@ -49,7 +49,12 @@ ${metadata.donor_name || "An anonymous donor"} donated ${format_currency(
               } with you on the ${metadata.date} by ${metadata.time}`,
         ref_ids: [
           ref_id,
-          ...(type === "donation" ? [metadata.donation_id] : []),
+          ...(type === "donation"
+            ? [
+                metadata.donation_id,
+                ...(metadata.orphanage_id ? [metadata.orphanage_id] : []),
+              ]
+            : []),
         ],
       }
     );

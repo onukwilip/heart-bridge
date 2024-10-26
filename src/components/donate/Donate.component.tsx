@@ -24,8 +24,8 @@ const payment_method = [
   new PaymentMethodClass("Stripe", "stripe", undefined, true),
 ];
 
-const Donate: FC<{ user: Models.User<TUser>; project: TProject }> = ({
-  user,
+const Donate: FC<{ owner: Models.User<TUser>; project: TProject }> = ({
+  owner,
   project,
 }) => {
   const [amount, setAmount] = useState("0");
@@ -67,13 +67,13 @@ const Donate: FC<{ user: Models.User<TUser>; project: TProject }> = ({
       // * If the payment mode is set to paystack, pay using paystack
       if (payment_mode === "paystack") {
         await make_transaction({
-          orphanage_id: user.$id,
-          email: user.email,
+          orphanage_id: owner.$id,
+          email: owner.email,
           amount: (Number(amount) * 100).toString(),
         });
         // * Add the transaction to the list of donations made by this donor
         await add_donation({
-          orphanage_id: user.$id,
+          orphanage_id: owner.$id,
           amount,
           project_id: project.$id,
           donor_id: donor?.$id,
@@ -81,6 +81,7 @@ const Donate: FC<{ user: Models.User<TUser>; project: TProject }> = ({
             amount,
             donor_name: `${donor?.prefs.firstname} ${donor?.prefs.lastname}`,
             project_title: project.title,
+            orphanage_id: owner.$id,
           },
         });
         payment_fetch_state.display_success("Success");
@@ -109,8 +110,8 @@ const Donate: FC<{ user: Models.User<TUser>; project: TProject }> = ({
       ) {
         return payment_fetch_state.display_error(
           `Sorry but ${
-            user.prefs.orphanage_name ||
-            `${user.prefs.firstname} ${user.prefs.lastname}`
+            owner.prefs.orphanage_name ||
+            `${owner.prefs.firstname} ${owner.prefs.lastname}`
           } orphanage hasn't set up their bank details`
         );
       }
@@ -138,8 +139,8 @@ const Donate: FC<{ user: Models.User<TUser>; project: TProject }> = ({
           <div>
             You are supporting{" "}
             <b className="!text-white">
-              {user.prefs.orphanage_name ||
-                `${user.prefs.firstname} ${user.prefs.lastname}`}
+              {owner.prefs.orphanage_name ||
+                `${owner.prefs.firstname} ${owner.prefs.lastname}`}
             </b>{" "}
             orphanage on their <b className="!text-white">{project.title}</b>{" "}
             project

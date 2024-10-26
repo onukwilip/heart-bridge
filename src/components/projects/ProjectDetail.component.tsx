@@ -218,7 +218,7 @@ const ProjectDetail: FC<{
             project?.title
           )}
         </span>
-        {/* Fnding progress */}
+        {/* Funding progress */}
         {fetch_project_state.loading ? (
           <Skeleton
             variant="text"
