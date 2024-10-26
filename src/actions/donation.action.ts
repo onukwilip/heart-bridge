@@ -7,6 +7,7 @@ import {
   TNotificationDonationMetadata,
   TNotificationScheduleMetadata,
   TUser,
+  TUserRoles,
 } from "@/utils/types";
 import { ID, Models, Query } from "node-appwrite";
 import { add_notification } from "./notification.action";
@@ -71,16 +72,30 @@ export const add_donation = async ({
 
 /**
  * * Function responsible for retrieving the listof donations made by a donor
- * @param donor_id The ID of the donor who made the donations
+ * @param user_id The ID of the donor who made the donations
  * @returns The list of donations made by the donor
  */
-export const get_donations = async (donor_id: string) => {
+export const get_donations = async (
+  account_type: TUserRoles,
+  user_id: string,
+  project_id?: string
+) => {
   try {
     // * Add this donation to the donation collection
     const donations = await database.listDocuments<Models.Document & TDonation>(
       APPWRITE_DATABASE.DB_ID,
       APPWRITE_DATABASE.DONATIONS_COLLECTION_ID,
-      [Query.equal("donor", donor_id)]
+      [
+        ...(!project_id
+          ? [
+              Query.equal(
+                account_type === "orphanage" ? "orphanage_id" : "donor",
+                user_id
+              ),
+            ]
+          : []),
+        ...(project_id ? [Query.equal("project", project_id)] : []),
+      ]
     );
 
     const parsed_donations: TDonation[] = [];
