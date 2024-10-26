@@ -66,9 +66,14 @@ const Donate: FC<{ user: Models.User<TUser>; project: TProject }> = ({
         // * Add the transaction to the list of donations made by this donor
         await add_donation({
           orphanage_id: user.$id,
-          amount: (Number(amount) / 100).toString(),
+          amount,
           project_id: project.$id,
           donor_id: donor?.$id,
+          notification_metadata: {
+            amount,
+            donor_name: `${donor?.prefs.firstname} ${donor?.prefs.lastname}`,
+            project_title: project.title,
+          },
         });
         payment_fetch_state.display_success("Success");
         open_modal({

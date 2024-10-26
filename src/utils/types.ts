@@ -190,14 +190,29 @@ export type TPayStackBankAccountDetails = {
   account_name: string;
 };
 
+export type TNotificationType = "visitation" | "call" | "donation";
+
 export type TNotification = {
   $id: string;
   initiator_id: string;
   content: string;
   ref_ids: string[];
-  type: "visitation" | "call" | "donation";
+  type: TNotificationType;
   user_id: string;
   read: boolean;
+};
+
+export type TNotificationDonationMetadata = {
+  donation_id?: string;
+  donor_name?: string;
+  amount?: string;
+  project_title?: string;
+};
+
+export type TNotificationScheduleMetadata = {
+  date?: string;
+  time?: string;
+  donor_name?: string;
 };
 
 export type TNotificationDoc = Models.Document & TNotification;
