@@ -1,7 +1,7 @@
 import { TUser } from "@/utils/types";
 import Image from "next/image";
 import React, { FC } from "react";
-import cover_image from "@/images/photo-1543689604-6fe8dbcd1f59 1.png";
+import cover_image from "@/images/happychildren.png";
 import dummy_image from "@/images/dummy-profile-pic.png";
 import Button from "../atoms/Button.component";
 import { Skeleton } from "@mui/material";
