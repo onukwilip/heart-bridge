@@ -38,7 +38,7 @@ const SuccessDonation: FC<{
         Donation Successful!
       </span>
       {/* Summarry */}
-      <span className="max-w-[300px] text-center">
+      <span className="max-w-[300px] text-center !text-white">
         You have successfully donated <b>{format_currency(Number(amount))}</b>{" "}
         to the <b>{project_title}</b> project{" "}
       </span>

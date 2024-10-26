@@ -33,7 +33,7 @@ export const make_transaction = async ({
       const popup = new Paystack();
 
       // * Initialize a new PayStack payment
-      const popup_transaction = popup.newTransaction({
+      popup.newTransaction({
         key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "",
         email: email,
         amount: Number(amount),
@@ -53,8 +53,6 @@ export const make_transaction = async ({
           reject(error);
         },
       });
-
-      console.log("PAYSTACK POPUP RESPONSE", popup_transaction);
     } catch (error) {
       console.log("PAYSTACK TRANSACTION ERROR", error);
     }

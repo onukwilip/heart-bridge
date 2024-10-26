@@ -56,6 +56,14 @@ const Donate: FC<{ user: Models.User<TUser>; project: TProject }> = ({
     try {
       // * Display loading indicator for the payment process
       payment_fetch_state.display_loading();
+
+      // * Check the user account type, if it's an orphanage, display an error message
+
+      if (donor?.prefs.account_type === "orphanage")
+        return payment_fetch_state.display_error(
+          "Orphanages cannot make donations, to donate to a project, login as a donor"
+        );
+
       // * If the payment mode is set to paystack, pay using paystack
       if (payment_mode === "paystack") {
         await make_transaction({
