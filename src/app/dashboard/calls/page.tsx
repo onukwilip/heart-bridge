@@ -1,7 +1,18 @@
+import CallsGrid from "@/components/calls/CallsGrid.component";
+import CallsTitle from "@/components/calls/CallTitle.component";
+import VisitationsTitle from "@/components/visitations/VisitationsTitle.component";
 import React from "react";
 
 const Calls = () => {
-  return <div>Calls</div>;
+  return (
+    <div className="flex flex-col space-y-10">
+      {/* Title + filters */}
+      <CallsTitle />
+
+      {/* Visitations grid */}
+      <CallsGrid />
+    </div>
+  );
 };
 
 export default Calls;
