@@ -1,8 +1,15 @@
 "use server";
 import database from "@/utils/appwrite/node_appwrite_database.utils";
 import users from "@/utils/appwrite/node_appwrite_users.utils";
-import { APPWRITE_DATABASE, TDonation, TUser } from "@/utils/types";
+import {
+  APPWRITE_DATABASE,
+  TDonation,
+  TNotificationDonationMetadata,
+  TNotificationScheduleMetadata,
+  TUser,
+} from "@/utils/types";
 import { ID, Models, Query } from "node-appwrite";
+import { add_notification } from "./notification.action";
 
 /**
  * * Function responsible for creating a new donation
@@ -14,22 +21,48 @@ export const add_donation = async ({
   comment,
   donor_id,
   amount,
+  notification_metadata,
 }: {
   orphanage_id: string;
   project_id: string;
   comment?: string;
   donor_id?: string;
   amount: string;
+  notification_metadata: TNotificationDonationMetadata;
 }) => {
   try {
-    const id = ID.unique();
+    const donation_id = ID.unique();
     // * Add this donation to the donation collection
     await database.createDocument<Models.Document & TDonation>(
       APPWRITE_DATABASE.DB_ID,
       APPWRITE_DATABASE.DONATIONS_COLLECTION_ID,
-      id,
+      ID.unique(),
       { orphanage_id, project: project_id, comment, donor: donor_id, amount }
     );
+
+    // * Notify the orphanage of this donation
+    await add_notification({
+      user_id: orphanage_id,
+      ref_id: project_id,
+      type: "donation",
+      initiator_id: donor_id,
+      metadata: notification_metadata,
+    });
+
+    // * if the donor is signed into the platform, then notifiy him/her concerning the donation
+    if (donor_id)
+      // * Notify the donor of this donation
+      await add_notification({
+        user_id: donor_id,
+        ref_id: project_id,
+        type: "donation",
+        initiator_id: orphanage_id,
+        metadata: {
+          ...notification_metadata,
+          donor_name: "You",
+          donation_id: donation_id,
+        },
+      });
   } catch (error) {
     console.error(error);
     throw new Error((error as any).message || error);
