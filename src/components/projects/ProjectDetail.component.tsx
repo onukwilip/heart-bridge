@@ -384,17 +384,24 @@ const ProjectDetail: FC<{
                           width={70}
                           height={70}
                           src={
-                            (donation.donor as TUser).image || dummy_profile.src
+                            (donation.donor as TUser)?.image ||
+                            dummy_profile.src
                           }
-                          alt={(donation.donor as TUser).firstname}
+                          alt={
+                            (donation.donor as TUser)?.firstname || "anonymous"
+                          }
                         />
                       </div>
                       {/* Content */}
                       <div className="flex flex-col gap-3 gap-y-1">
                         {/* Name */}
-                        <div>{`${(donation.donor as TUser).firstname} ${
-                          (donation.donor as TUser).lastname
-                        }`}</div>
+                        <div>
+                          {donation.donor
+                            ? `${(donation.donor as TUser).firstname} ${
+                                (donation.donor as TUser).lastname
+                              }`
+                            : `An anonymous donor`}
+                        </div>
                         {/* Amount + date */}
                         <div className="flex gap-x-3 gap-y-1 flex-wrap">
                           {/* Amount */}

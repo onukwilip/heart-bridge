@@ -57,8 +57,6 @@ export const get_user_profile = async (
       Query.equal("user_id", orphanage_id),
     ]);
 
-    // console.log("USER PROJECTS", user_projects.documents);
-
     return { ...user, projects: user_projects.documents };
   } catch (error) {
     console.error(error);
