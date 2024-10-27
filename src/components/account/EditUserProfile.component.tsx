@@ -11,7 +11,7 @@ import Image from "next/image";
 import dummy_profile from "@/images/dummy-profile-pic.png";
 import storage from "@/utils/appwrite/appwrite_storage.utils";
 import { ID } from "appwrite";
-import { update_user_profile } from "@/actions/user_profile.actions";
+import { update_user_profile } from "@/actions/user_profile.action";
 
 const EditUserProfile: FC<{
   existing_information: TUser;

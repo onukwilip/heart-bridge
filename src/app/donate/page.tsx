@@ -63,7 +63,7 @@ const DonatePage: FC<Props> = async ({ searchParams }) => {
       <section className="relative w-full">
         <Header />
         <br />
-        <Donate user={user} project={project} />
+        <Donate owner={user} project={project} />
       </section>
     );
   } catch (error) {

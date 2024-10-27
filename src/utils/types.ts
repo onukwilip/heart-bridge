@@ -29,14 +29,28 @@ export type TUser = {
   bio?: string;
 };
 
+export type TDonation = {
+  $id: string;
+  $createdAt: string;
+  donor?: string | TUser;
+  orphanage_id: string;
+  amount: string;
+  project: string;
+  comment?: string;
+};
+
 export enum APPWRITE_DATABASE {
   DB_ID = "heart_bridge",
   BANK_ACCOUNTS_COLLECTION_ID = "bank_accounts",
   PAYSTACK_DETAILS_COLLECTION_ID = "paystack_details",
   PROJECTS_COLLECTION_ID = "projects",
   NOTIFICATIONS_COLLECTION_ID = "notfications",
+
   VISITATIONS_COLLECTION_ID = "671e0a5700199fd0a5d7",
   CALLS_COLLECTION_ID = "671e0caf001327aafec2",
+
+  DONATIONS_COLLECTION_ID = "donations",
+
 }
 
 export enum APPWRITE_BUCKET {
@@ -136,6 +150,7 @@ export type TPaystackAccountDetails = {
   account_name: string;
   subaccount_code: string;
   id: number;
+  user_id: string;
   $id: string;
 };
 
@@ -180,17 +195,34 @@ export type TPayStackBankAccountDetails = {
   account_name: string;
 };
 
+export type TNotificationType = "visitation" | "call" | "donation";
+
 export type TNotification = {
   $id: string;
   initiator_id: string;
   content: string;
   ref_ids: string[];
-  type: "visitation" | "call" | "donation";
+  type: TNotificationType;
   user_id: string;
   read: boolean;
 };
 
+export type TNotificationDonationMetadata = {
+  donation_id?: string;
+  donor_name?: string;
+  orphanage_id?: string;
+  amount?: string;
+  project_title?: string;
+};
+
+export type TNotificationScheduleMetadata = {
+  date?: string;
+  time?: string;
+  donor_name?: string;
+};
+
 export type TNotificationDoc = Models.Document & TNotification;
+
 
 export type TCall = {
   $id: string;
@@ -218,3 +250,10 @@ export enum STATUS {
   APPROVED = "approved",
   DECLINED = "declined",
 }
+
+export type TPayStackInitTransactionParams = {
+  orphanage_id: string;
+  email: string;
+  amount: string;
+};
+

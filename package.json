@@ -12,7 +12,10 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.1.3",
+    "@paystack/inline-js": "^2.22.1",
     "@types/js-cookie": "^3.0.6",
+    "@types/paystack": "^2.0.4",
+    "@types/paystack__inline-js": "^1.0.0",
     "appwrite": "^16.0.2",
     "axios": "^1.7.7",
     "date-fns": "^4.1.0",
@@ -25,6 +28,7 @@
     "react-dom": "^18",
     "react-icons": "^5.3.0",
     "react-quill": "^2.0.0",
+    "react-spinners": "^0.14.1",
     "use-manage-form": "^2.1.1"
   },
   "devDependencies": {
