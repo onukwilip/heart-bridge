@@ -35,6 +35,8 @@ export enum APPWRITE_DATABASE {
   PAYSTACK_DETAILS_COLLECTION_ID = "paystack_details",
   PROJECTS_COLLECTION_ID = "projects",
   NOTIFICATIONS_COLLECTION_ID = "notfications",
+  VISITATIONS_COLLECTION_ID = "671e0a5700199fd0a5d7",
+  CALLS_COLLECTION_ID = "671e0caf001327aafec2",
 }
 
 export enum APPWRITE_BUCKET {
@@ -96,11 +98,11 @@ export interface Donation {
   date: string;
 }
 
-export interface Visitation {
-  visitor: string;
-  date: string;
-  time: string;
-}
+// export interface Visitation {
+//   visitor: string;
+//   date: string;
+//   time: string;
+// }
 
 export type TProject = {
   $id: string;
@@ -189,3 +191,30 @@ export type TNotification = {
 };
 
 export type TNotificationDoc = Models.Document & TNotification;
+
+export type TCall = {
+  $id: string;
+  caller_name: string;
+  call_date: string;
+  call_time: string;
+  caller_id: string;
+  orphanage_id: string;
+  status: string;
+};
+
+export type Visitation = {
+  $id: string;
+  visitor_id: string;
+  visitor_name: string;
+  visit_status: string;
+  visit_description: string;
+  visit_date: string;
+  visit_time: string;
+  orphanage_id: string;
+};
+
+export enum STATUS {
+  PENDING = "pending",
+  APPROVED = "approved",
+  DECLINED = "declined",
+}

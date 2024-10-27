@@ -1,4 +1,4 @@
-import { Donation, TProject, Summary, Visitation } from "./types";
+import { Donation, TProject, Summary, Visitation, STATUS } from "./types";
 import project from "@/images/projects.png";
 import call from "@/images/calls.png";
 import visitation from "@/images/visitations.png";
@@ -46,9 +46,15 @@ export const fakeDonations: Donation[] = [
 
 export const fakeVisitation: Visitation[] = [
   {
-    visitor: "Jane Doe",
-    date: "2021-10-01",
-    time: "10:00 AM",
+    $id: "",
+    orphanage_id: "",
+    visitor_name: "Jane Doe",
+    visit_description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tellus lacus, dignissim commodo dictum aliquam, maximus nec mauris. Phasellus sed nisl dignissim erat eleifend congue. Nullam ultricies est a tempus varius. Phasellus vitae massa rutrum, elementum urna sed, volutpat urna. Nam at nulla dui. Suspendisse aliquet metus purus, eget ultrices tellus pharetra eget. Proin dictum urna non aliquet pellentesque. Nunc dapibus gravida justo eu finibus.",
+    visit_date: "2021-10-01",
+    visit_status: STATUS.PENDING,
+    visitor_id: "",
+    visit_time: "10:00 AM",
   },
 ];
 
