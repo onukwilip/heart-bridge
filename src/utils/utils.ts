@@ -53,3 +53,12 @@ export const parse_json = <T>(string: string) => {
     return string;
   }
 };
+
+/**
+ * * Function responsible for capitalizing the first letter of a string
+ * @param string The string to capitalize
+ * @returns The string with the first letter capitalized
+ */
+export const capitalize = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};

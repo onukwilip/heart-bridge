@@ -3,6 +3,7 @@ import { Visitation } from "@/utils/types";
 import { MenuItem, Select } from "@mui/material";
 import React from "react";
 import Button from "../atoms/Button.component";
+import { capitalize } from "@/utils/utils";
 
 interface VisitationDetailsModalProps {
   visitation: Visitation;
@@ -29,28 +30,25 @@ const VisitationDetailsModal: React.FC<VisitationDetailsModalProps> = ({
         <div className="grid grid-cols-5 ">
           <p className="col-span-2">Visitor name:</p>
           <p className="col-span-3 text-white/70 font-semibold">
-            Nkemdilim Nwanko
+            {visitation.visitor_name}
           </p>
         </div>
 
         <div className="grid grid-cols-5 ">
           <p className="col-span-2">Description:</p>
           <p className="col-span-3 text-white/70">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
-            omnis, soluta rerum praesentium facilis minima libero nesciunt
-            laudantium officia maiores nam delectus et animi distinctio harum.
-            Alias totam culpa similique.
+            {visitation.visit_description}
           </p>
         </div>
 
         <div className="grid grid-cols-5 ">
           <p className="col-span-2">Date:</p>
-          <p className="col-span-3 text-white/70">12/10/2020</p>
+          <p className="col-span-3 text-white/70">{visitation.visit_date}</p>
         </div>
 
         <div className="grid grid-cols-5 ">
           <p className="col-span-2">Time:</p>
-          <p className="col-span-3 text-white/70">2:00 PM</p>
+          <p className="col-span-3 text-white/70">{visitation.visit_time}</p>
         </div>
       </div>
 
@@ -62,9 +60,11 @@ const VisitationDetailsModal: React.FC<VisitationDetailsModalProps> = ({
         onChange={() => {}}
         className="text-white border-2 border-primary-grey"
       >
-        <MenuItem value="pending">Pending</MenuItem>
-        <MenuItem value="pending">Approved</MenuItem>
-        <MenuItem value="pending">Canceled</MenuItem>
+        {Array.from(["pending", "approved", "rejected"]).map((status) => (
+          <MenuItem key={status} value={status}>
+            {capitalize(status)}
+          </MenuItem>
+        ))}
       </Select>
 
       {/* Save */}

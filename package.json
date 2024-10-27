@@ -18,6 +18,7 @@
     "@types/paystack__inline-js": "^1.0.0",
     "appwrite": "^16.0.2",
     "axios": "^1.7.7",
+    "date-fns": "^4.1.0",
     "framer": "^2.4.1",
     "js-cookie": "^3.0.5",
     "next": "14.2.15",
