@@ -50,7 +50,6 @@ export enum APPWRITE_DATABASE {
   CALLS_COLLECTION_ID = "671e0caf001327aafec2",
 
   DONATIONS_COLLECTION_ID = "donations",
-
 }
 
 export enum APPWRITE_BUCKET {
@@ -223,7 +222,6 @@ export type TNotificationScheduleMetadata = {
 
 export type TNotificationDoc = Models.Document & TNotification;
 
-
 export type TCall = {
   $id: string;
   caller_name: string;
@@ -234,7 +232,7 @@ export type TCall = {
   status: string;
 };
 
-export type Visitation = {
+export type TVisitation = {
   $id: string;
   visitor_id: string;
   visitor_name: string;
@@ -256,4 +254,3 @@ export type TPayStackInitTransactionParams = {
   email: string;
   amount: string;
 };
-

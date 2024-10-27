@@ -1,11 +1,11 @@
 "use client";
 
 import { useModalContext } from "@/contexts/Modal.context";
-import { Visitation } from "@/utils/types";
+import { TVisitation } from "@/utils/types";
 import React from "react";
 
 interface VisitationCardProps {
-  visitation: Visitation;
+  visitation: TVisitation;
 }
 
 const CallsCard: React.FC<VisitationCardProps> = ({ visitation }) => {

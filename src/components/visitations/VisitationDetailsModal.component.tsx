@@ -1,18 +1,53 @@
 import { useModalContext } from "@/contexts/Modal.context";
-import { Visitation } from "@/utils/types";
-import { MenuItem, Select } from "@mui/material";
-import React from "react";
+import { APPWRITE_DATABASE, STATUS, TVisitation } from "@/utils/types";
+import { Alert, MenuItem, Select, Snackbar } from "@mui/material";
+import React, { useState } from "react";
 import Button from "../atoms/Button.component";
 import { capitalize } from "@/utils/utils";
+import useFetch from "@/hooks/useFetch.hook";
+import database from "@/utils/appwrite/appwrite_database.utils";
+import Loader from "../atoms/Loader.component";
+import { format } from "date-fns";
 
 interface VisitationDetailsModalProps {
-  visitation: Visitation;
+  visitation: TVisitation;
 }
 
 const VisitationDetailsModal: React.FC<VisitationDetailsModalProps> = ({
   visitation,
 }) => {
   const { close_modal } = useModalContext();
+  const [newStatus, setNewStatus] = useState<STATUS>(STATUS.PENDING);
+  const updateStatusState = useFetch({ loading: false });
+  const { display_loading, display_success, display_error } = updateStatusState;
+  const { DB_ID, VISITATIONS_COLLECTION_ID } = APPWRITE_DATABASE;
+
+  const handleUpdateStatus = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      display_loading();
+      // * Update the visitation status
+      await database.updateDocument(
+        DB_ID,
+        VISITATIONS_COLLECTION_ID,
+        visitation.$id,
+        {
+          visit_status: newStatus,
+        }
+      );
+
+      // * Display success message
+      display_success("Status updated successfully");
+
+      // * Close the modal
+      close_modal();
+    } catch (error) {
+      console.error(error);
+      // * Display error message
+      display_error((error as any).message || error);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-y-3">
@@ -43,32 +78,66 @@ const VisitationDetailsModal: React.FC<VisitationDetailsModalProps> = ({
 
         <div className="grid grid-cols-5 ">
           <p className="col-span-2">Date:</p>
-          <p className="col-span-3 text-white/70">{visitation.visit_date}</p>
+          <p className="col-span-3 text-white/70">
+            {format(visitation.visit_date, "dd MMM yyy")}
+          </p>
         </div>
 
         <div className="grid grid-cols-5 ">
           <p className="col-span-2">Time:</p>
-          <p className="col-span-3 text-white/70">{visitation.visit_time}</p>
+          <p className="col-span-3 text-white/70">
+            {format(visitation.visit_time, "hh:mm bb")}
+          </p>
         </div>
       </div>
 
       {/* Status dropdown */}
-      <Select
-        variant="outlined"
-        fullWidth
-        defaultValue="pending"
-        onChange={() => {}}
-        className="text-white border-2 border-primary-grey"
-      >
-        {Array.from(["pending", "approved", "rejected"]).map((status) => (
-          <MenuItem key={status} value={status}>
-            {capitalize(status)}
-          </MenuItem>
-        ))}
-      </Select>
+      <form onSubmit={handleUpdateStatus} className="flex flex-col gap-y-3">
+        <Select
+          variant="outlined"
+          fullWidth
+          defaultValue={visitation.visit_status}
+          onChange={(e) => setNewStatus(e.target.value as STATUS)}
+          className="text-white border-2 border-primary-grey"
+        >
+          {Array.from(["pending", "approved", "declined"]).map((status) => (
+            <MenuItem key={status} value={status}>
+              {capitalize(status)}
+            </MenuItem>
+          ))}
+        </Select>
 
-      {/* Save */}
-      <Button onClick={() => {}}>Save</Button>
+        {/* Save */}
+        <Button type="submit">
+          {updateStatusState.loading ? <Loader type="button" /> : "Save"}
+        </Button>
+      </form>
+
+      {updateStatusState.success ? (
+        <Snackbar
+          open={updateStatusState.success ? true : false}
+          onClose={() => updateStatusState.setSuccess(undefined)}
+        >
+          <Alert
+            color="success"
+            onClose={() => updateStatusState.setSuccess(undefined)}
+          >
+            {updateStatusState.success}
+          </Alert>
+        </Snackbar>
+      ) : updateStatusState.error ? (
+        <Snackbar
+          open={updateStatusState.error ? true : false}
+          onClose={() => updateStatusState.setError(undefined)}
+        >
+          <Alert
+            color="error"
+            onClose={() => updateStatusState.setError(undefined)}
+          >
+            {updateStatusState.error}
+          </Alert>
+        </Snackbar>
+      ) : null}
     </div>
   );
 };
