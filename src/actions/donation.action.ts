@@ -127,9 +127,11 @@ export const get_donations = async (
         (donation.donor as string) || ""
       );
 
-      const donor = { ...donor_response.prefs, $id: donor_response.$id };
+      const donor = donor_response.$id
+        ? { ...donor_response.prefs, $id: donor_response.$id }
+        : undefined;
 
-      parsed_donations.push({ ...donation, donor });
+      parsed_donations.push({ ...donation, donor: donor });
     }
 
     return parsed_donations;
