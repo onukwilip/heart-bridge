@@ -1,14 +1,14 @@
 "use client";
 
 import { useModalContext } from "@/contexts/Modal.context";
-import { Visitation } from "@/utils/types";
+import { TVisitation } from "@/utils/types";
 import React from "react";
 import VisitationDetailsModal from "./VisitationDetailsModal.component";
 import { format } from "date-fns";
 import { capitalize } from "@mui/material";
 
 interface VisitationCardProps {
-  visitation: Visitation;
+  visitation: TVisitation;
 }
 
 const VisitationCard: React.FC<VisitationCardProps> = ({ visitation }) => {
@@ -45,7 +45,7 @@ const VisitationCard: React.FC<VisitationCardProps> = ({ visitation }) => {
       </h3>
 
       {/* date */}
-      <p>{format(visitation.visit_date, "dd MMM YYY")}</p>
+      <p>{format(visitation.visit_date, "dd MMM yyy")}</p>
 
       {/* Time */}
       <p>{format(visitation.visit_time, "hh:mm bb")}</p>
@@ -61,7 +61,7 @@ function decideColor(status: string): string {
       return "golden";
     case "approved":
       return "green-500";
-    case "rejected":
+    case "declined":
       return "red-500";
     default:
       return "white";

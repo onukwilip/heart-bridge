@@ -1,4 +1,4 @@
-import { Donation, TProject, Summary, Visitation, STATUS } from "./types";
+import { Donation, TProject, Summary, TVisitation, STATUS } from "./types";
 import project from "@/images/projects.png";
 import call from "@/images/calls.png";
 import visitation from "@/images/visitations.png";
@@ -44,7 +44,7 @@ export const fakeDonations: Donation[] = [
   },
 ];
 
-export const fakeVisitation: Visitation[] = [
+export const fakeVisitation: TVisitation[] = [
   {
     $id: "",
     orphanage_id: "",

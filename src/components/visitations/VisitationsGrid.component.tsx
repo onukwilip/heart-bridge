@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import VisitationCard from "./VisitationCard.component";
 import { useUserContext } from "@/contexts/User.context";
-import { APPWRITE_DATABASE, Visitation } from "@/utils/types";
+import { APPWRITE_DATABASE, TVisitation } from "@/utils/types";
 import { Query } from "appwrite";
 import database from "@/utils/appwrite/appwrite_database.utils";
 import useFetch from "@/hooks/useFetch.hook";
@@ -11,7 +11,7 @@ import { Skeleton } from "@mui/material";
 
 const VisitationsGrid = () => {
   const { user, fetch_user_state } = useUserContext();
-  const [visitations, setVisitations] = useState<Visitation[]>([]);
+  const [visitations, setVisitations] = useState<TVisitation[]>([]);
   const fetch_visitations_state = useFetch({ loading: true });
 
   /**
