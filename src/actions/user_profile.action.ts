@@ -46,6 +46,8 @@ export const get_user_profile = async (
     // * Retrieves the details of the user
     const user = await users.get<TUser>(orphanage_id);
 
+    // console.log("USER", user);
+
     // * If the user is not an orphanage, but a donor, throw error
     if (user.prefs.account_type === "donor")
       throw new Error(JSON.stringify({ code: 403 }));

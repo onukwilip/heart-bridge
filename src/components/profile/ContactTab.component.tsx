@@ -36,22 +36,24 @@ const ContactTab: FC<{ user: TUser }> = ({ user }) => {
         />
       </div>
       <div className="mt-4">
-        <iframe
-          src={
-            "https://maps.google.com/maps?q=" +
-            (user.location?.lat || orphanage_details.location?.lat) +
-            "," +
-            (user.location?.lng || orphanage_details.location?.lng) +
-            "&t=&z=15&ie=UTF8&iwloc=&output=embed"
-          }
-          width="100%"
-          height="450"
-          style={{ border: 0 }}
-          className={"w-full h-[450px] rounded-lg"}
-          loading="lazy"
-          {...{ referrerpolicy: "no-referrer-when-downgrade" }}
-          title="map"
-        ></iframe>
+        {user.location && (
+          <iframe
+            src={
+              "https://maps.google.com/maps?q=" +
+              (user.location?.lat || orphanage_details.location?.lat) +
+              "," +
+              (user.location?.lng || orphanage_details.location?.lng) +
+              "&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            }
+            width="100%"
+            height="450"
+            style={{ border: 0 }}
+            className={"w-full h-[450px] rounded-lg"}
+            loading="lazy"
+            {...{ referrerpolicy: "no-referrer-when-downgrade" }}
+            title="map"
+          ></iframe>
+        )}
       </div>
     </TabSection>
   );

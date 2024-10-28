@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.1.3",
     "@paystack/inline-js": "^2.22.1",
+    "@types/date-fns": "^2.6.3",
     "@types/js-cookie": "^3.0.6",
     "@types/paystack": "^2.0.4",
     "@types/paystack__inline-js": "^1.0.0",

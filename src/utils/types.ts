@@ -3,16 +3,42 @@ import { StaticImageData } from "next/image";
 
 export type TUserRoles = "orphanage" | "donor";
 
+export type TUserAddress = {
+  street?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  formatted_address?: string;
+};
+
 export type TUserLocation = {
-  lat: number;
-  lng: number;
-  address: {
-    street: string;
-    city?: string;
-    state?: string;
-    country: string;
-    formatted_address: string;
-  };
+  lat?: number;
+  lng?: number;
+  address: TUserAddress;
+};
+
+export type TPlaceAPIResponse = {
+  candidates: [
+    {
+      formatted_address: string;
+      geometry: {
+        location: {
+          lat: number;
+          lng: number;
+        };
+        viewport: {
+          northeast: {
+            lat: number;
+            lng: number;
+          };
+          southwest: {
+            lat: number;
+            lng: number;
+          };
+        };
+      };
+    }
+  ];
 };
 
 export type TUser = {
@@ -50,7 +76,6 @@ export enum APPWRITE_DATABASE {
   CALLS_COLLECTION_ID = "671e0caf001327aafec2",
 
   DONATIONS_COLLECTION_ID = "donations",
-
 }
 
 export enum APPWRITE_BUCKET {
@@ -83,6 +108,16 @@ export enum SIGNUP_FORMSTATE {
   BIO = "bio",
 }
 
+export enum LOCATION_ENUM {
+  LAT = "lat",
+  LNG = "lng",
+  COUNTRY = "country",
+  STATE = "state",
+  CITY = "city",
+  STREET = "street",
+  FORMATTED_ADDRESS = "formatted_address",
+}
+
 export enum TAB_PAGE_NAMES {
   DASHBOARD = "dashboard",
   DONATIONS = "donations",
@@ -111,12 +146,6 @@ export interface Donation {
   project: string;
   date: string;
 }
-
-// export interface Visitation {
-//   visitor: string;
-//   date: string;
-//   time: string;
-// }
 
 export type TProject = {
   $id: string;
@@ -223,7 +252,6 @@ export type TNotificationScheduleMetadata = {
 
 export type TNotificationDoc = Models.Document & TNotification;
 
-
 export type TCall = {
   $id: string;
   caller_name: string;
@@ -256,4 +284,3 @@ export type TPayStackInitTransactionParams = {
   email: string;
   amount: string;
 };
-
