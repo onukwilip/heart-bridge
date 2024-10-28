@@ -1,14 +1,15 @@
 "use client";
 
 import { useModalContext } from "@/contexts/Modal.context";
-import { TVisitation } from "@/utils/types";
+import { TCall, TVisitation } from "@/utils/types";
+import { format } from "date-fns";
 import React from "react";
 
 interface VisitationCardProps {
-  visitation: TVisitation;
+  call: TCall;
 }
 
-const CallsCard: React.FC<VisitationCardProps> = ({ visitation }) => {
+const CallsCard: React.FC<VisitationCardProps> = ({ call }) => {
   return (
     <div className="flex w-full duration-300  flex-col space-y-2 bg-white/10 rounded-xl p-4 border-b-primary border-b-2">
       {/* Status + detail link */}
@@ -17,15 +18,13 @@ const CallsCard: React.FC<VisitationCardProps> = ({ visitation }) => {
       </div>
 
       {/* visitor  name */}
-      <h3 className="text-xl font-bold text-white">
-        {visitation.visitor_name}
-      </h3>
+      <h3 className="text-xl font-bold text-white">{call.caller_name}</h3>
 
       {/* date */}
-      <p>{visitation.visit_date}</p>
+      <p>{format(call.call_date, "dd MMM yyy")}</p>
 
       {/* Time */}
-      <p>{visitation.visit_time}</p>
+      <p>{format(call.call_time, "hh:mm bb")}</p>
     </div>
   );
 };
