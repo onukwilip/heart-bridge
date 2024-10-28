@@ -38,7 +38,7 @@ const Modal: FC = () => {
     <>
       {screen_size.width >= 480 ? (
         <MUIModal open={modal.open} onClose={close_modal}>
-          <div className="w-[95%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary-dark rounded-xl shadow-lg p-4 xs:w-[400px] sm:w-[600px] min-h-[300px] max-h-[80vh] overflow-y-auto">
+          <div className="w-[95%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary-dark rounded-xl shadow-lg p-4 xs:w-[400px] sm:w-[600px] max-h-[80vh] overflow-y-auto">
             {modal.children}
           </div>
         </MUIModal>
