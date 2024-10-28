@@ -4,15 +4,13 @@ import React from "react";
 
 const Donations = () => {
   return (
-    <RouteProtector role="orphanage">
-      <div className="flex flex-col space-y-10">
-        {/* Title */}
-        <h1 className="text-white text-2xl font-bold">Donations</h1>
+    <div className="flex flex-col space-y-10">
+      {/* Title */}
+      <h1 className="text-white text-2xl font-bold">Donations</h1>
 
-        {/* Dontaions Table */}
-        <DonationsTable />
-      </div>
-    </RouteProtector>
+      {/* Dontaions Table */}
+      <DonationsTable />
+    </div>
   );
 };
 
