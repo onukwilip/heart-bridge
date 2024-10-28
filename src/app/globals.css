@@ -65,3 +65,7 @@ ul.list li {
     background-color: transparent;
   }
 }
+
+.menu-item {
+  color: white;
+}
