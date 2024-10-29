@@ -66,8 +66,11 @@ const VisitationsGrid = () => {
       {fetch_visitations_state.loading || fetch_user_state.loading ? (
         <div className="grid md:grid-cols-3 lg:grid-cols-4 w-full gap-10 place-items-center ">
           {Array.from(
-            [1, 2, 3, 4, 5, 6, 7, 8].map(() => (
-              <div className="w-full flex flex-col gap-2 max-w-[350px]">
+            [1, 2, 3, 4, 5, 6, 7, 8].map((_, idx) => (
+              <div
+                key={idx}
+                className="w-full flex flex-col gap-2 max-w-[350px]"
+              >
                 <Skeleton
                   animation="pulse"
                   variant="rectangular"
