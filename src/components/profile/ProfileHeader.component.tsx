@@ -5,6 +5,7 @@ import cover_image from "@/images/happychildren.png";
 import dummy_image from "@/images/dummy-profile-pic.png";
 import Button from "../atoms/Button.component";
 import { Skeleton } from "@mui/material";
+import Link from "next/link";
 
 const ProfileHeader: FC<{ user?: TUser; loading?: boolean }> = ({
   user,
@@ -84,9 +85,19 @@ const ProfileHeader: FC<{ user?: TUser; loading?: boolean }> = ({
             <Button className="!h-[30px] w-[100px]">
               <span className="!text-2xs">Book a visit</span>{" "}
             </Button>
-            <Button className="!h-[30px] w-fit" outlined size="small">
-              <i className="fas fa-phone !text-xs"></i>
-            </Button>
+            <Link
+              href={`tel://${user?.phone_number}`}
+              className={`${!user?.phone_number ? "pointer-events-none" : ""}`}
+            >
+              <Button
+                className="!h-[30px] w-fit"
+                outlined
+                size="small"
+                disabled={!user?.phone_number}
+              >
+                <i className="fas fa-phone !text-xs"></i>
+              </Button>
+            </Link>
           </div>
         )}
       </div>
