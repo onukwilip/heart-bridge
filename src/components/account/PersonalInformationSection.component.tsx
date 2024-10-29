@@ -4,15 +4,14 @@ import TabSection from "../molecules/TabSection.component";
 import EditButton from "../atoms/EditButton.component";
 import PersonalInformationDetail from "./PersonalInformationDetail.component";
 import { useUserContext } from "@/contexts/User.context";
-import { SIGNUP_FORMSTATE, TUser } from "@/utils/types";
+import { USER_FORMSTATE, TUser } from "@/utils/types";
 import SectionHeader from "./SectionHeader.component";
 import { Skeleton } from "@mui/material";
 import { useModalContext } from "@/contexts/Modal.context";
 import EditUserProfile from "./EditUserProfile.component";
-import { refresh_user_details } from "@/utils/account/account";
 
 const PersonalInformationSection = () => {
-  const { user, refresh_user } = useUserContext();
+  const { user, refresh_user, fetch_user_state } = useUserContext();
   const { open_modal, modal } = useModalContext();
 
   /**
@@ -81,7 +80,7 @@ const PersonalInformationSection = () => {
         )}
         {/* Email */}
         <PersonalInformationDetail
-          title={SIGNUP_FORMSTATE.EMAIL}
+          title={USER_FORMSTATE.EMAIL}
           value={
             user?.email || (
               <Skeleton
@@ -89,6 +88,22 @@ const PersonalInformationSection = () => {
                 width={"50%"}
                 className="!bg-weak-grey/10"
               />
+            )
+          }
+          no_capitalize
+        />
+        {/* Phone number */}
+        <PersonalInformationDetail
+          title={USER_FORMSTATE.PHONE_NUMBER}
+          value={
+            fetch_user_state.loading ? (
+              <Skeleton
+                animation="pulse"
+                width={"50%"}
+                className="!bg-weak-grey/10"
+              />
+            ) : (
+              user?.prefs.phone_number || "_"
             )
           }
           no_capitalize

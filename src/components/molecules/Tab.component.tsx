@@ -49,6 +49,7 @@ const Tab: FC<{
         {menus.map((menu, i) => (
           <>
             <div
+              key={i}
               onClick={() =>
                 router.push(`${base_route}?${tab_param}=${menu.slug}`)
               }

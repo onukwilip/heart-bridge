@@ -12,9 +12,14 @@ export type TUserAddress = {
 };
 
 export type TUserLocation = {
+  user?: string | TUser;
   lat?: number;
   lng?: number;
-  address: TUserAddress;
+  street?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  formatted_address?: string;
 };
 
 export type TPlaceAPIResponse = {
@@ -71,11 +76,11 @@ export enum APPWRITE_DATABASE {
   PAYSTACK_DETAILS_COLLECTION_ID = "paystack_details",
   PROJECTS_COLLECTION_ID = "projects",
   NOTIFICATIONS_COLLECTION_ID = "notfications",
-
   VISITATIONS_COLLECTION_ID = "671e0a5700199fd0a5d7",
   CALLS_COLLECTION_ID = "671e0caf001327aafec2",
-
   DONATIONS_COLLECTION_ID = "donations",
+  USERS_COLLECTION_ID = "users",
+  LOCATION_COLLECTION_ID = "location",
 }
 
 export enum APPWRITE_BUCKET {
@@ -98,14 +103,16 @@ export enum PROJECT_FORM {
   USER_ID = "user_id",
 }
 
-export enum SIGNUP_FORMSTATE {
+export enum USER_FORMSTATE {
   FIRSTNAME = "firstname",
   LASTNAME = "lastname",
   EMAIL = "email",
   ACCOUNT_TYPE = "account_type",
   PASSWORD = "password",
+  PHONE_NUMBER = "phone_number",
   ORPHANAGE_NAME = "orphanage_name",
   BIO = "bio",
+  LOCATION = "lastname",
 }
 
 export enum LOCATION_ENUM {
@@ -283,4 +290,31 @@ export type TPayStackInitTransactionParams = {
   orphanage_id: string;
   email: string;
   amount: string;
+};
+
+export type TProps<
+  SearchParams = Record<string, string>,
+  Params = Record<string, string>
+> = {
+  searchParams: SearchParams;
+  params: Params;
+};
+
+export type TSearchType = "orphanage" | "project" | "nearby";
+
+export type TIpApiResponse = {
+  status: "success" | "fail";
+  country: string;
+  countryCode: string;
+  region: string;
+  regionName: string;
+  city: string;
+  zip: string;
+  lat: number;
+  lon: number;
+  timezone: string;
+  isp: string;
+  org: string;
+  as: string;
+  query: string;
 };

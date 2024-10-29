@@ -1,8 +1,9 @@
 import { ID, Models } from "appwrite";
 import account from "./appwrite_account.utils";
-import { SIGNUP_FORMSTATE, TUser } from "../types";
+import { USER_FORMSTATE, TUser, APPWRITE_DATABASE } from "../types";
 import cookies from "js-cookie";
 import { USER_COOKIE_NAME } from "../constants.utils";
+import database from "./appwrite_database.utils";
 
 /**
  * * Function responsible for creating a new user
@@ -30,15 +31,25 @@ export const create_account = async (data: TUser) => {
     );
     console.log("SIGNED IN NEW USER", current_session);
 
-    // * Update other information concerning the newly created user
-    const updated_user = await account.updatePrefs({
-      [SIGNUP_FORMSTATE.FIRSTNAME]: data.firstname,
-      [SIGNUP_FORMSTATE.LASTNAME]: data.lastname,
-      [SIGNUP_FORMSTATE.ACCOUNT_TYPE]: data.account_type,
+    const details_to_add: Omit<TUser, "email" | "password"> = {
+      [USER_FORMSTATE.FIRSTNAME]: data.firstname,
+      [USER_FORMSTATE.LASTNAME]: data.lastname,
+      [USER_FORMSTATE.ACCOUNT_TYPE]: data.account_type,
       ...(data.orphanage_name
-        ? { [SIGNUP_FORMSTATE.ORPHANAGE_NAME]: data.orphanage_name }
+        ? { [USER_FORMSTATE.ORPHANAGE_NAME]: data.orphanage_name }
         : {}),
-    });
+    };
+
+    // * Update other information concerning the newly created user
+    const updated_user = await account.updatePrefs(details_to_add);
+    // * Create new user in the Users collection
+    await database.createDocument(
+      APPWRITE_DATABASE.DB_ID,
+      APPWRITE_DATABASE.USERS_COLLECTION_ID,
+      created_user.$id,
+      { ...details_to_add, email: created_user.email }
+    );
+
     console.log("UPDATED USER", updated_user);
 
     // * Get the signed in user details (the user who was just created)

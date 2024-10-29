@@ -3,14 +3,10 @@ import Donate from "@/components/donate/Donate.component";
 import Header from "@/components/profile/Header.component";
 import database from "@/utils/appwrite/node_appwrite_database.utils";
 import users from "@/utils/appwrite/node_appwrite_users.utils";
-import { APPWRITE_DATABASE, TProject, TUser } from "@/utils/types";
+import { APPWRITE_DATABASE, TProject, TProps, TUser } from "@/utils/types";
 import { Metadata } from "next";
 import { Models } from "node-appwrite";
 import React, { FC } from "react";
-
-type Props = {
-  searchParams: Record<string, string>;
-};
 
 /**
  * * Function responsible for dynamically rendering the page's metadata object
@@ -19,7 +15,7 @@ type Props = {
  */
 export const generateMetadata = async ({
   searchParams,
-}: Props): Promise<Metadata> => {
+}: TProps): Promise<Metadata> => {
   try {
     const orphanage_id = searchParams["orphanage"];
     const project_id = searchParams["project"];
@@ -47,7 +43,7 @@ export const generateMetadata = async ({
   }
 };
 
-const DonatePage: FC<Props> = async ({ searchParams }) => {
+const DonatePage: FC<TProps> = async ({ searchParams }) => {
   try {
     const orphanage_id = searchParams["orphanage"];
     const project_id = searchParams["project"];

@@ -3,7 +3,7 @@ import React, { FC, FormEvent, useEffect, useState } from "react";
 import TextField from "../atoms/TextField.component";
 import useFetch from "@/hooks/useFetch.hook";
 import { Alert, Snackbar } from "@mui/material";
-import { APPWRITE_BUCKET, SIGNUP_FORMSTATE, TUser } from "@/utils/types";
+import { APPWRITE_BUCKET, USER_FORMSTATE, TUser } from "@/utils/types";
 import { handle_input_change } from "@/utils/input.utils";
 import Button from "../atoms/Button.component";
 import Loader from "../atoms/Loader.component";
@@ -28,6 +28,7 @@ const EditUserProfile: FC<{
     firstname: "",
     lastname: "",
     password: "",
+    phone_number: "",
     image: undefined,
     ...(existing_information.account_type === "orphanage"
       ? { orphanage_name: "" }
@@ -131,22 +132,27 @@ const EditUserProfile: FC<{
     if (!existing_information) return;
 
     handle_input_change(
-      SIGNUP_FORMSTATE.FIRSTNAME,
+      USER_FORMSTATE.FIRSTNAME,
       existing_information.firstname,
       setFormState
     );
     handle_input_change(
-      SIGNUP_FORMSTATE.LASTNAME,
+      USER_FORMSTATE.LASTNAME,
       existing_information.lastname,
       setFormState
     );
     handle_input_change(
-      SIGNUP_FORMSTATE.EMAIL,
+      USER_FORMSTATE.EMAIL,
       existing_information.email,
       setFormState
     );
     handle_input_change(
-      SIGNUP_FORMSTATE.ORPHANAGE_NAME,
+      USER_FORMSTATE.PHONE_NUMBER,
+      existing_information.phone_number,
+      setFormState
+    );
+    handle_input_change(
+      USER_FORMSTATE.ORPHANAGE_NAME,
       existing_information.orphanage_name as string,
       setFormState
     );
@@ -205,7 +211,7 @@ const EditUserProfile: FC<{
           <div className="flex items-center justify-center w-full gap-3">
             {/* Firstname field */}
             <TextField
-              name={SIGNUP_FORMSTATE.FIRSTNAME}
+              name={USER_FORMSTATE.FIRSTNAME}
               label="Firstname"
               placeholder="Enter firstname"
               onChange={(e) =>
@@ -218,7 +224,7 @@ const EditUserProfile: FC<{
             />
             {/* Lastname field */}
             <TextField
-              name={SIGNUP_FORMSTATE.LASTNAME}
+              name={USER_FORMSTATE.LASTNAME}
               label="Lastname"
               placeholder="Enter lastname"
               onChange={(e) =>
@@ -233,7 +239,7 @@ const EditUserProfile: FC<{
           {/* Orphanage name field */}
           {existing_information.account_type === "orphanage" && (
             <TextField
-              name={SIGNUP_FORMSTATE.ORPHANAGE_NAME}
+              name={USER_FORMSTATE.ORPHANAGE_NAME}
               label="Orphanage name"
               placeholder="Enter the orphanage name"
               onChange={(e) =>
@@ -245,10 +251,22 @@ const EditUserProfile: FC<{
               required
             />
           )}
-
+          {/* Phone number field */}
+          <TextField
+            name={USER_FORMSTATE.PHONE_NUMBER}
+            label="Phone"
+            placeholder="Enter phone number"
+            onChange={(e) =>
+              handle_input_change(e.target.name, e.target.value, setFormState)
+            }
+            value={form_state.phone_number}
+            variant="outlined"
+            className="w-full"
+            required
+          />
           {/* Email field */}
           <TextField
-            name={SIGNUP_FORMSTATE.EMAIL}
+            name={USER_FORMSTATE.EMAIL}
             label="Email"
             placeholder="Enter email address"
             type="email"

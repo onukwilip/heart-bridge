@@ -16,7 +16,7 @@ import { FormControl } from "../atoms/FormControl.component";
 import Link from "next/link";
 import GoogleButton from "../atoms/GoogleSSO.component";
 import { handle_input_change } from "@/utils/input.utils";
-import { SIGNUP_FORMSTATE, TUser } from "@/utils/types";
+import { USER_FORMSTATE, TUser } from "@/utils/types";
 import { useRouter } from "next/navigation";
 import { create_account } from "@/utils/appwrite/auth.utils";
 import { AppwriteException } from "appwrite";
@@ -71,7 +71,7 @@ const SignUpForm: FC<{ className?: string }> = ({ className }) => {
         <div className="flex items-center justify-center w-full gap-3">
           {/* Firstname field */}
           <TextField
-            name={SIGNUP_FORMSTATE.FIRSTNAME}
+            name={USER_FORMSTATE.FIRSTNAME}
             label="Firstname"
             placeholder="Enter firstname"
             onChange={(e) =>
@@ -84,7 +84,7 @@ const SignUpForm: FC<{ className?: string }> = ({ className }) => {
           />
           {/* Lastname field */}
           <TextField
-            name={SIGNUP_FORMSTATE.LASTNAME}
+            name={USER_FORMSTATE.LASTNAME}
             label="Lastname"
             placeholder="Enter lastname"
             onChange={(e) =>
@@ -102,7 +102,7 @@ const SignUpForm: FC<{ className?: string }> = ({ className }) => {
             Select Account Type
           </InputLabel>
           <Select
-            name={SIGNUP_FORMSTATE.ACCOUNT_TYPE}
+            name={USER_FORMSTATE.ACCOUNT_TYPE}
             input={<OutlinedInput label="Select Account Type" />}
             value={form_state.account_type}
             onChange={(e) =>
@@ -117,7 +117,7 @@ const SignUpForm: FC<{ className?: string }> = ({ className }) => {
         {/* Orphanage name field */}
         {form_state.account_type === "orphanage" && (
           <TextField
-            name={SIGNUP_FORMSTATE.ORPHANAGE_NAME}
+            name={USER_FORMSTATE.ORPHANAGE_NAME}
             label="Orphanage name"
             placeholder="Enter the orphanage name"
             onChange={(e) =>
@@ -131,7 +131,7 @@ const SignUpForm: FC<{ className?: string }> = ({ className }) => {
         )}
         {/* Email field */}
         <TextField
-          name={SIGNUP_FORMSTATE.EMAIL}
+          name={USER_FORMSTATE.EMAIL}
           label="Email"
           placeholder="Enter email address"
           type="email"
@@ -147,7 +147,7 @@ const SignUpForm: FC<{ className?: string }> = ({ className }) => {
         <FormControl variant="outlined" className="w-full" required>
           <InputLabel htmlFor="password">Password</InputLabel>
           <OutlinedInput
-            name={SIGNUP_FORMSTATE.PASSWORD}
+            name={USER_FORMSTATE.PASSWORD}
             id="password"
             type={show_password ? "text" : "password"}
             onChange={(e) =>

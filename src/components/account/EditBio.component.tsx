@@ -1,8 +1,8 @@
 import { useModalContext } from "@/contexts/Modal.context";
-import React, { FC, FormEvent, useEffect, useState } from "react";
+import React, { FC, FormEvent, use, useEffect, useState } from "react";
 import useFetch from "@/hooks/useFetch.hook";
 import { Alert, Snackbar } from "@mui/material";
-import { SIGNUP_FORMSTATE, TUser } from "@/utils/types";
+import { USER_FORMSTATE, TUser } from "@/utils/types";
 import { handle_input_change } from "@/utils/input.utils";
 import Button from "../atoms/Button.component";
 import Loader from "../atoms/Loader.component";
@@ -10,12 +10,14 @@ import account from "@/utils/appwrite/appwrite_account.utils";
 import { useUserContext } from "@/contexts/User.context";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { update_user_profile } from "@/actions/user_profile.action";
 
 const EditBio: FC<{
   existing_bio: string;
   existing_details: TUser;
+  user_id: string;
   post_submit_function?: Function;
-}> = ({ existing_bio, existing_details, post_submit_function }) => {
+}> = ({ existing_bio, existing_details, post_submit_function, user_id }) => {
   const { close_modal } = useModalContext();
   const form_submit_state = useFetch();
 
@@ -30,13 +32,16 @@ const EditBio: FC<{
     e: FormEvent<HTMLFormElement>
   ): Promise<void> => {
     try {
+      // * Display the loading state for the form submission
+      form_submit_state.display_loading();
       // * Preevents the form from reloading the page
       e.preventDefault();
 
       // * Update the user bio
-      await account.updatePrefs({
+      await update_user_profile({
         ...existing_details,
         bio: form_state.bio,
+        $id: user_id,
       });
 
       post_submit_function && (await post_submit_function());
@@ -58,7 +63,7 @@ const EditBio: FC<{
   const auto_fill_input_fields = () => {
     if (!existing_bio) return;
 
-    handle_input_change(SIGNUP_FORMSTATE.BIO, existing_bio, setFormState);
+    handle_input_change(USER_FORMSTATE.BIO, existing_bio, setFormState);
   };
 
   useEffect(() => {
@@ -83,7 +88,7 @@ const EditBio: FC<{
             theme="snow"
             value={form_state.bio}
             onChange={(value) =>
-              handle_input_change(SIGNUP_FORMSTATE.BIO, value, setFormState)
+              handle_input_change(USER_FORMSTATE.BIO, value, setFormState)
             }
             placeholder="Enter details about your orphanage"
             className={`bg-transparent !border-[1px] !border-dark/80 outline-none !font-inter rounded-md w-full h-[300px] text-dark/80  placeholder:!text-dark/80 first-letter:placeholder:capitalize text-[14px] sm:text-[19px] resize-none !overflow-auto !text-weak-white`}

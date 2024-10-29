@@ -3,13 +3,10 @@ import Error403 from "@/components/atoms/Error403.component";
 import Error404 from "@/components/atoms/Error404.component";
 import Header from "@/components/profile/Header.component";
 import OrphanageProfile from "@/components/profile/OrphanageProfile.component";
+import { TProps } from "@/utils/types";
 import { parse_json } from "@/utils/utils";
 import { Metadata } from "next";
 import React, { FC, Suspense } from "react";
-
-type Props = {
-  params: { orphanage_id: string };
-};
 
 /**
  * * Function responsible for dynamically rendering the page's metadata object
@@ -18,7 +15,7 @@ type Props = {
  */
 export const generateMetadata = async ({
   params: { orphanage_id },
-}: Props): Promise<Metadata> => {
+}: TProps): Promise<Metadata> => {
   try {
     const user = await get_user_profile(orphanage_id);
 
@@ -46,7 +43,7 @@ export const generateMetadata = async ({
   }
 };
 
-const OrphanageProfilePage: FC<Props> = async ({
+const OrphanageProfilePage: FC<TProps> = async ({
   params: { orphanage_id },
 }) => {
   try {
@@ -54,7 +51,7 @@ const OrphanageProfilePage: FC<Props> = async ({
 
     return (
       <div>
-        <Header />
+        <Header display_search />
         <OrphanageProfile user={user} />
       </div>
     );

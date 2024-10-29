@@ -38,7 +38,7 @@ const Notification: FC<{ notification: TNotificationDoc; expand: boolean }> = ({
     <Link
       onClick={async () => await read_notification(notification.$id)}
       className={`w-full p-3 flex gap-4 justify-between rounded ${
-        !notification.read ? "bg-primary/15" : "bg-[#1E1E1ECC]"
+        !notification.read ? "bg-primary/15" : "bg-container-dark"
       } items-center !text-sm cursor-pointer transition hover:scale-105`}
       href={link}
     >

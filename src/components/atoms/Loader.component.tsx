@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, LinearProgress } from "@mui/material";
 import React, { FC } from "react";
 
 const Loader: FC<{
@@ -14,7 +14,12 @@ const Loader: FC<{
       />
     );
 
-  return <>Loading...</>;
+  return (
+    <LinearProgress
+      color="primary"
+      className={`w-[100px] ${className || ""}`}
+    />
+  );
 };
 
 export default Loader;

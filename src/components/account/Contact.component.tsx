@@ -8,25 +8,18 @@ import { useUserContext } from "@/contexts/User.context";
 import { useModalContext } from "@/contexts/Modal.context";
 import { TUser } from "@/utils/types";
 
-const orphanage_details = {
-  location: {
-    lat: 53.4737,
-    lng: -2.2368,
-  },
-};
-
 const Contact = () => {
   const { user, refresh_user } = useUserContext();
   const { open_modal } = useModalContext();
 
   /**
-   * * Function responsible for displaying the modal to edit user bank information
+   * * Function responsible for displaying the modal to edit user contact information
    */
   const handle_edit_click = () => {
     open_modal({
       children: (
         <EditContact
-          existing_information={user?.prefs as TUser}
+          existing_information={{ ...user?.prefs, email: user?.email } as TUser}
           user_id={user?.$id || ""}
           post_submit_function={refresh_user}
         />
@@ -44,7 +37,7 @@ const Contact = () => {
       <div className="w-full">
         <PersonalInformationDetail
           title={"Address"}
-          value={user?.prefs.location?.address.formatted_address || "-"}
+          value={user?.prefs.location?.formatted_address || "-"}
         />
       </div>
       {user?.prefs.location && (
