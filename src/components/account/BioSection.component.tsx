@@ -11,7 +11,7 @@ import EditBio from "./EditBio.component";
 import { refresh_user_details } from "@/utils/account/account";
 
 const BioSection = () => {
-  const { user } = useUserContext();
+  const { user, refresh_user } = useUserContext();
   const { open_modal } = useModalContext();
 
   /**
@@ -24,6 +24,7 @@ const BioSection = () => {
           existing_bio={user?.prefs?.bio || ""}
           existing_details={{ ...user?.prefs, email: user?.email } as TUser}
           user_id={user?.$id || ""}
+          post_submit_function={refresh_user}
         />
       ),
     });

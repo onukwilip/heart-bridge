@@ -47,7 +47,7 @@ export const create_account = async (data: TUser) => {
       APPWRITE_DATABASE.DB_ID,
       APPWRITE_DATABASE.USERS_COLLECTION_ID,
       created_user.$id,
-      details_to_add
+      { ...details_to_add, email: created_user.email }
     );
 
     console.log("UPDATED USER", updated_user);

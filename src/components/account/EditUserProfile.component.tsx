@@ -28,6 +28,7 @@ const EditUserProfile: FC<{
     firstname: "",
     lastname: "",
     password: "",
+    phone_number: "",
     image: undefined,
     ...(existing_information.account_type === "orphanage"
       ? { orphanage_name: "" }
@@ -146,6 +147,11 @@ const EditUserProfile: FC<{
       setFormState
     );
     handle_input_change(
+      USER_FORMSTATE.PHONE_NUMBER,
+      existing_information.phone_number,
+      setFormState
+    );
+    handle_input_change(
       USER_FORMSTATE.ORPHANAGE_NAME,
       existing_information.orphanage_name as string,
       setFormState
@@ -245,7 +251,19 @@ const EditUserProfile: FC<{
               required
             />
           )}
-
+          {/* Phone number field */}
+          <TextField
+            name={USER_FORMSTATE.PHONE_NUMBER}
+            label="Phone"
+            placeholder="Enter phone number"
+            onChange={(e) =>
+              handle_input_change(e.target.name, e.target.value, setFormState)
+            }
+            value={form_state.phone_number}
+            variant="outlined"
+            className="w-full"
+            required
+          />
           {/* Email field */}
           <TextField
             name={USER_FORMSTATE.EMAIL}

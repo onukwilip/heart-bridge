@@ -32,6 +32,8 @@ const EditBio: FC<{
     e: FormEvent<HTMLFormElement>
   ): Promise<void> => {
     try {
+      // * Display the loading state for the form submission
+      form_submit_state.display_loading();
       // * Preevents the form from reloading the page
       e.preventDefault();
 

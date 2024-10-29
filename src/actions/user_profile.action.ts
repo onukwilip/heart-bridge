@@ -165,6 +165,7 @@ export const update_user_profile = async (
         : {}),
       account_type: current_user.prefs.account_type,
       bio: user.bio || current_user.prefs.bio,
+      phone_number: user.phone_number || current_user.prefs.phone_number,
       image: user.image || current_user.prefs.image,
       ...(current_user.prefs.account_type === "orphanage"
         ? { location: user.location || current_user.prefs.location }

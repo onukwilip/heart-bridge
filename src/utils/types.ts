@@ -109,6 +109,7 @@ export enum USER_FORMSTATE {
   EMAIL = "email",
   ACCOUNT_TYPE = "account_type",
   PASSWORD = "password",
+  PHONE_NUMBER = "phone_number",
   ORPHANAGE_NAME = "orphanage_name",
   BIO = "bio",
   LOCATION = "lastname",

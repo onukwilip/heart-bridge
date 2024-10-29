@@ -9,10 +9,9 @@ import SectionHeader from "./SectionHeader.component";
 import { Skeleton } from "@mui/material";
 import { useModalContext } from "@/contexts/Modal.context";
 import EditUserProfile from "./EditUserProfile.component";
-import { refresh_user_details } from "@/utils/account/account";
 
 const PersonalInformationSection = () => {
-  const { user, refresh_user } = useUserContext();
+  const { user, refresh_user, fetch_user_state } = useUserContext();
   const { open_modal, modal } = useModalContext();
 
   /**
@@ -89,6 +88,22 @@ const PersonalInformationSection = () => {
                 width={"50%"}
                 className="!bg-weak-grey/10"
               />
+            )
+          }
+          no_capitalize
+        />
+        {/* Phone number */}
+        <PersonalInformationDetail
+          title={USER_FORMSTATE.PHONE_NUMBER}
+          value={
+            fetch_user_state.loading ? (
+              <Skeleton
+                animation="pulse"
+                width={"50%"}
+                className="!bg-weak-grey/10"
+              />
+            ) : (
+              user?.prefs.phone_number || "_"
             )
           }
           no_capitalize
