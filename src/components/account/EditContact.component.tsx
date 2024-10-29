@@ -7,6 +7,8 @@ import Button from "../atoms/Button.component";
 import { get_places } from "@/actions/location.action";
 import useFetch from "@/hooks/useFetch.hook";
 import account from "@/utils/appwrite/appwrite_account.utils";
+import { update_user_profile } from "@/actions/user_profile.action";
+import Loader from "../atoms/Loader.component";
 
 const EditContact: FC<{
   existing_information: TUser;
@@ -20,13 +22,11 @@ const EditContact: FC<{
   const [form_state, setFormState] = useState<TUserLocation>({
     lat: 0,
     lng: 0,
-    address: {
-      country: "",
-      formatted_address: "",
-      street: "",
-      city: "",
-      state: "",
-    },
+    country: "",
+    formatted_address: "",
+    street: "",
+    city: "",
+    state: "",
   });
   let timeout: NodeJS.Timeout;
 
@@ -39,14 +39,11 @@ const EditContact: FC<{
     setFormState((prev) => ({
       lat: existing_information?.location?.lat,
       lng: existing_information?.location?.lng,
-      address: {
-        country: existing_information.location?.address?.country,
-        formatted_address:
-          existing_information.location?.address?.formatted_address,
-        street: existing_information.location?.address?.street,
-        city: existing_information.location?.address?.city,
-        state: existing_information.location?.address?.state,
-      },
+      country: existing_information.location?.country,
+      formatted_address: existing_information.location?.formatted_address,
+      street: existing_information.location?.street,
+      city: existing_information.location?.city,
+      state: existing_information.location?.state,
     }));
   };
 
@@ -91,24 +88,15 @@ const EditContact: FC<{
       fetch_state.display_loading();
 
       // * Validate the form state before updating the user location
-      if (
-        !form_state.lat ||
-        !form_state.lng ||
-        !form_state.address.formatted_address
-      )
+      if (!form_state.lat || !form_state.lng || !form_state.formatted_address)
         return fetch_state.display_error("Please enter a valid address");
 
       // * Update the user's location in the database
-      const user = await account.updatePrefs<TUser>({
+      await update_user_profile({
         ...existing_information,
         location: form_state,
+        $id: user_id,
       });
-
-      // * if an error occurred, display error
-      if (!user)
-        return fetch_state.display_error(
-          "An error occurred while updating your information, please try again"
-        );
 
       // * Execute the function to be called aster successfull update
       await post_submit_function();
@@ -145,7 +133,7 @@ const EditContact: FC<{
             filterSelectedOptions
             autoComplete
             includeInputInList
-            getOptionLabel={(option) => option.address.formatted_address || ""}
+            getOptionLabel={(option) => option.formatted_address || ""}
             onChange={(e, val) => {
               if (!val) return;
 
@@ -172,7 +160,7 @@ const EditContact: FC<{
             )}
             renderOption={(props, option) => (
               <li {...props} key={`${option.lat}${option.lng}`}>
-                {option.address.formatted_address}
+                {option.formatted_address}
               </li>
             )}
           />
@@ -200,12 +188,13 @@ const EditContact: FC<{
         <Button
           className="w-full"
           disabled={
-            form_state.address.formatted_address?.trim() === "" ||
-            !form_state.address.formatted_address
+            fetch_state.loading ||
+            form_state.formatted_address?.trim() === "" ||
+            !form_state.formatted_address
           }
           onClick={handle_update}
         >
-          Save
+          {fetch_state.loading ? <Loader type="button" /> : "Save"}
         </Button>
       </div>
       {/* Places API error state */}

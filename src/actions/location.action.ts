@@ -24,13 +24,11 @@ export const get_places = async (place: string) => {
       formatted_response.push({
         lat: place.geometry.location.lat,
         lng: place.geometry.location.lng,
-        address: {
-          street: place_array[0],
-          city: place_array[1],
-          state: place_array[place_array.length - 2],
-          country: place_array[place_array.length - 1],
-          formatted_address: place.formatted_address,
-        },
+        street: place_array[0],
+        city: place_array[1],
+        state: place_array[place_array.length - 2],
+        country: place_array[place_array.length - 1],
+        formatted_address: place.formatted_address,
       });
     }
 
@@ -42,5 +40,32 @@ export const get_places = async (place: string) => {
       error;
     console.error(error_text);
     throw new Error(error_text);
+  }
+};
+
+/**
+ * Retrieves the address of the coordinates
+ * @param location The object containing the tattitude and the longitude coordinates
+ * @returns The address of the user
+ */
+export const get_address = async (location: {
+  latitude: number;
+  longitude: number;
+}): Promise<string | undefined> => {
+  try {
+    const res = await axios.get<{
+      results: { formatted_address: string }[];
+    }>(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=${process.env.GOOGLE_API_KEY}`
+    );
+
+    if (res.status !== 200) {
+      return undefined;
+    }
+
+    return res.data?.results?.[0]?.formatted_address;
+  } catch (error) {
+    console.error(error);
+    return undefined;
   }
 };

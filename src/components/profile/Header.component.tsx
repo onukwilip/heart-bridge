@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import LogoText from "../Logo.component";
 import SearchBar from "../search/SearchBar.component";
 import { Models } from "appwrite";
@@ -11,7 +11,7 @@ import ProfileCard from "../atoms/ProfileCard.component";
 import Button from "../atoms/Button.component";
 import { useRouter } from "next/navigation";
 
-const Header = () => {
+const Header: FC<{ display_search?: boolean }> = ({ display_search }) => {
   const [user, setUser] = useState<Models.User<TUser>>();
   const fetch_user_state = useFetch({ loading: true });
   const router = useRouter();
@@ -49,7 +49,7 @@ const Header = () => {
       {/* Right side */}
       <div className="flex gap-6 items-center">
         {/* Search */}
-        <SearchBar />
+        {display_search && <SearchBar />}
         {/* Profile OR Login button */}
         <div className="flex gap-3 items-center">
           {fetch_user_state.loading ? (

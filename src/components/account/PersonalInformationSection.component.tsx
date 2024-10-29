@@ -4,7 +4,7 @@ import TabSection from "../molecules/TabSection.component";
 import EditButton from "../atoms/EditButton.component";
 import PersonalInformationDetail from "./PersonalInformationDetail.component";
 import { useUserContext } from "@/contexts/User.context";
-import { SIGNUP_FORMSTATE, TUser } from "@/utils/types";
+import { USER_FORMSTATE, TUser } from "@/utils/types";
 import SectionHeader from "./SectionHeader.component";
 import { Skeleton } from "@mui/material";
 import { useModalContext } from "@/contexts/Modal.context";
@@ -81,7 +81,7 @@ const PersonalInformationSection = () => {
         )}
         {/* Email */}
         <PersonalInformationDetail
-          title={SIGNUP_FORMSTATE.EMAIL}
+          title={USER_FORMSTATE.EMAIL}
           value={
             user?.email || (
               <Skeleton

@@ -16,7 +16,7 @@ import GoogleButton from "../atoms/GoogleSSO.component";
 import { handle_input_change } from "@/utils/input.utils";
 import useFetch from "@/hooks/useFetch.hook";
 import { sign_in } from "@/utils/appwrite/auth.utils";
-import { SIGNUP_FORMSTATE, TUser } from "@/utils/types";
+import { USER_FORMSTATE, TUser } from "@/utils/types";
 import { useRouter } from "next/navigation";
 import { AppwriteException } from "appwrite";
 import Loader from "../atoms/Loader.component";
@@ -66,7 +66,7 @@ const LoginForm: FC<{ className?: string }> = ({ className }) => {
       >
         {/* Email field */}
         <TextField
-          name={SIGNUP_FORMSTATE.EMAIL}
+          name={USER_FORMSTATE.EMAIL}
           label="Email"
           placeholder="Enter email address"
           type="email"
@@ -82,7 +82,7 @@ const LoginForm: FC<{ className?: string }> = ({ className }) => {
         <FormControl variant="outlined" className="w-full" required>
           <InputLabel htmlFor="password">Password</InputLabel>
           <OutlinedInput
-            name={SIGNUP_FORMSTATE.PASSWORD}
+            name={USER_FORMSTATE.PASSWORD}
             id="password"
             type={show_password ? "text" : "password"}
             onChange={(e) =>

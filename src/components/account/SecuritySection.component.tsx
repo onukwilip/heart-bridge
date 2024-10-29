@@ -4,7 +4,7 @@ import TabSection from "../molecules/TabSection.component";
 import EditButton from "../atoms/EditButton.component";
 import PersonalInformationDetail from "./PersonalInformationDetail.component";
 import { useUserContext } from "@/contexts/User.context";
-import { SIGNUP_FORMSTATE } from "@/utils/types";
+import { USER_FORMSTATE } from "@/utils/types";
 import SectionHeader from "./SectionHeader.component";
 
 const SecuritySection = () => {
@@ -19,7 +19,7 @@ const SecuritySection = () => {
       {/* Password */}
       <div className="w-full">
         <PersonalInformationDetail
-          title={SIGNUP_FORMSTATE.PASSWORD}
+          title={USER_FORMSTATE.PASSWORD}
           value={"********"}
           no_capitalize
         />

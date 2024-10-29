@@ -30,7 +30,7 @@ const ContactTab: FC<{ user: TUser }> = ({ user }) => {
         />
         <PersonalInformationDetail
           title={"Address"}
-          value={`${user.location?.address?.formatted_address || "-"}`}
+          value={`${user.location?.formatted_address || "-"}`}
           no_capitalize
           value_className="text-white"
         />
