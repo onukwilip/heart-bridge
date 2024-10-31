@@ -66,7 +66,7 @@ export type TDonation = {
   donor?: string | TUser;
   orphanage_id: string;
   amount: string;
-  project: string;
+  project: string | TProject;
   comment?: string;
 };
 

@@ -17,7 +17,8 @@ import { AppwriteException, Models, Query } from "node-appwrite";
  */
 const create_or_update_location = async (
   location_id: string,
-  location: TUserLocation
+  location: TUserLocation,
+  first_time?: boolean
 ) => {
   try {
     // * Check if the user already exists in the Users collection
@@ -62,6 +63,21 @@ const create_or_update_location = async (
     console.error("LOCATION ERROR", error);
     throw new AppwriteException(modified_error.message, modified_error.code);
   } finally {
+    if (first_time) {
+      try {
+        // * Update the user's location in the Users collection as well to maintain consistency if the location was just being created
+        await database.updateDocument(
+          APPWRITE_DATABASE.DB_ID,
+          APPWRITE_DATABASE.USERS_COLLECTION_ID,
+          location_id,
+          { location: location_id }
+        );
+      } catch (error) {
+        console.error(
+          "Could not update user's location in the Users collection"
+        );
+      }
+    }
   }
 };
 
@@ -73,54 +89,47 @@ const create_or_update_location = async (
  */
 const create_or_update_user = async (
   user_id: string,
-  user: Omit<TUser, "password">
+  user: Omit<TUser, "password">,
+  create_location?: boolean
 ) => {
   try {
-    // * Check if the user already exists in the Users collection
-    const existing_user = await database.getDocument(
-      APPWRITE_DATABASE.DB_ID,
-      APPWRITE_DATABASE.USERS_COLLECTION_ID,
-      user_id
-    );
-
-    // * If the user already exists, update their details in the Users collection
-    if (existing_user) {
-      // * Update the user's details in the Users collection as well to maintain consistency
-      await database.updateDocument(
-        APPWRITE_DATABASE.DB_ID,
-        APPWRITE_DATABASE.USERS_COLLECTION_ID,
-        user_id,
-        { ...user, location: user_id }
-      );
-      return;
-    }
-
-    // * Else, Create the user's details in the Users collection
-    await database.createDocument(
+    // * Update the user's details in the Users collection as well to maintain consistency
+    const updated_user = await database.updateDocument<Models.Document & TUser>(
       APPWRITE_DATABASE.DB_ID,
       APPWRITE_DATABASE.USERS_COLLECTION_ID,
       user_id,
       { ...user, location: user_id }
     );
-    return;
+    // * If the user's location is provided, update it in the Location collection as well to maintain consistency
+    if (create_location && typeof user.location === "object")
+      await create_or_update_location(
+        user_id,
+        user.location,
+        updated_user.location ? false : true
+      );
   } catch (error) {
     const modified_error = error as AppwriteException;
     // * If the error was that of user not found, create a new user in the collection
     if (modified_error?.code === 404) {
-      await database.createDocument(
+      const created_user = await database.createDocument<
+        Models.Document & TUser
+      >(
         APPWRITE_DATABASE.DB_ID,
         APPWRITE_DATABASE.USERS_COLLECTION_ID,
         user_id,
         { ...user, location: user_id }
       );
+      // * If the user's location is provided, update it in the Location collection as well to maintain consistency
+      if (create_location && typeof user.location === "object")
+        await create_or_update_location(
+          user_id,
+          user.location,
+          created_user.location ? false : true
+        );
       return;
     }
     console.error("USER ERROR", error);
     throw new AppwriteException(modified_error.message, modified_error.code);
-  } finally {
-    // * If the user's location is provided, update it in the Location collection as well to maintain consistency
-    if (typeof user.location === "object")
-      await create_or_update_location(user_id, user.location);
   }
 };
 
@@ -175,10 +184,14 @@ export const update_user_profile = async (
     // * Update the rest of the user information
     await users.updatePrefs(user.$id, details_to_update);
     // * Update the user's details in the Users collection as well to maintain consistency
-    await create_or_update_user(user.$id, {
-      ...details_to_update,
-      email: current_user.email,
-    });
+    await create_or_update_user(
+      user.$id,
+      {
+        ...details_to_update,
+        email: current_user.email,
+      },
+      true
+    );
   } catch (error) {
     console.error(error);
     throw new Error((error as any)?.message || error);
@@ -191,15 +204,18 @@ export const update_user_profile = async (
  */
 export const get_user_profile = async (
   orphanage_id: string
-): Promise<Models.User<TUser> & { projects: TProject[] }> => {
+): Promise<TUser & { projects: TProject[] }> => {
   try {
     // * Retrieves the details of the user
-    const user = await users.get<TUser>(orphanage_id);
-
-    // console.log("USER", user);
+    // const user = await users.get<TUser>(orphanage_id);
+    const user = await database.getDocument<Models.Document & TUser>(
+      APPWRITE_DATABASE.DB_ID,
+      APPWRITE_DATABASE.USERS_COLLECTION_ID,
+      orphanage_id
+    );
 
     // * If the user is not an orphanage, but a donor, throw error
-    if (user.prefs.account_type === "donor")
+    if (user.account_type === "donor")
       throw new Error(JSON.stringify({ code: 403 }));
 
     // * Retrieve list of projects created by this orphanage account
@@ -208,6 +224,8 @@ export const get_user_profile = async (
     >(APPWRITE_DATABASE.DB_ID, APPWRITE_DATABASE.PROJECTS_COLLECTION_ID, [
       Query.equal("user_id", orphanage_id),
     ]);
+
+    // console.log("USER", { ...user, projects: user_projects.documents });
 
     return { ...user, projects: user_projects.documents };
   } catch (error) {

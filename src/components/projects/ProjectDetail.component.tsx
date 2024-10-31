@@ -3,13 +3,11 @@ import Error404 from "@/components/atoms/Error404.component";
 import useFetch from "@/hooks/useFetch.hook";
 import database from "@/utils/appwrite/appwrite_database.utils";
 import { APPWRITE_DATABASE, TDonation, TProject, TUser } from "@/utils/types";
-import { format_currency } from "@/utils/utils";
 import { Skeleton } from "@mui/material";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import React, { FC, useEffect, useState } from "react";
 import dummy_image from "@/images/dummy-image.jpg";
-import dummy_profile from "@/images/dummy-profile-pic.png";
 import Button from "@/components/atoms/Button.component";
 import { useModalContext } from "@/contexts/Modal.context";
 import CreateOrEditProject from "@/components/projects/CreateOrEditProject.component";
@@ -17,6 +15,8 @@ import { useUserContext } from "@/contexts/User.context";
 import FundingProgress from "./FundingProgress.component";
 import { get_donations } from "@/actions/donation.action";
 import TabSection from "../molecules/TabSection.component";
+import Donation from "../donations/Donation.component";
+import DonationLoader from "../donations/DonationLoader.component";
 
 const ProjectDetail: FC<{
   mode: "public" | "private";
@@ -331,90 +331,17 @@ const ProjectDetail: FC<{
         >
           <div className="text-xl !text-white">Donations</div>
           {fetch_donations_state.loading ? (
-            <div className="flex flex-col gap-3">
-              {[1, 2, 3, 4, 5].map((_) => (
-                <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-2 p-3 rounded-md border border-weak-grey">
-                  <Skeleton
-                    variant="circular"
-                    className="w-[70px] h-[40px] !bg-primary-grey"
-                    width={70}
-                    height={70}
-                    animation="pulse"
-                  />
-                  <Skeleton
-                    variant="text"
-                    className="w-[80%] xs:w-[70px] !bg-primary-grey"
-                    // width={70}
-                    animation="pulse"
-                  />
-                  <Skeleton
-                    variant="text"
-                    className="w-[80%] xs:w-[70px] !bg-primary-grey"
-                    // width={70}
-                    animation="pulse"
-                  />
-                  <Skeleton
-                    variant="text"
-                    className="w-[80%] xs:w-[70px] !bg-primary-grey"
-                    // width={70}
-                    animation="pulse"
-                  />
-                  <Skeleton
-                    variant="text"
-                    className="w-[80%] xs:w-[70px] !bg-primary-grey"
-                    // width={70}
-                    animation="pulse"
-                  />
-                </div>
-              ))}
-            </div>
+            <DonationLoader className="max-w-[600px] xs:max-w-full" />
           ) : (
             <div className="w-full flex flex-col gap-3">
               {donations.length > 0 ? (
                 <>
                   {donations.map((donation) => (
-                    <div
-                      className="w-full max-w-[600px] flex flex-col xs:flex-row xs:items-center xs:max-w-full gap-x-3 gap-y-3 p-3 rounded-md border border-weak-grey"
+                    <Donation
+                      donation={donation}
+                      account_type={user?.prefs.account_type || "orphanage"}
                       key={donation.$id}
-                    >
-                      {/* Image */}
-                      <div className="w-[70px] h-[70px] rounded-full overflow-hidden">
-                        <Image
-                          className="w-[70px] h-[70px] object-cover"
-                          width={70}
-                          height={70}
-                          src={
-                            (donation.donor as TUser)?.image ||
-                            dummy_profile.src
-                          }
-                          alt={
-                            (donation.donor as TUser)?.firstname || "anonymous"
-                          }
-                        />
-                      </div>
-                      {/* Content */}
-                      <div className="flex flex-col gap-3 gap-y-1">
-                        {/* Name */}
-                        <div>
-                          {donation.donor
-                            ? `${(donation.donor as TUser).firstname} ${
-                                (donation.donor as TUser).lastname
-                              }`
-                            : `An anonymous donor`}
-                        </div>
-                        {/* Amount + date */}
-                        <div className="flex gap-x-3 gap-y-1 flex-wrap">
-                          {/* Amount */}
-                          <span>
-                            {format_currency(Number(donation.amount))}
-                          </span>
-                          {/* Date */}
-                          <span>
-                            {new Date(donation.$createdAt).toLocaleString()}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                    />
                   ))}
                 </>
               ) : (
