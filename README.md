@@ -59,4 +59,4 @@ Unlike other crowdfunding platforms, Heart Bridge offers unique features to vali
 
 ## Demo Video/Photos
 
-[Demo Video](https://www.youtube.com/watch?v=9IBaX1avYWc)
+[Demo Video](https://www.awesomescreenshot.com/video/33128771?key=c0590082f175f9f4a260b177a6c2e825)

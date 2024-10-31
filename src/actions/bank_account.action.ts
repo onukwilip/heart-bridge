@@ -254,7 +254,7 @@ export const modify_bank_details = async (config: TBankDetailsParams) => {
     );
 
     // * If it does, update the existing bank information instead of creating a new one
-    if (existing_account_details) {
+    if (existing_account_details.documents.length > 0) {
       await update_bank_details(config);
       return;
     }
