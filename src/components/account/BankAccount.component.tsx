@@ -56,7 +56,7 @@ const BankAccount = () => {
 
   useEffect(() => {
     get_user_bank_details();
-  }, []);
+  }, [modal.open]);
 
   return (
     <RouteProtector role="orphanage">
