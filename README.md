@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Heart Bridge
 
-## Getting Started
+## GitHub handles of Team Members
 
-First, run the development server:
+- @onukwilip
+- @python-fuse
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## How to run project
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Start the project in the development environment**: `npm run dev`
+- **Build the project**: `npm run build`
+- **Start the project in the production environment**: `npm start`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Description
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project we created is a crowdfunding platform designed specifically for orphanages, allowing them to set up accounts, add bank details, and list projects in need of funding. Donors, either anonymous or registered, can contribute to these projects, providing an accessible way for orphanages to receive donations and support.
 
-## Learn More
+## Inspiration behind the Project
 
-To learn more about Next.js, take a look at the following resources:
+The idea for this project began when I remembered a childhood experience of visiting an orphanage with my mom. We had trouble finding orphanages nearby, and even when we did, they had little online presence for gathering donations or attracting visitors. This inspired me to create a platform where orphanages can set up online profiles, even with simple templates, to receive donations directly. Heart Bridge has since evolved from this initial idea, with some inspiration from platforms like GoFundMe.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The technologies I used include:
 
-## Deploy on Vercel
+- **React & Next.js** - Frontend framework
+- **TypeScript** - Type-safe JavaScript
+- **Tailwind CSS** - For styling and UI
+- **PayStack** - Payment integration for donations
+- **Appwrite Authentication** - To manage registered users’ authentication
+- **Appwrite Database** - For data management
+- **Appwrite Storage** - To store files, photos, and videos uploaded to the platform
+- **Appwrite Real-time** - For receiving notifications of new donations
+- **Google Maps Places API** - For orphanages to set their exact location, ensuring accurate addresses
+- **Google Maps Reverse Geocoding API** - For users to search for orphanages nearby by area, city, or country
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Platform Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Allows orphanages to create projects to receive donations from donors or anonymous visitors
+- Enables orphanages to set their locations and addresses using the Google Maps API
+- Provides donors the ability to search for nearby orphanages using the Google Geocoding API
+- Sends real-time notifications to orphanages and donors when donations are made or when a call or visitation is scheduled
+- Allows donors to schedule visits and calls with orphanages for authenticity validation
+
+## Unique Value Proposition
+
+Unlike other crowdfunding platforms, Heart Bridge offers unique features to validate the authenticity of orphanage projects by allowing donors to speak with or visit orphanages before making a donation. Furthermore, by using the Google Maps Places API, we validate orphanage locations, ensuring donors can trust the legitimacy of the profiles they choose to support.
+
+## Upcoming Features
+
+- Full implementation of visitation and call scheduling for donors to connect with orphanages more directly
+- Registered donors will be able to leave reviews on orphanage profiles and projects to further validate authenticity
+- Verification process for orphanages to confirm their legal status and improve platform trustworthiness
+- Support for additional payment methods, including Google Pay, Stripe, Venmo, and PayPal
+
+## Project Repo
+
+[Heart Bridge GitHub Repository](https://github.com/onukwilip/heart-bridge)
+
+## Demo Video/Photos
+
+[Demo Video](https://www.youtube.com/watch?v=9IBaX1avYWc)
