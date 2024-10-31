@@ -66,7 +66,12 @@ export const search_nearby_orphanages = async (location: TUserLocation) => {
       ]),
     ]);
 
-    // console.log("NEARBY ORPHANAGES", orphanages_locations);
+    console.log(
+      "NEARBY ORPHANAGES",
+      orphanages_locations.documents.map(
+        (location) => (location.user as TUser)?.location
+      )
+    );
 
     return orphanages_locations.documents.map(
       (location) => location.user as TUser

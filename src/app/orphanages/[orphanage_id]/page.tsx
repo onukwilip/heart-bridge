@@ -21,10 +21,9 @@ export const generateMetadata = async ({
 
     return {
       title: `${
-        user.prefs.orphanage_name ||
-        `${user.prefs.firstname} ${user.prefs.lastname}`
+        user.orphanage_name || `${user.firstname} ${user.lastname}`
       } | Heart Bridge`,
-      description: `${user.prefs.bio?.slice(0, 200)}...` || "Orphanage profile",
+      description: `${user.bio?.slice(0, 200)}...` || "Orphanage profile",
     };
   } catch (error) {
     const parsed_error_msg = parse_json<{ code: number }>(

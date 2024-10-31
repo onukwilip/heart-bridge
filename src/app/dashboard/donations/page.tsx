@@ -1,5 +1,4 @@
-import DonationsTable from "@/components/donations/DonationsTable.components";
-import RouteProtector from "@/components/RouteProtector.component";
+import DonationsComponent from "@/components/donations/Donations.components";
 import React from "react";
 
 const Donations = () => {
@@ -7,9 +6,8 @@ const Donations = () => {
     <div className="flex flex-col space-y-10">
       {/* Title */}
       <h1 className="text-white text-2xl font-bold">Donations</h1>
-
       {/* Dontaions Table */}
-      <DonationsTable />
+      <DonationsComponent />
     </div>
   );
 };
