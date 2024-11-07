@@ -76,6 +76,7 @@ jobs:
           terraform init
 
       - name: Update Terraform state with existing resources on the Google Cloud project
+        continue-on-error: true
         run: |
           cd terraform
           terraform import google_compute_instance_group_manager.heart-bridge-instance-group-manager projects/impactful-shard-429011-e7/zones/us-central1-c/instanceGroupManagers/heart-bridge-instance-group-manager
