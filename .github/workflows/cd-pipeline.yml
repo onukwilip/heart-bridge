@@ -107,6 +107,6 @@ jobs:
            --min-ready=0 \
            --minimal-action=restart \
            --replacement-method=substitute \
-           --version=template=https://www.googleapis.com/compute/beta/projects/impactful-shard-429011-e7/global/instanceTemplates/heart-bridge-instance,name=0-$SHA \
+           --version=template="https://www.googleapis.com/compute/beta/projects/impactful-shard-429011-e7/global/instanceTemplates/heart-bridge-instance",name=0-$SHA \
            --quiet
           echo "Instances in the managed instance group are restarting to pull the latest Docker image."
