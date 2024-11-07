@@ -1,0 +1,96 @@
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: published
+  workflow_dispatch: {}
+
+jobs:
+  deploy-to-docker:
+    runs-on: ubuntu-latest
+    name: Deploy application to Docker Hub container registry
+    env:
+      SHA: ${{github.sha}}
+    steps:
+      - name: Checkout branch from the repository
+        uses: actions/checkout@v2
+
+      - name: Authenticate and Docker Hub
+        env:
+          D_USER: ${{secrets.D_USER}}
+          D_PWORD: ${{secrets.D_PWORD}}
+        run: docker login -u $D_USER -p $D_PWORD
+
+      - name: Build Docker image
+        run: docker build -t prince2006/heart-bridge:$SHA -t prince2006/heart-bridge:latest .
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push prince2006/heart-bridge:$SHA
+          docker push prince2006/heart-bridge:latest
+
+  setup-infrastructure:
+    runs-on: ubuntu-latest
+    name: Set up infrastructure
+    needs: deploy-to-docker
+    env:
+      PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      ZONE: us-central1-c
+      INSTANCE_GROUP_NAME: heart-bridge-instance-group
+    steps:
+      - name: Checkout branch from the repository
+        uses: actions/checkout@v2
+
+      - name: Authenticate for GCP
+        id: gcp-auth
+        uses: google-github-actions/auth@v0
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+
+      - name: Check if instance group exists
+        id: check_instance_group
+        run: |
+          if gcloud compute instance-groups managed describe "$INSTANCE_GROUP_NAME" --project "$PROJECT_ID" --zone "$ZONE" &> /dev/null; then
+              echo "Instance group exists."
+              echo "INSTANCES_EXISTS=1" >> $GITHUB_ENV
+          else
+              echo "Instance group does not exist."
+              echo "INSTANCES_EXISTS=0" >> $GITHUB_ENV
+          fi
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.3
+
+      - name: Initialize Terraform
+        run: |
+          cd terraform 
+          terraform init
+
+      - name: Update Terraform state with existing resources on the Google Cloud project
+        run: |
+          terraform import google_compute_instance_group_manager.heart-bridge-instance-group-manager projects/impactful-shard-429011-e7/zones/us-central1-c/instanceGroupManagers/heart-bridge-instance-group-manager
+          terraform import google_compute_instance_template.heart-bridge-instance projects/impactful-shard-429011-e7/global/instanceTemplates/heart-bridge-instance
+          terraform import google_compute_backend_service.heart-bridge-backend projects/impactful-shard-429011-e7/global/backendServices/heart-bridge-backend
+          terraform import google_compute_global_forwarding_rule.heart-bridge-forwarding-rule projects/impactful-shard-429011-e7/global/forwardingRules/heart-bridge-forwarding-rule
+          terraform import google_compute_health_check.heart-bridge-health-check projects/impactful-shard-429011-e7/global/healthChecks/heart-bridge-health-check
+          terraform import google_compute_firewall.react-server projects/impactful-shard-429011-e7/global/firewalls/react-server
+
+      - name: Set up the infrastructure on Google Cloud using Terraform
+        run: terraform apply --auto-approve
+
+      - name: If instance group manager already exists, run the command to restart the instances
+        if: env.INSTANCES_EXISTS == 1
+        run: |
+          echo "Restarting instances in the managed instance group..."
+          gcloud compute instance-groups managed rolling-action restart "$INSTANCE_GROUP_NAME" \
+              --project "$PROJECT_ID" \
+              --zone "$ZONE" \
+              --max-surge 1 \
+              --max-unavailable 0
+          echo "Instances in the managed instance group are restarting to pull the latest Docker image."

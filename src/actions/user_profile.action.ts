@@ -214,6 +214,13 @@ export const get_user_profile = async (
       orphanage_id
     );
 
+    // const users = await database.listDocuments<Models.Document & TUser>(
+    //   APPWRITE_DATABASE.DB_ID,
+    //   APPWRITE_DATABASE.USERS_COLLECTION_ID
+    // );
+
+    // console.log("ALL USERS", users);
+
     // * If the user is not an orphanage, but a donor, throw error
     if (user.account_type === "donor")
       throw new Error(JSON.stringify({ code: 403 }));
@@ -225,7 +232,7 @@ export const get_user_profile = async (
       Query.equal("user_id", orphanage_id),
     ]);
 
-    // console.log("USER", { ...user, projects: user_projects.documents });
+    // console.log("USER", user);
 
     return { ...user, projects: user_projects.documents };
   } catch (error) {
