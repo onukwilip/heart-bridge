@@ -40,7 +40,7 @@ jobs:
     env:
       PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
       ZONE: us-central1-c
-      INSTANCE_GROUP_NAME: heart-bridge-instance-group
+      INSTANCE_GROUP_NAME: heart-bridge-instance-group-manager
     steps:
       - name: Checkout branch from the repository
         uses: actions/checkout@v2
