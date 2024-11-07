@@ -99,7 +99,7 @@ jobs:
         if: env.INSTANCES_EXISTS == 1
         run: |
           echo "Restarting instances in the managed instance group..."
-          gcloud beta compute instance-groups managed rolling-action start-update heart-bridge-instance-group-manager \
+          gcloud --quiet beta compute instance-groups managed rolling-action start-update heart-bridge-instance-group-manager \
            --project=$PROJECT_ID \
            --zone=$ZONE \
            --type=proactive \
@@ -107,6 +107,5 @@ jobs:
            --min-ready=0 \
            --minimal-action=restart \
            --replacement-method=substitute \
-           --version=template="https://www.googleapis.com/compute/beta/projects/impactful-shard-429011-e7/global/instanceTemplates/heart-bridge-instance",name=0-$SHA \
-           --quiet
+           --version=template=https://www.googleapis.com/compute/beta/projects/impactful-shard-429011-e7/global/instanceTemplates/heart-bridge-instance,name=0-$SHA
           echo "Instances in the managed instance group are restarting to pull the latest Docker image."
