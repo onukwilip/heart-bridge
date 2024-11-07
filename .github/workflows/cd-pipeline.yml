@@ -77,6 +77,7 @@ jobs:
 
       - name: Update Terraform state with existing resources on the Google Cloud project
         run: |
+          cd terraform
           terraform import google_compute_instance_group_manager.heart-bridge-instance-group-manager projects/impactful-shard-429011-e7/zones/us-central1-c/instanceGroupManagers/heart-bridge-instance-group-manager
           terraform import google_compute_instance_template.heart-bridge-instance projects/impactful-shard-429011-e7/global/instanceTemplates/heart-bridge-instance
           terraform import google_compute_backend_service.heart-bridge-backend projects/impactful-shard-429011-e7/global/backendServices/heart-bridge-backend
@@ -85,7 +86,9 @@ jobs:
           terraform import google_compute_firewall.react-server projects/impactful-shard-429011-e7/global/firewalls/react-server
 
       - name: Set up the infrastructure on Google Cloud using Terraform
-        run: terraform apply --auto-approve
+        run: |
+          cd terraform
+          terraform apply --auto-approve
 
       - name: If instance group manager already exists, run the command to restart the instances
         if: env.INSTANCES_EXISTS == 1
