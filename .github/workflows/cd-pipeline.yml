@@ -40,7 +40,7 @@ jobs:
     env:
       PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
       ZONE: us-central1-c
-      INSTANCE_GROUP_NAME: heart-bridge-instance-group
+      INSTANCE_GROUP_NAME: heart-bridge-instance-group-manager
     steps:
       - name: Checkout branch from the repository
         uses: actions/checkout@v2
@@ -85,6 +85,8 @@ jobs:
           terraform import google_compute_backend_service.heart-bridge-backend projects/impactful-shard-429011-e7/global/backendServices/heart-bridge-backend || true
           terraform import google_compute_global_forwarding_rule.heart-bridge-forwarding-rule projects/impactful-shard-429011-e7/global/forwardingRules/heart-bridge-forwarding-rule || true
           terraform import google_compute_health_check.heart-bridge-health-check projects/impactful-shard-429011-e7/global/healthChecks/heart-bridge-health-check || true
+          terraform import google_compute_autoscaler.heart-bridge-autoscaler projects/impactful-shard-429011-e7/global/autoscalers/heart-bridge-autoscaler || true
+          terraform import google_compute_url_map.heart-bridge-url-map projects/impactful-shard-429011-e7/global/urlMaps/heart-bridge-url-map || true
 
       - name: Set up the infrastructure on Google Cloud using Terraform
         run: |
