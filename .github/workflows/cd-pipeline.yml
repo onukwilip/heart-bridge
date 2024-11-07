@@ -12,6 +12,9 @@ jobs:
     name: Deploy application to Docker Hub container registry
     env:
       SHA: ${{github.sha}}
+      INFISICAL_MACHINE_CLIENT_ID: ${{secrets.INFISICAL_MACHINE_CLIENT_ID}}
+      INFISICAL_MACHINE_CLIENT_SECRET: ${{secrets.INFISICAL_MACHINE_CLIENT_SECRET}}
+      INFISICAL_PROJECT_ID: ${{secrets.INFISICAL_PROJECT_ID}}
     steps:
       - name: Checkout branch from the repository
         uses: actions/checkout@v2
@@ -23,7 +26,7 @@ jobs:
         run: docker login -u $D_USER -p $D_PWORD
 
       - name: Build Docker image
-        run: docker build -t prince2006/heart-bridge:$SHA -t prince2006/heart-bridge:latest .
+        run: docker build --build-arg INFISICAL_MACHINE_CLIENT_ID_ARG=$INFISICAL_MACHINE_CLIENT_ID --build-arg INFISICAL_MACHINE_CLIENT_SECRET_ARG=$INFISICAL_MACHINE_CLIENT_SECRET --build-arg PROJECT_ID_ARG=$INFISICAL_PROJECT_ID -t prince2006/heart-bridge:$SHA -t prince2006/heart-bridge:latest .
 
       - name: Push Docker image to Docker Hub
         run: |
