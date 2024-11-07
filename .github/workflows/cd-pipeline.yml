@@ -79,12 +79,12 @@ jobs:
         continue-on-error: true
         run: |
           cd terraform
-          terraform import google_compute_instance_group_manager.heart-bridge-instance-group-manager projects/impactful-shard-429011-e7/zones/us-central1-c/instanceGroupManagers/heart-bridge-instance-group-manager
-          terraform import google_compute_instance_template.heart-bridge-instance projects/impactful-shard-429011-e7/global/instanceTemplates/heart-bridge-instance
-          terraform import google_compute_backend_service.heart-bridge-backend projects/impactful-shard-429011-e7/global/backendServices/heart-bridge-backend
-          terraform import google_compute_global_forwarding_rule.heart-bridge-forwarding-rule projects/impactful-shard-429011-e7/global/forwardingRules/heart-bridge-forwarding-rule
-          terraform import google_compute_health_check.heart-bridge-health-check projects/impactful-shard-429011-e7/global/healthChecks/heart-bridge-health-check
-          terraform import google_compute_firewall.react-server projects/impactful-shard-429011-e7/global/firewalls/react-server
+          terraform import google_compute_firewall.react-server projects/impactful-shard-429011-e7/global/firewalls/react-server || true
+          terraform import google_compute_instance_group_manager.heart-bridge-instance-group-manager projects/impactful-shard-429011-e7/zones/us-central1-c/instanceGroupManagers/heart-bridge-instance-group-manager || true
+          terraform import google_compute_instance_template.heart-bridge-instance projects/impactful-shard-429011-e7/global/instanceTemplates/heart-bridge-instance || true
+          terraform import google_compute_backend_service.heart-bridge-backend projects/impactful-shard-429011-e7/global/backendServices/heart-bridge-backend || true
+          terraform import google_compute_global_forwarding_rule.heart-bridge-forwarding-rule projects/impactful-shard-429011-e7/global/forwardingRules/heart-bridge-forwarding-rule || true
+          terraform import google_compute_health_check.heart-bridge-health-check projects/impactful-shard-429011-e7/global/healthChecks/heart-bridge-health-check || true
 
       - name: Set up the infrastructure on Google Cloud using Terraform
         run: |
