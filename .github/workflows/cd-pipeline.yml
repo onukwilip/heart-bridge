@@ -87,6 +87,7 @@ jobs:
           terraform import google_compute_health_check.heart-bridge-health-check projects/impactful-shard-429011-e7/global/healthChecks/heart-bridge-health-check || true
           terraform import google_compute_autoscaler.heart-bridge-autoscaler projects/impactful-shard-429011-e7/zones/$ZONE/autoscalers/heart-bridge-autoscaler || true
           terraform import google_compute_url_map.heart-bridge-url-map projects/impactful-shard-429011-e7/global/urlMaps/heart-bridge-url-map || true
+          terraform import google_compute_target_http_proxy.heart-bridge-http-proxy projects/impactful-shard-429011-e7/global/targetHttpProxies/heart-bridge-http-proxy || true
 
       - name: Set up the infrastructure on Google Cloud using Terraform
         run: |
