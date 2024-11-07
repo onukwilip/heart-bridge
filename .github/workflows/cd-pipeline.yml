@@ -38,6 +38,7 @@ jobs:
     name: Set up infrastructure
     needs: deploy-to-docker
     env:
+      SHA: ${{github.sha}}
       PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
       ZONE: us-central1-c
       INSTANCE_GROUP_NAME: heart-bridge-instance-group-manager
@@ -98,9 +99,13 @@ jobs:
         if: env.INSTANCES_EXISTS == 1
         run: |
           echo "Restarting instances in the managed instance group..."
-          gcloud compute instance-groups managed rolling-action restart "$INSTANCE_GROUP_NAME" \
-              --project "$PROJECT_ID" \
-              --zone "$ZONE" \
-              --max-surge 1 \
-              --max-unavailable 0
+          gcloud beta compute instance-groups managed rolling-action start-update heart-bridge-instance-group-manager \
+           --project=$PROJECT_ID \
+           --zone=$ZONE \
+           --type=proactive \
+           --max-unavailable=1 \
+           --min-ready=0 \
+           --minimal-action=restart \
+           --replacement-method=substitute \
+           --version=template=https://www.googleapis.com/compute/beta/projects/impactful-shard-429011-e7/global/instanceTemplates/heart-bridge-instance,name=0-$SHA
           echo "Instances in the managed instance group are restarting to pull the latest Docker image."
