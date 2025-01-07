@@ -171,13 +171,13 @@ const Search: FC<{
             >
               <ToggleButton
                 value="orphanage"
-                className="text-white rounded-lg border border-weak-grey"
+                className="!text-white rounded-lg border border-weak-grey"
               >
                 Orphanage
               </ToggleButton>
               <ToggleButton
                 value="project"
-                className="text-white rounded-lg border border-weak-grey"
+                className="!text-white rounded-lg border border-weak-grey"
               >
                 Project
               </ToggleButton>

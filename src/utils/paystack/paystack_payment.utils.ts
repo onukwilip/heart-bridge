@@ -38,7 +38,9 @@ export const make_transaction = async ({
         email: email,
         amount: Number(amount),
         subaccountCode: paystack_details.subaccount_code,
+        reference: "xxx",
         onSuccess: async (transaction) => {
+          console.log("onSuccess: ", transaction);
           resolve(transaction);
         },
         onLoad: (response) => {
@@ -46,7 +48,7 @@ export const make_transaction = async ({
         },
         onCancel: () => {
           console.log("onCancel");
-          reject();
+          reject("");
         },
         onError: (error) => {
           console.log("Error: ", error.message);
