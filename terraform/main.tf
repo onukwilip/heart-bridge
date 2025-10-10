@@ -1,6 +1,16 @@
+variable "project_id" {
+  description = "GCP project id (can be overridden for multi-project deployments)"
+  type        = string
+  default     = "impactful-shard-429011-e7"
+}
+
 provider "google" {
-  project = "impactful-shard-429011-e7"
+  project = var.project_id
   region  = "us-central1"
+}
+
+data "google_project" "project" {
+  project_id = var.project_id
 }
 
 # Define a Google Cloud firewall rule allowing access to ports 3*** - 4***
@@ -21,6 +31,24 @@ resource "google_compute_firewall" "react-server" {
   source_ranges = ["0.0.0.0/0"] # adjust as needed for security purposes
 }
 
+# Define a Google Cloud firewall rule allowing access to port 80
+resource "google_compute_firewall" "http-server" {
+  name    = "http-server"
+  network = "default" # or specify the name of your VPC network
+
+  # Target instances with the 'react-server' tag
+  target_tags = ["http-server"]
+
+  # Allow incoming TCP traffic on ports 3000-4000
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  # Set source ranges (e.g., to allow traffic from any IP)
+  source_ranges = ["0.0.0.0/0"] # adjust as needed for security purposes
+}
+
 
 # Define a Google Cloud instance template with a startup script
 resource "google_compute_instance_template" "heart-bridge-instance" {
@@ -30,6 +58,14 @@ resource "google_compute_instance_template" "heart-bridge-instance" {
   instance_description = "The instance where the Heart Bridge application will be deployed to"
   machine_type         = "e2-micro"
   tags                 = ["http-server", "react-server"]
+
+  service_account {
+    email = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+    scopes = [
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring.write",
+    ]
+  }
 
   // Create a new boot disk from an image
   disk {

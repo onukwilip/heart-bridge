@@ -1,10 +1,20 @@
+name: Deploy/Destroy Infra. on Google Cloud
 on:
   push:
     branches:
       - main
   release:
     types: published
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Create OR Destroy the resources on Google Cloud"
+        required: true
+        default: "deploy"
+        type: choice
+        options:
+          - deploy
+          - destroy
 
 jobs:
   deploy-to-docker:
@@ -12,6 +22,7 @@ jobs:
     name: Deploy application to Docker Hub container registry
     env:
       SHA: ${{github.sha}}
+      TF_VAR_project_id: ${{ vars.PROJECT_ID }}
       INFISICAL_MACHINE_CLIENT_ID: ${{secrets.INFISICAL_MACHINE_CLIENT_ID}}
       INFISICAL_MACHINE_CLIENT_SECRET: ${{secrets.INFISICAL_MACHINE_CLIENT_SECRET}}
       INFISICAL_PROJECT_ID: ${{secrets.INFISICAL_PROJECT_ID}}
@@ -91,9 +102,16 @@ jobs:
           terraform import google_compute_target_http_proxy.heart-bridge-http-proxy projects/impactful-shard-429011-e7/global/targetHttpProxies/heart-bridge-http-proxy || true
 
       - name: Set up the infrastructure on Google Cloud using Terraform
+        if: ${{ github.event.inputs.action == 'deploy' || github.event_name != 'workflow_dispatch' }}
         run: |
           cd terraform
           terraform apply --auto-approve
+
+      - name: Destroy infrastructure (Terraform destroy)
+        if: ${{ github.event.inputs.action == 'destroy' }}
+        run: |
+          cd terraform
+          terraform destroy --auto-approve
 
       - name: If instance group manager already exists, run the command to restart the instances
         if: env.INSTANCES_EXISTS == 1
