@@ -18,6 +18,7 @@ on:
 
 jobs:
   deploy-to-docker:
+    if: ${{ github.event.inputs.action == 'deploy' || github.event_name != 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     name: Deploy application to Docker Hub container registry
     env:
