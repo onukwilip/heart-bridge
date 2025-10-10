@@ -48,6 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Set up infrastructure
     needs: deploy-to-docker
+    if: ${{ success() || github.event.inputs.action == 'destroy' }}
     env:
       SHA: ${{github.sha}}
       PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}

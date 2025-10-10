@@ -150,6 +150,10 @@ EOF' | logger
 } 2>&1 | logger
 EOT
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 # Create a Google Cloud HTTP health check for the application
