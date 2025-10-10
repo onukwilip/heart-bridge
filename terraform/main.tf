@@ -173,6 +173,8 @@ resource "google_compute_health_check" "heart-bridge-health-check" {
 
 # Create a managed instance group with the instance template and health check
 resource "google_compute_instance_group_manager" "heart-bridge-instance-group-manager" {
+  depends_on = [google_compute_instance_template.heart-bridge-instance]
+
   name = "heart-bridge-instance-group-manager"
 
   base_instance_name = "heart-bridge-instance"
