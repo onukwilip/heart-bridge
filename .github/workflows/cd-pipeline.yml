@@ -22,7 +22,6 @@ jobs:
     name: Deploy application to Docker Hub container registry
     env:
       SHA: ${{github.sha}}
-      TF_VAR_project_id: ${{ vars.PROJECT_ID }}
       INFISICAL_MACHINE_CLIENT_ID: ${{secrets.INFISICAL_MACHINE_CLIENT_ID}}
       INFISICAL_MACHINE_CLIENT_SECRET: ${{secrets.INFISICAL_MACHINE_CLIENT_SECRET}}
       INFISICAL_PROJECT_ID: ${{secrets.INFISICAL_PROJECT_ID}}
@@ -51,6 +50,7 @@ jobs:
     env:
       SHA: ${{github.sha}}
       PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      TF_VAR_project_id: ${{ vars.PROJECT_ID }}
       ZONE: us-central1-c
       INSTANCE_GROUP_NAME: heart-bridge-instance-group-manager
     steps:
@@ -91,15 +91,16 @@ jobs:
         continue-on-error: true
         run: |
           cd terraform
-          terraform import google_compute_firewall.react-server projects/impactful-shard-429011-e7/global/firewalls/react-server || true
-          terraform import google_compute_instance_group_manager.heart-bridge-instance-group-manager projects/impactful-shard-429011-e7/zones/us-central1-c/instanceGroupManagers/heart-bridge-instance-group-manager || true
-          terraform import google_compute_instance_template.heart-bridge-instance projects/impactful-shard-429011-e7/global/instanceTemplates/heart-bridge-instance || true
-          terraform import google_compute_backend_service.heart-bridge-backend projects/impactful-shard-429011-e7/global/backendServices/heart-bridge-backend || true
-          terraform import google_compute_global_forwarding_rule.heart-bridge-forwarding-rule projects/impactful-shard-429011-e7/global/forwardingRules/heart-bridge-forwarding-rule || true
-          terraform import google_compute_health_check.heart-bridge-health-check projects/impactful-shard-429011-e7/global/healthChecks/heart-bridge-health-check || true
-          terraform import google_compute_autoscaler.heart-bridge-autoscaler projects/impactful-shard-429011-e7/zones/$ZONE/autoscalers/heart-bridge-autoscaler || true
-          terraform import google_compute_url_map.heart-bridge-url-map projects/impactful-shard-429011-e7/global/urlMaps/heart-bridge-url-map || true
-          terraform import google_compute_target_http_proxy.heart-bridge-http-proxy projects/impactful-shard-429011-e7/global/targetHttpProxies/heart-bridge-http-proxy || true
+          terraform import google_compute_firewall.react-server projects/${{ env.PROJECT_ID }}/global/firewalls/react-server || true
+          terraform import google_compute_firewall.http-server projects/${{ env.PROJECT_ID }}/global/firewalls/http-server || true
+          terraform import google_compute_instance_group_manager.heart-bridge-instance-group-manager projects/${{ env.PROJECT_ID }}/zones/us-central1-c/instanceGroupManagers/heart-bridge-instance-group-manager || true
+          terraform import google_compute_instance_template.heart-bridge-instance projects/${{ env.PROJECT_ID }}/global/instanceTemplates/heart-bridge-instance || true
+          terraform import google_compute_backend_service.heart-bridge-backend projects/${{ env.PROJECT_ID }}/global/backendServices/heart-bridge-backend || true
+          terraform import google_compute_global_forwarding_rule.heart-bridge-forwarding-rule projects/${{ env.PROJECT_ID }}/global/forwardingRules/heart-bridge-forwarding-rule || true
+          terraform import google_compute_health_check.heart-bridge-health-check projects/${{ env.PROJECT_ID }}/global/healthChecks/heart-bridge-health-check || true
+          terraform import google_compute_autoscaler.heart-bridge-autoscaler projects/${{ env.PROJECT_ID }}/zones/$ZONE/autoscalers/heart-bridge-autoscaler || true
+          terraform import google_compute_url_map.heart-bridge-url-map projects/${{ env.PROJECT_ID }}/global/urlMaps/heart-bridge-url-map || true
+          terraform import google_compute_target_http_proxy.heart-bridge-http-proxy projects/${{ env.PROJECT_ID }}/global/targetHttpProxies/heart-bridge-http-proxy || true
 
       - name: Set up the infrastructure on Google Cloud using Terraform
         if: ${{ github.event.inputs.action == 'deploy' || github.event_name != 'workflow_dispatch' }}
@@ -125,5 +126,5 @@ jobs:
            --min-ready=0 \
            --minimal-action=restart \
            --replacement-method=substitute \
-           --version=template=https://www.googleapis.com/compute/beta/projects/impactful-shard-429011-e7/global/instanceTemplates/heart-bridge-instance,name=0-$SHA
+           --version=template=https://www.googleapis.com/compute/beta/projects/${{ env.PROJECT_ID }}/global/instanceTemplates/heart-bridge-instance,name=0-$SHA
           echo "Instances in the managed instance group are restarting to pull the latest Docker image."
