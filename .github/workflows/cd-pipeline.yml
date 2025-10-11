@@ -117,7 +117,7 @@ jobs:
           terraform destroy --auto-approve
 
       - name: If instance group manager already exists, run the command to restart the instances
-        if: env.INSTANCES_EXISTS == 1
+        if: ${{env.INSTANCES_EXISTS == 1 && (github.event.inputs.action == 'deploy' || github.event_name != 'workflow_dispatch')}}
         run: |
           echo "Restarting instances in the managed instance group..."
           gcloud --quiet beta compute instance-groups managed rolling-action start-update heart-bridge-instance-group-manager \
