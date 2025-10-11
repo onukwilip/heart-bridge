@@ -207,12 +207,12 @@ resource "google_compute_autoscaler" "heart-bridge-autoscaler" {
   target = google_compute_instance_group_manager.heart-bridge-instance-group-manager.self_link
 
   autoscaling_policy {
-    max_replicas    = 3
+    max_replicas    = 5
     min_replicas    = 2
     cooldown_period = 60
 
     cpu_utilization {
-      target = 0.6
+      target = 0.5
     }
   }
 }
